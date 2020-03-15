@@ -1,0 +1,2 @@
+# foshistonks
+Project reflecting Microservices
