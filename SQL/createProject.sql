@@ -32,7 +32,7 @@ USE `project`;
 
 DROP TABLE IF EXISTS `project`;
 CREATE TABLE IF NOT EXISTS `project` (
-  `projectid` int(10) NOT NULL,
+  `projectid` int(10) AUTO_INCREMENT,
   `employerid` varchar(128) NOT NULL,
   `title` varchar(128) NOT NULL,
   `risk` varchar(1) NOT NULL,
