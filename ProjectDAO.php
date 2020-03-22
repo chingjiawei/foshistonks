@@ -25,10 +25,10 @@ class ProjectDAO{
             $stmt1->execute();
             //Return Project Object
             while ($row = $stmt1->fetch()){
-                $result[] = new Project($row['projectid'], $row['employerid'], $row['title'], $row['risk'], $row['payout'], $row['loss'], $row['employees'], $row['timer'], , $row['status'], $row['salary']);
+                $result[] = new Project($row['projectid'], $row['employerid'], $row['title'], $row['risk'], $row['payout'], $row['loss'], $row['employees'], $row['timer'], $row['status'], $row['salary']);
             }
         }
-        return $result
+        return $result;
     }
 
     public function getEmployerProject(){

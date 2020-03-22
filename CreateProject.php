@@ -7,7 +7,7 @@
     $employerid = 'foshi'; //$_POST['employerid']
     $risk = 'L'; //L M or H.  $_POST['risk']
 
-    $titles = ["Clean Toilet", "Go Fishing", "Rap with Donkey Kong", "Do absolutely everything"]
+    $titles = ["Clean Toilet", "Go Fishing", "Rap with Donkey Kong", "Do absolutely everything"];
     
     $projectdao = new ProjectDAO();
     if ($projectdao->getEmployerProject != []){
@@ -19,7 +19,7 @@
     }
 
     //Here I need to fetch stonks of the user with Account Microservice
-    $stonks = 1000
+    $stonks = 1000;
     $datetime = new DateTime();
     if ($risk == 'L'){
         $payoff = round($stonks * rand(5, 10) / 100) ;
@@ -38,7 +38,7 @@
     }
     $length = rand(60, 120);
     $title = $titles[rand(0, count($title) - 1)];
-    $timer = $datetime->modify("+$length minutes")
+    $timer = $datetime->modify("+$length minutes");
     $duration = rand(60, 300);
 
     $outcome = addProject($employerid, $title, $risk, $payout, $loss, $employees, $timer, $duration);
@@ -51,11 +51,9 @@
     else{
         $result = [
             "status" => "success",
-            "message" =?
-        ]
+            "message" => "data show be printed out here"
+        ];
     }
-
-
 
 
 ?>
