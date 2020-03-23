@@ -37,8 +37,7 @@ CREATE TABLE IF NOT EXISTS `account` (
   `email` varchar(128) DEFAULT NULL,
   `phoneNumber` int(10) DEFAULT NULL,
   `telegramid` varchar(20) DEFAULT NULL,
-  `type` TINYINT(1) NOT NULL,
-  `stonks` int(10) NOT NULL,
+  `stonks` DECIMAL(10,2) NOT NULL,
   PRIMARY KEY (`userid`)
 ) ENGINE=MyISAM DEFAULT CHARSET=latin1;
 COMMIT;
