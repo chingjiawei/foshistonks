@@ -31,11 +31,48 @@ class ProjectDAO{
         return $result;
     }
 
-    public function getEmployerProject(){
+    public function checkEmployerProject($employerid){
+        $sql = "SELECT * FROM project WHERE employerid = :employerid and status = 'active'";
         $connMgr = new ConnectionManager();      
         $conn = $connMgr->getConnection();
-
         $stmt = $conn->prepare($sql);
+        $stmt->bindParam(':employerid', $employerid, PDO::PARAM_STR);
+        $stmt->execute();
+        $result = [];
+        while ($row = $stmt->fetch()){
+            $result[] = new Project($row['projectid'], $row['employerid'], $row['title'], $row['risk'], $row['payout'], $row['loss'], $row['employees'], $row['timer'], $row['status'], $row['salary']);
+        }
+        return $result;
+    }
+
+    public function getEmployerProject($employerid){
+        $sql = "SELECT * FROM project WHERE employerid = :employerid";
+        $connMgr = new ConnectionManager();      
+        $conn = $connMgr->getConnection();
+        $stmt = $conn->prepare($sql);
+        $stmt->bindParam(':employerid', $employerid, PDO::PARAM_STR);
+        $stmt->bindParam(':employeeid', $employerid, PDO::PARAM_STR);
+        $stmt->execute();
+        $result = [];
+        while ($row = $stmt->fetch()){
+            $result[] = new Project($row['projectid'], $row['employerid'], $row['title'], $row['risk'], $row['payout'], $row['loss'], $row['employees'], $row['timer'], $row['status'], $row['salary']);
+        }
+        return $result;
+    }
+
+    public function getEmployeeProject($employeeid){
+        $sql = "SELECT * FROM project WHERE employeeid = :employeeid";
+        $connMgr = new ConnectionManager();      
+        $conn = $connMgr->getConnection();
+        $stmt = $conn->prepare($sql);
+        $stmt->bindParam(':employeeid', $employeeid, PDO::PARAM_STR);
+        $stmt->execute();
+        $result = [];
+        while ($row = $stmt->fetch()){
+            $result[] = new Project($row['projectid'], $row['employerid'], $row['title'], $row['risk'], $row['payout'], $row['loss'], $row['employees'], $row['timer'], $row['status'], $row['salary']);
+        }
+        return $result;
+
     }
 
 

@@ -10,7 +10,7 @@
     $titles = ["Clean Toilet", "Go Fishing", "Rap with Donkey Kong", "Do absolutely everything"];
     
     $projectdao = new ProjectDAO();
-    if ($projectdao->getEmployerProject != []){
+    if ($projectdao->checkEmployerProject($employerid) != []){
         $result = [
             "status" => "error",
             "message" => "Already have active project!"
@@ -41,7 +41,7 @@
     $timer = $datetime->modify("+$length minutes");
     $duration = rand(60, 300);
 
-    $outcome = addProject($employerid, $title, $risk, $payout, $loss, $employees, $timer, $duration);
+    $outcome = $projectdao->addProject($employerid, $title, $risk, $payout, $loss, $employees, $timer, $duration);
     if ($outcome == []){
         $result = [
             "status" => "error",
