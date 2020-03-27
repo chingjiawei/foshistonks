@@ -114,7 +114,7 @@ def create_position(userid):
             if purchasetype == "buy":
                 amt = -amt
             else:
-                this.update_position(userid)
+                this.update_position(time_stamp, stockid, userid)
             query = {"stonks" : amt}
             requests.post("/account/update/stonks/" + userid, query)
         except:
@@ -126,20 +126,18 @@ def create_position(userid):
 
 #Update the position of the stock - if you want to sell some
 @app.route("position/update/<string:userid>", methods =['POST'])
-def update_position(userid):
-    time_stamp = datetime.datetime.now().timestamp()
-    spoofname = request.json.get('spoofname')
-    stock = Stock.query.filter_by(spoofname = spoofname).first()
-    stockid = stock.stockid
-    price = request.json.get('price')
-    purchasetype = request.json.get('purchasetype')
-    amount = request.json.get('amount')
+def update_position(time_stamp, stockid, userid):
+    # time_stamp = datetime.datetime.now().timestamp()
+    # spoofname = request.json.get('spoofname')
+    # stock = Stock.query.filter_by(spoofname = spoofname).first()
+    # stockid = stock.stockid
+    # price = request.json.get('price')
+    # purchasetype = request.json.get('purchasetype')
+    # amount = request.json.get('amount')
     position = Position.query.filter_by(time_stamp == time_stamp and stockid == stockid and userid == userid).first()
     try:
         position.amount = position.amount - amount
-        amt = round(price * amount, 2)
-        query = {"stonks" : amt}
-        requests.post("/account/update/stonks/" + userid, query)
+        db.session.commit()
 
     except:
          return jsonify({"message":"An error occurred updating the position information."}), 500
