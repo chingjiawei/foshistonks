@@ -2,6 +2,8 @@ from flask import Flask, request, jsonify
 from flask_sqlalchemy import SQLAlchemy
 from flask_cors import CORS
 from os import environ 
+from sqlalchemy import Column, Integer, DateTime
+from datetime import datetime
 
 import requests
 import datetime
@@ -37,16 +39,16 @@ class Stock(db.Model):
 class Position(db.Model):
     __tablename__ = 'position'
 
-    timestamp = db.Column(db.timestamp, primary_key = True)
+    time_stamp = db.Column(db.DateTime, primary_key = True)
     stockid = db.Column(db.Integer, nullable = False)
-    userid = db.Column(db.String(16), nullable = False)
+    userid = db.Column(db.String(16), primary_key = True)
     price = db.Column(db.Float, nullable = False)
     purchasetype = db.Column(db.String(10), nullable = False)
     amount = db.Column(db.Integer, nullable = False)
 
     
-    def __init__(self, timestamp, stockid, userid, price, purchasetype, amount):
-        self.timestamp = timestamp
+    def __init__(self, time_stamp, stockid, userid, price, purchasetype, amount):
+        self.time_stamp = time_stamp
         self.stockid = stockid
         self.userid = userid
         self.price = price
@@ -54,7 +56,7 @@ class Position(db.Model):
         self.amount = amount
 
     def json(self):
-        return {"timestamp": self.timestamp, 
+        return {"time_stamp": self.time_stamp, 
                 "stockid": self.stockid, 
                 "userid": self.userid,  
                 "price": self.price,
@@ -75,7 +77,7 @@ def get_stocks(spoofname):
         API_URL = "https://www.alphavantage.co/query"
 
         data = {
-            "function": "TIME_SERIES_INTRADAY",
+            "function": "TIME_SERIES_INTRADAY", #Gets stock data at 5 min intervals
             "symbol": stock.stockname,
             "interval": "5min",
             "apikey": "2BAMKY2DJ4ZKBEK2",
@@ -85,9 +87,11 @@ def get_stocks(spoofname):
     return jsonify({"message":"Stock not found"}), 404
 
 #Add a Position
-@app.route("position/create/<string:userid>", methods =['POST'])
+@app.route("/position/create/<string:userid>", methods =['POST'])
 def create_position(userid):
-    time_stamp = request.json.get('timestamp')
+    time_stamp = datetime.datetime.now()
+    # time_stamp = request.json.post('time_stamp')
+    # return jsonify({"userid": userid}), 201
     spoofname = request.json.get('spoofname')
     stock = Stock.query.filter_by(spoofname = spoofname).first()
     stockid = stock.stockid
@@ -97,35 +101,36 @@ def create_position(userid):
 
     if time_stamp and stockid and userid and price and purchasetype and amount:
         existing_position = Position.query.filter(Position.stockid == stockid and Position.userid == userid).first()
-        if existing_position.purchasetype == purchasetype and purchasetype == 'sell':
+        if existing_position != None and existing_position.purchasetype == purchasetype and purchasetype == 'sell':
             return jsonify({"message": "Stock has not been bought yet - unable to sell"}), 404
 
-        new_position = Position(timestamp = time_stamp,
+        new_position = Position(time_stamp = time_stamp,
                          stockid = stockid, 
                          userid = userid, 
                          price = price,
                          purchasetype = purchasetype,
                          amount = amount)
 
-        try:
-            db.session.add(new_position)
-            db.session.commit()
-            amt = round(price * amount, 2)
-            if purchasetype == "buy":
-                amt = -amt
-            else:
-                this.update_position(time_stamp, stockid, userid)
-            query = {"stonks" : amt}
-            requests.post("/account/update/stonks/" + userid, query)
-        except:
-            return jsonify({"message":"An error occurred creating the position."}), 500
+        # try:
+        db.session.add(new_position)
+        db.session.commit()
+        amt = round(float(price) * int(amount), 2)
+        if purchasetype == "buy":
+            amt = -amt
+        else:
+            update_position(time_stamp, stockid, userid)
+        data = {"stonks" : str(amt)}
+        headers = {'content-type': 'application/json'}
+        requests.post("http://localhost:5000/account/update/stonks/" + userid, headers=headers, data=data)
+        # except:
+        #     return jsonify({"message":"An error occurred creating the position."}), 500
 
         return jsonify(new_position.json()), 201
 
     return jsonify({"message": "Fields incomplete!"}), 404
 
 #Update the position of the stock - if you want to sell some
-@app.route("position/update/<string:userid>", methods =['POST'])
+@app.route("/position/update/<string:userid>", methods =['POST'])
 def update_position(time_stamp, stockid, userid):
     # time_stamp = datetime.datetime.now().timestamp()
     # spoofname = request.json.get('spoofname')
@@ -150,4 +155,4 @@ def update_position(time_stamp, stockid, userid):
 
 
 if __name__ == '__main__':
-    app.run(host='0.0.0.0', port=5000, debug=True)
+    app.run(host='0.0.0.0', port=5010, debug=True)

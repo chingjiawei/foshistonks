@@ -33,13 +33,13 @@ USE `stock`;
 
 DROP TABLE IF EXISTS `position`;
 CREATE TABLE IF NOT EXISTS `position` (
-  `timestamp` timestamp NOT NULL,
+  `time_stamp` datetime NOT NULL,
   `stockid` int(10) NOT NULL,
   `userid` varchar(16) NOT NULL,
   `price` decimal(10,2) NOT NULL,
   `purchasetype` varchar(10) NOT NULL,
   `amount` int(10) NOT NULL,
-  PRIMARY KEY (`timestamp`, `userid`)
+  PRIMARY KEY (`time_stamp`, `userid`)
 ) ENGINE=MyISAM DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
 
 -- --------------------------------------------------------
