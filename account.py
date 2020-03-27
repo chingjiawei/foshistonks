@@ -188,7 +188,7 @@ def update_equipment(userid):
         account.equipPet = request.json.get('equipPet', account.equipPet)
         db.session.commit()
     except:
-         return jsonify({"message":"An unknown error occurred while updating the stonks balance."}), 500
+         return jsonify({"message":"An unknown error occurred while updating the equipment sources."}), 500
 
     return jsonify({"message":"Updated Successfully!"}), 200
 
