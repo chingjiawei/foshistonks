@@ -18,23 +18,23 @@ CORS(app)
 class Account(db.Model):
     __tablename__ = 'account'
 
-    userid = db.Column(db.String(20), primary_key = True, unique = True, nullable = False)
+    username = db.Column(db.String(20), primary_key = True, unique = True, nullable = False)
     password = db.Column(db.String(20), nullable = False)
-    email = db.Column(db.String(128), nullable = False)
+    email = db.Column(db.String(128), unique = True, nullable = False)
     phoneNumber = db.Column(db.String(8), nullable = False)
-    telegramid = db.Column(db.String(128), nullable = False)
+    telegramID = db.Column(db.String(128), unique = True, nullable = False)
     stonks = db.Column(db.Numeric(8,2), nullable = False)
     equipHead = db.Column(db.String(128), nullable = True)
     equipBody = db.Column(db.String(128), nullable = True)
     equipHand = db.Column(db.String(128), nullable = True)
     equipPet = db.Column(db.String(128), nullable = True)
     
-    def __init__(self, userid, password, email, phoneNumber, telegramid, stonks, equipHead=None, equipBody=None, equipHand=None, equipPet=None):
-        self.userid = userid
+    def __init__(self, username, password, email, phoneNumber, telegramID, stonks, equipHead=None, equipBody=None, equipHand=None, equipPet=None):
+        self.username = username
         self.password = password
         self.email = email
         self.phoneNumber = phoneNumber
-        self.telegramid = telegramid
+        self.telegramID = telegramID
         self.stonks = stonks
         self.equipHead = equipHead
         self.equipBody = equipBody
@@ -42,17 +42,18 @@ class Account(db.Model):
         self.equipPet = equipPet
 
     def json(self):
-        return {"userid": self.userid,
-                "password": self.password,
-                "email": self.email ,
-                "phoneNumber": self.phoneNumber,
-                "telegramid": self.telegramid,
-                "stonks": str(self.stonks),
-                "equipHead": self.equipHead,
-                "equipBody": self.equipBody,
-                "equipHand": self.equipHand,
-                "equipPet": self.equipPet
-                }    
+        return {
+            "username": self.username,
+            "password": self.password,
+            "email": self.email ,
+            "phoneNumber": self.phoneNumber,
+            "telegramID": self.telegramID,
+            "stonks": str(self.stonks),
+            "equipHead": self.equipHead,
+            "equipBody": self.equipBody,
+            "equipHand": self.equipHand,
+            "equipPet": self.equipPet
+        }    
 
 
 #get all accounts
@@ -62,27 +63,27 @@ def get_all():
 
 
 #get an account
-@app.route("/account/<string:userid>")
-def find_by_userid(userid):
-    account = Account.query.filter_by(userid = userid).first()
+@app.route("/account/<string:username>")
+def find_by_username(username):
+    account = Account.query.filter_by(username = username).first()
     if account:
         return jsonify(account.json())
     return jsonify({"message":"Account not found"}), 404
 
 
-#create a new account (Input parameters. JSON password, email, telegramid, phoneNumber)
-@app.route("/account/<string:userid>", methods =['POST'])
-def create_account(userid):
+#create a new account (Input parameters. JSON password, email, telegramID, phoneNumber)
+@app.route("/account/<string:username>", methods =['POST'])
+def create_account(username):
 
     try:
         data = request.get_json()
 
         for key, value in data.items():
-            if key in ['userid', 'telegramid', 'email', 'phoneNumber']:
+            if key in ['username', 'telegramID', 'email', 'phoneNumber']:
                 if value == None:
                     return jsonify({"message":f"{key} should not be NoneType."}), 400 
                 else:
-                    existing_account = Account.query.filter(Account.userid == userid or Account.email == request.json.get("email") or Account.telegramid == request.json.get("telegramid")).first()
+                    existing_account = Account.query.filter(Account.username == username or Account.email == request.json.get("email") or Account.telegramID == request.json.get("telegramID")).first()
                     if existing_account:
                         return jsonify({"message":"Account already exists."}), 400
 
@@ -91,7 +92,7 @@ def create_account(userid):
 
 
 
-        new_account = Account(userid = userid, stonks = 100, **data)
+        new_account = Account(username = username, stonks = 100, **data)
 
     except:
         return jsonify({"message": "Please input a valid JSON."}), 400
@@ -112,7 +113,7 @@ def create_account(userid):
 #       "email": "xyzhang@gmail.com",
 #       "password": "xyzhang123",
 #       "phoneNumber": "67009000",
-#       "telegramid": "45678",
+#       "telegramID": "45678",
 #       "equipHead": "./src/img/1.png",
 #       "equipBody": "./src/img/2.png",
 #       "equipHand": "./src/img/3.png",
@@ -121,16 +122,16 @@ def create_account(userid):
 #  }
 
 
-@app.route("/account/<string:userid>", methods =['PUT'])
-def update_account(userid):
+@app.route("/account/<string:username>", methods =['PUT'])
+def update_account(username):
 
-    if not (Account.query.filter_by(userid = userid).first()):
-        return jsonify({"message": "An account with userid '{}' does not exist.".format(userid)}), 404
+    if not (Account.query.filter_by(username = username).first()):
+        return jsonify({"message": "An account with username '{}' does not exist.".format(username)}), 404
 
     try:
-        account = Account.query.filter_by(userid = userid).first()
+        account = Account.query.filter_by(username = username).first()
         account.email = request.json.get('email', account.email)
-        account.telegramid = request.json.get('telegramid', account.telegramid)
+        account.telegramID = request.json.get('telegramID', account.telegramID)
         account.password = request.json.get('password', account.password)
         account.phoneNumber = request.json.get('phoneNumber', account.phoneNumber)
         account.stonks = request.json.get('stonks', account.stonks)
@@ -147,17 +148,17 @@ def update_account(userid):
 
 # update stonks balance for a particular account
 # expected input: 
-# {     "userid": "weihao",
+# {     "username": "weihao",
 #       "stonks": "0"
 # }
 
-@app.route("/account/update/stonks/<string:userid>", methods =['PUT'])
-def update_stonks(userid):
+@app.route("/account/update/stonks/<string:username>", methods =['PUT'])
+def update_stonks(username):
 
-    if not (Account.query.filter_by(userid = userid).first()):
-        return jsonify({"message": "An account with userid '{}' does not exist.".format(userid)}), 404
+    if not (Account.query.filter_by(username = username).first()):
+        return jsonify({"message": "An account with username '{}' does not exist.".format(username)}), 404
     
-    account = Account.query.filter_by(userid = userid).first()
+    account = Account.query.filter_by(username = username).first()
 
     try:
         new_stonks = request.json.get('stonks')
@@ -173,13 +174,13 @@ def update_stonks(userid):
 
 
 #JSON Input equipHead, equipBody, equipHand, equipPet src
-@app.route("/account/update/equip/<string:userid>", methods =['PUT'])
-def update_equipment(userid):
+@app.route("/account/update/equip/<string:username>", methods =['PUT'])
+def update_equipment(username):
 
-    if not (Account.query.filter_by(userid = userid).first()):
-        return jsonify({"message": "An account with userid '{}' does not exist.".format(userid)}), 404
+    if not (Account.query.filter_by(username = username).first()):
+        return jsonify({"message": "An account with username '{}' does not exist.".format(username)}), 404
     
-    account = Account.query.filter_by(userid = userid).first()
+    account = Account.query.filter_by(username = username).first()
 
     try:
         account.equipHead = request.json.get('equipHead', account.equipHead)
@@ -194,15 +195,15 @@ def update_equipment(userid):
 
 
 #delete account from database
-# expected input: userid
-@app.route("/account/<string:userid>",methods =['DELETE'])
-def delete_account(userid):
+# expected input: username
+@app.route("/account/<string:username>",methods =['DELETE'])
+def delete_account(username):
 
-    if not (Account.query.filter_by(userid = userid).first()):
-        return jsonify({"message": "An account with userid '{}' does not exist.".format(userid)}), 404
+    if not (Account.query.filter_by(username = username).first()):
+        return jsonify({"message": "An account with username '{}' does not exist.".format(username)}), 404
 
     try:
-        account = Account.query.filter_by(userid = userid).first()
+        account = Account.query.filter_by(username = username).first()
         db.session.delete(account)
         db.session.commit()
     except:

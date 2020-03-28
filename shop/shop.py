@@ -34,13 +34,33 @@ class Shop(db.Model):
             "price" : str(self.price)
         }
 
-# returns a list of shops
+# returns a list of shops with its accessories
 @app.route('/shop')
 def get_all_shops():
-    return jsonify({"Shops" : [shop.json() for shop in Shop.query.all()]})
+    shops = Shop.query.all()
+    shopsDict = {}
+
+    for shop in shops:
+        if shop.shopID not in shopsDict:
+            shopsDict[shop.shopID] = [{"accessoryID": shop.accessoryID, "inStock": shop.inStock, "price": str(shop.price)}]
+        else:
+            shopsDict[shop.shopID] += [{"accessoryID": shop.accessoryID, "inStock": shop.inStock, "price": str(shop.price)}]
+
+    return jsonify({"Shops" : shopsDict})
 
 
-# create item in shop
+# Retreive a shop's accessories
+@app.route("/shop/<int:shopID>")
+def find_by_shopID(shopID):
+    shop = Shop.query.filter_by(shopID=shopID)
+
+    if shop:
+        return jsonify({f"{shopID}": [{"accessoryID":shopAccessory.accessoryID, "inStock": shopAccessory.inStock, "price": str(shopAccessory.price)} for shopAccessory in shop]})
+
+    return jsonify({'message': 'There are no items available for sale in shop' + str(shopID)}), 404
+
+
+# create accessory in shop
 @app.route('/shop/<int:shopID>', methods=["POST"])
 def create_item(shopID):
 
@@ -54,7 +74,15 @@ def create_item(shopID):
         return jsonify({"message": "An accessory with accessoryID '{}' already exists in shopID '{}'.".format(accessoryID, shopID)}), 400
     
     try:
-        shop = Shop(shopID, **data)
+        shop = Shop(shopID=shopID, **data)
+        
+        for key, value in data.items():
+            if value == None:
+                return jsonify({'message': f"An error occurred while updating the item in the shop. {key} cannot be None."}), 400
+
+            elif key in ['inStock', 'price'] and int(value) < 0:
+                return jsonify({'message': f"An error occurred while updating the item in the shop. Please input a proper amount."}), 400
+
     except TypeError:
         return jsonify({'message': "An error has occurred while creating the accessory in the shop. Please input a valid JSON."}), 400
 
@@ -67,6 +95,57 @@ def create_item(shopID):
     return jsonify(shop.json()), 201
 
 
+# update accessory price and stock
+@app.route('/shop/<int:shopID>', methods=['PUT'])
+def update_item(shopID):
+
+    try:
+        data = request.get_json()
+        
+        for key, value in data.items():
+            if value == None:
+                return jsonify({'message': f"An error occurred while updating the item in the shop. {key} cannot be None."}), 400
+
+            elif key in ['inStock', 'price'] and int(value) < 0:
+                return jsonify({'message': f"An error occurred while updating the item in the shop. Please input a proper amount."}), 400
+
+        accessoryID = request.json.get('accessoryID')
+
+        if not (Shop.query.filter_by(shopID=shopID, accessoryID=accessoryID).first()):
+            return jsonify({"message": "The accessory with accessoryID '{}' does not exist in shop {}.".format(accessoryID, shopID)}), 404
+
+        shopAccessory = Shop.query.filter_by(shopID=shopID, accessoryID=accessoryID).first()
+        shopAccessory.inStock = request.json.get('inStock', shopAccessory.inStock)
+        shopAccessory.price = request.json.get('price', shopAccessory.price)
+
+        db.session.commit()
+
+    except:
+        return jsonify({"message": "An unknown error occurred while updating the accessory."}), 500
+
+    return jsonify(shopAccessory.json()), 200
+
+
+# Delete accessory in shop
+@app.route("/shop/<int:shopID>/<int:accessoryID>", methods=['DELETE'])
+def delete_accessory_in_shop(shopID, accessoryID):
+
+    if not (Shop.query.filter_by(shopID=shopID, accessoryID=accessoryID).first()):
+        return jsonify({"message": "The accessory with accessoryID '{}' does not exist in the shop {}.".format(accessoryID, shopID)}), 404
+
+    try:
+        shopAccessory = Shop.query.filter_by(shopID=shopID, accessoryID=accessoryID).first()
+        db.session.delete(shopAccessory)
+        db.session.commit()
+
+    except KeyError:
+        return jsonify({"message": "An unknown error occurred while deleting the accessory."}), 500
+
+    shop = Shop.query.filter_by(shopID=shopID)
+
+    if shop:
+        return jsonify({f"{shopID}": [{"accessoryID":shopAccessory.accessoryID, "inStock": shopAccessory.inStock, "price": str(shopAccessory.price)} for shopAccessory in shop]})
+
 
 if __name__ == "__main__":
-    app.run(host='0.0.0.0', port=5001, debug=True)
+    app.run(host='0.0.0.0', port=5003, debug=True)
