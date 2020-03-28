@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: 127.0.0.1:3306
--- Generation Time: Mar 28, 2020 at 04:40 PM
+-- Generation Time: Mar 28, 2020 at 04:42 PM
 -- Server version: 5.7.23
 -- PHP Version: 7.2.10
 
@@ -20,34 +20,24 @@ SET time_zone = "+08:00";
 
 -- --------------------------------------------------------
 --
--- Database: `account`
+-- Database: `inventory`
 --
-DROP DATABASE IF EXISTS `account`;
-CREATE DATABASE IF NOT EXISTS `account` DEFAULT CHARACTER SET utf8 COLLATE utf8_general_ci;
-USE `account`;
+DROP DATABASE IF EXISTS `inventory`;
+CREATE DATABASE IF NOT EXISTS `inventory` DEFAULT CHARACTER SET utf8 COLLATE utf8_general_ci;
+USE `inventory`;
 
 -- --------------------------------------------------------
 
 --
--- Table structure for table `account`
+-- Table structure for table `inventory`
 --
 
-DROP TABLE IF EXISTS `account`;
-CREATE TABLE IF NOT EXISTS `account` (
+DROP TABLE IF EXISTS `inventory`;
+CREATE TABLE IF NOT EXISTS `inventory` (
   `username` varchar(20) NOT NULL,
-  `password` varchar(20) NOT NULL,
-  `email` varchar(128) NOT NULL,
-  `phoneNumber` varchar(8) NOT NULL,
-  `telegramID` varchar(128) NOT NULL,
-  `stonks` decimal(8,2) NOT NULL,
-  `equipHead` varchar(128) DEFAULT NULL,
-  `equipBody` varchar(128) DEFAULT NULL,
-  `equipHand` varchar(128) DEFAULT NULL,
-  `equipPet` varchar(128) DEFAULT NULL,
-  PRIMARY KEY (`username`),
-  UNIQUE KEY `username` (`username`),
-  UNIQUE KEY `email` (`email`),
-  UNIQUE KEY `telegramID` (`telegramID`)
+  `accessoryID` int(11) NOT NULL,
+  `quantity` int(11) NOT NULL,
+  PRIMARY KEY (`username`,`accessoryID`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 COMMIT;
 

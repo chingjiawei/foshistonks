@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: 127.0.0.1:3306
--- Generation Time: Mar 28, 2020 at 04:40 PM
+-- Generation Time: Mar 28, 2020 at 04:44 PM
 -- Server version: 5.7.23
 -- PHP Version: 7.2.10
 
@@ -20,34 +20,27 @@ SET time_zone = "+08:00";
 
 -- --------------------------------------------------------
 --
--- Database: `account`
+-- Database: `accessory`
 --
-DROP DATABASE IF EXISTS `account`;
-CREATE DATABASE IF NOT EXISTS `account` DEFAULT CHARACTER SET utf8 COLLATE utf8_general_ci;
-USE `account`;
+DROP DATABASE IF EXISTS `accessory`;
+CREATE DATABASE IF NOT EXISTS `accessory` DEFAULT CHARACTER SET utf8 COLLATE utf8_general_ci;
+USE `accessory`;
 
 -- --------------------------------------------------------
 
 --
--- Table structure for table `account`
+-- Table structure for table `accessory`
 --
 
-DROP TABLE IF EXISTS `account`;
-CREATE TABLE IF NOT EXISTS `account` (
-  `username` varchar(20) NOT NULL,
-  `password` varchar(20) NOT NULL,
-  `email` varchar(128) NOT NULL,
-  `phoneNumber` varchar(8) NOT NULL,
-  `telegramID` varchar(128) NOT NULL,
-  `stonks` decimal(8,2) NOT NULL,
-  `equipHead` varchar(128) DEFAULT NULL,
-  `equipBody` varchar(128) DEFAULT NULL,
-  `equipHand` varchar(128) DEFAULT NULL,
-  `equipPet` varchar(128) DEFAULT NULL,
-  PRIMARY KEY (`username`),
-  UNIQUE KEY `username` (`username`),
-  UNIQUE KEY `email` (`email`),
-  UNIQUE KEY `telegramID` (`telegramID`)
+DROP TABLE IF EXISTS `accessory`;
+CREATE TABLE IF NOT EXISTS `accessory` (
+  `accessoryID` int(11) NOT NULL AUTO_INCREMENT,
+  `accessoryName` varchar(128) NOT NULL,
+  `accessoryDesc` varchar(256) NOT NULL,
+  `category` varchar(128) NOT NULL,
+  `src` varchar(128) NOT NULL,
+  PRIMARY KEY (`accessoryID`),
+  UNIQUE KEY `accessoryID` (`accessoryID`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 COMMIT;
 
