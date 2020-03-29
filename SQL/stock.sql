@@ -21,7 +21,7 @@ SET time_zone = "+08:00";
 --
 -- Database: `stock`
 --
-CREATE DATABASE IF NOT EXISTS `stock` DEFAULT CHARACTER SET latin1 COLLATE latin1_swedish_ci;
+CREATE DATABASE IF NOT EXISTS `stock` DEFAULT CHARACTER SET utf8 COLLATE utf8_general_ci;
 USE `stock`;
 
 -- --------------------------------------------------------
@@ -36,7 +36,7 @@ CREATE TABLE IF NOT EXISTS `stock` (
   `stockname` varchar(128) NOT NULL,
   `spoofname` varchar(128) NOT NULL,
   PRIMARY KEY (`stockid`)
-) ENGINE=MyISAM DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
+) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 COMMIT;
 
 INSERT INTO `stock` (stockname, spoofname) VALUES

@@ -21,7 +21,7 @@ SET time_zone = "+08:00";
 --
 -- Database: `position`
 --
-CREATE DATABASE IF NOT EXISTS `position` DEFAULT CHARACTER SET latin1 COLLATE latin1_swedish_ci;
+CREATE DATABASE IF NOT EXISTS `position` DEFAULT CHARACTER SET utf8 COLLATE utf8_general_ci;
 USE `position`;
 
 -- --------------------------------------------------------
@@ -39,5 +39,5 @@ CREATE TABLE IF NOT EXISTS `position` (
   `purchasetype` varchar(10) NOT NULL,
   `amount` int(10) NOT NULL,
   PRIMARY KEY (`time_stamp`, `username`)
-) ENGINE=MyISAM DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
+) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 COMMIT;

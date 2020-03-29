@@ -21,7 +21,7 @@ SET time_zone = "+08:00";
 --
 -- Database: `project`
 --
-CREATE DATABASE IF NOT EXISTS `payment` DEFAULT CHARACTER SET latin1 COLLATE latin1_swedish_ci;
+CREATE DATABASE IF NOT EXISTS `payment` DEFAULT CHARACTER SET utf8 COLLATE utf8_general_ci;
 USE `payment`;
 
 -- --------------------------------------------------------
@@ -38,7 +38,7 @@ CREATE TABLE IF NOT EXISTS `payment` (
   `title` varchar(128) NOT NULL,
   `status` varchar(128) NOT NULL,
   PRIMARY KEY (`paymentid`)
-) ENGINE=InnoDB DEFAULT CHARSET=latin1;
+) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 COMMIT;
 
 /*!40101 SET CHARACTER_SET_CLIENT=@OLD_CHARACTER_SET_CLIENT */;
