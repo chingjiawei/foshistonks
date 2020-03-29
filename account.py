@@ -3,10 +3,12 @@ from flask_sqlalchemy import SQLAlchemy
 from flask_cors import CORS
 from os import environ 
 
+import decimal
+
 # from os import environ
 
 app = Flask(__name__)
-app.config['SQLALCHEMY_DATABASE_URI'] = 'mysql+mysqlconnector://root@localhost:3306/account'
+app.config['SQLALCHEMY_DATABASE_URI'] = 'mysql+mysqlconnector://root@localhost:3308/account'
 # environ.get('dbURL')
 
 app.config['SQLALCHEMY_TRACK_MODIFICATIONS'] = False
@@ -152,7 +154,7 @@ def update_account(username):
 #       "stonks": "0"
 # }
 
-@app.route("/account/update/stonks/<string:username>", methods =['PUT'])
+@app.route("/account/update/stonks/<string:username>", methods =['POST'])
 def update_stonks(username):
 
     if not (Account.query.filter_by(username = username).first()):
@@ -161,11 +163,11 @@ def update_stonks(username):
     account = Account.query.filter_by(username = username).first()
 
     try:
-        new_stonks = request.json.get('stonks')
-        if float(new_stonks) < 0 or new_stonks == None:
+        content = request.get_json()
+        new_stonks = content["stonks"]
+        if new_stonks == None:
             return jsonify({"message":"Please input a valid stonks balance."}), 400
-
-        account.stonks = new_stonks
+        account.stonks = account.stonks + decimal.Decimal(new_stonks)
         db.session.commit()
     except:
          return jsonify({"message":"An unknown error occurred while updating the stonks balance."}), 500

@@ -24,24 +24,6 @@ SET time_zone = "+08:00";
 CREATE DATABASE IF NOT EXISTS `stock` DEFAULT CHARACTER SET latin1 COLLATE latin1_swedish_ci;
 USE `stock`;
 
-
--- --------------------------------------------------------
-
---
--- Table structure for table `position`
---
-
-DROP TABLE IF EXISTS `position`;
-CREATE TABLE IF NOT EXISTS `position` (
-  `time_stamp` datetime NOT NULL,
-  `stockid` int(10) NOT NULL,
-  `userid` varchar(16) NOT NULL,
-  `price` decimal(10,2) NOT NULL,
-  `purchasetype` varchar(10) NOT NULL,
-  `amount` int(10) NOT NULL,
-  PRIMARY KEY (`time_stamp`, `userid`)
-) ENGINE=MyISAM DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
-
 -- --------------------------------------------------------
 
 --
