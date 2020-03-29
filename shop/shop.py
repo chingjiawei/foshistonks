@@ -55,7 +55,8 @@ def find_by_shopID(shopID):
     shop = Shop.query.filter_by(shopID=shopID)
 
     if shop:
-        return jsonify({f"{shopID}": [{"accessoryID":shopAccessory.accessoryID, "inStock": shopAccessory.inStock, "price": str(shopAccessory.price)} for shopAccessory in shop]})
+        shopAccessories = {shopID: {accessory.accessoryID: {"inStock": accessory.inStock, "price": str(accessory.price)} for accessory in shop}}
+        return jsonify(shopAccessories)
 
     return jsonify({'message': 'There are no items available for sale in shop' + str(shopID)}), 404
 
@@ -144,7 +145,8 @@ def delete_accessory_in_shop(shopID, accessoryID):
     shop = Shop.query.filter_by(shopID=shopID)
 
     if shop:
-        return jsonify({f"{shopID}": [{"accessoryID":shopAccessory.accessoryID, "inStock": shopAccessory.inStock, "price": str(shopAccessory.price)} for shopAccessory in shop]})
+        shopAccessories = {shopID: {accessory.accessoryID: {"inStock": accessory.inStock, "price": str(accessory.price)} for accessory in shop}}
+        return jsonify(shopAccessories)
 
 
 if __name__ == "__main__":

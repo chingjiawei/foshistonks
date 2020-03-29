@@ -54,6 +54,22 @@ def find_by_accessoryID(accessoryID):
     return jsonify({'message': 'Accessory not found for id ' + str(accessoryID)}), 404
 
 
+# Retreive accessories from list
+@app.route("/accessory/list")
+def find_by_accessoryIDList():
+    try:
+        accessoryIDList = request.args.getlist('accessoryIDList[]', type=int)
+
+        accessoryList = Accessory.query.filter(Accessory.accessoryID.in_(accessoryIDList)).all()
+        if accessoryList:
+            return jsonify([accessory.json() for accessory in accessoryList])
+
+        return jsonify({'message': 'Accessories not found for ids in this list: ' + str(accessoryIDList)}), 404
+    
+    except:
+        return jsonify({"message": "An unknown error occurred while retrieving the accessory."}), 500
+
+
 # Create accessory
 @app.route("/accessory/<int:accessoryID>", methods=['POST'])
 def create_accessory(accessoryID):
