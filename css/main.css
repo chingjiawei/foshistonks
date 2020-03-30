@@ -1,0 +1,99 @@
+@import url('https://fonts.googleapis.com/css?family=Roboto:400,400i,500,500i,900&display=swap');
+
+html,body{
+    margin:0;
+    padding:0;
+}
+
+*{font-family: 'Poppins', sans-serif;}
+
+/* #bg_overlay {
+    width:100vw;
+    height:100vh;
+    background: url("../src/bg_check/login.png") no-repeat;
+} */
+
+body {
+    position: relative;
+}
+
+#bg_overlay {
+    width:100vw;
+    height:auto;
+    opacity: 0.15;
+    position: absolute;
+    top:0;
+    left:0;
+}
+.col-2 {
+    float:left;
+    width:50%;
+    height: 100vh;
+    /* background-color: #f00; */
+}
+
+#index_body{background: #001e06;}
+
+.login_left img {
+    width:75%;
+    padding: 6% 0 0 13%;
+}
+.login_left p {
+    padding: 4% 15% 0 13%;
+    font-weight: 900;
+    color: #fff;
+}
+.login_left p.login_descript {
+    padding-top: 0;
+    font-weight: 500;
+}
+
+.login_right img {
+    width:73%;
+    padding: 10% 0 0 3%;
+}
+
+#login_form input {
+    width: 85%;
+    margin: 20px 0 10px 0;
+    border: 2px solid #fff;
+    border-radius: 0;
+}
+#login_form .button_row {
+    margin: 20px 0 0 0;
+    width: 85%;
+    text-align: center;
+}
+#login_form .button_row span {
+    padding: 0 10px 0 10px;
+    color: #fff;
+}
+.btn_login {
+    width: 100px;
+    height: 30px;
+    border: 1px solid #fff;
+    background-color: rgba(100, 100, 100, 0);
+    border-radius: 0;
+    color: #fff;
+}
+.btn_login:hover {
+    border: 1px solid #fff;
+    background-color: #fff;
+    border-radius: 0;
+    color: #001e06;
+    transition: ease-in 0.3s;
+}
+.a_signup {
+    color: #fff;
+    text-decoration: underline;
+}
+.a_signup:hover {
+    color: #fff;
+    text-decoration: overline;
+    transition: ease-in 0.3s;
+}
+
+.login_right #error{
+    margin: 10px 0 0 0;
+    width:75%;
+}
