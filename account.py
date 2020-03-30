@@ -72,7 +72,6 @@ def find_by_username(username):
         return jsonify(account.json())
     return jsonify({"message":"Account not found"}), 404
 
-
 #create a new account (Input parameters. JSON password, email, telegramID, phoneNumber)
 @app.route("/account/<string:username>", methods =['POST'])
 def create_account(username):
