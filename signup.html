@@ -1,9 +1,3 @@
-<?php
-
-
-
-?>
-
 <!DOCTYPE html>
 <html>
 
@@ -37,23 +31,23 @@
 
 <!-- Page passes the container for the graph to the program -->
 
-<body id="index_body">
-    <div class='col-2 login_left'>
-        <img src="src/img/logo.png" alt="">
-        <p><i>one-stop platform</i></p>
-        <p class="login_descript">THE ONLY PLACE TO LEARN ABOUT STONKS, EARN SOME STONKS, INVEST IN STONKS,
-HAPPY STONKING!</p>
-    </div>
-    <div class='col-2 login_right'>
+<body id="signup_body">
+    <h1>SIGN UP TO FOSHISTONK</h1>
+    <div class='signup'>
         <img src="src/img/yoshi_house.png" alt="">
 
-        <form id="login_form">
-            <input type="text" class="form-control" id="username" placeholder="Username" value="">
-            <input type="password" class="form-control" id="password" placeholder="Password" value="">
+        <form id="signup_form">
+            <input type="text" class="form-control" id="username" placeholder="Username" value="" required>
+            <input type="password" class="form-control" id="password" placeholder="Password"  
+                pattern="(?=.*\d)(?=.*[a-z])(?=.*[A-Z]).{8,}"
+                title="Must contain at least one number and one uppercase and lowercase letter, and at least 8 or more characters" 
+                value="" required>
+            <input type="email" class="form-control" id="email" placeholder="Email" value="" required>
+            <input type="tel" class="form-control" id="phoneNumber" placeholder="Phone Number" pattern="[0-9]{8}" title="8-digit number" value="" required>
+            <input type="text" class="form-control" id="telegramID" placeholder="Telegram ID" value="" required>
+            
             <div class="button_row">    
-                <button type="submit" class="btn_login">Log In</button>
-                <span> | </span> 
-                <a class="a_signup" href="signup.html">Sign Up</a>
+                <button type="submit" class="btn_signup">Log In</button>
             </div>
         </form>
 
@@ -64,19 +58,17 @@ HAPPY STONKING!</p>
     <!-- <script async src="https://telegram.org/js/telegram-widget.js?7" data-telegram-login="foshistonks_bot"
             data-size="large" data-onauth="onTelegramAuth(user)" data-request-access="write"></script> -->
 	<script>
-        function showError(message) {
-            // Display an error under the the predefined label with error as the id
-            $('#error').text(message);
-        }
-
-        $("#login_form").submit(async (event) => {
+        $("#signup_form").submit(async (event) => {
             //Prevents screen from refreshing when submitting
             event.preventDefault();
             //Get form data 
             var username = $('#username').val();
             var password = $('#password').val();
-
-            var serviceURL = "http://localhost:5013/login/" + username;
+            var email = $('#email').val();
+            var phoneNumber = $('#phoneNumber').val();
+            var telegramID = $('#telegramID').val();
+            
+            var serviceURL = "http://localhost:????/signup/" + username;
             var homeURL = "http://localhost/home.php";
 
             // var availability = parseInt($("#availability").val());
@@ -86,7 +78,18 @@ HAPPY STONKING!</p>
             try {
                 const response =
                     await fetch(
-                        serviceURL, { method: 'GET' });
+                        serviceURL, {
+                            mode: 'cors',
+                            method: 'POST',
+                            headers: { "Content-Type": "application/json" },
+                            body: JSON.stringify({ 
+                                username: username,
+                                password: password,
+                                email: email,
+                                phoneNumber: phoneNumber,
+                                telegramID: telegramID
+                             })
+                    });
                 const data = await response.json();
 
                 if (response.ok) {
@@ -99,6 +102,7 @@ HAPPY STONKING!</p>
                             alert("Done! Session created.");
                         }
                     };
+
                     // relocate to home page
                     window.location.replace(homeURL);
                     return false;
@@ -117,7 +121,7 @@ HAPPY STONKING!</p>
         // function onTelegramAuth(user) {
         //         alert('Logged in as ' + user.first_name + ' ' + user.last_name + ' (' + user.id + (user.username ? ', @' + user.username : '') + ')');
         //     }
-            
+        
         </script>
     </script>
 </body>
