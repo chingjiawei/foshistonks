@@ -3,7 +3,6 @@
 html,body{
     margin:0;
     padding:0;
-    background: #001e06;
     color: #fff;
 }
 
@@ -29,7 +28,7 @@ body {
     /* background-color: #f00; */
 }
 
-/* #index_body{background: #001e06;} */
+#index_body{background: #001e06;}
 
 .login_left img {
     width:75%;
@@ -97,7 +96,7 @@ body {
 
 
 /******************** index - sign up  **********************/
-#signup_body {text-align: center;}
+#signup_body {text-align: center; background: #001e06;}
 #signup_body h1{text-align: center; font-weight: 900; margin-top: 12%;}
 #signup_body .signup {
     width:100%; 
@@ -138,6 +137,90 @@ body {
     width:75%;
 }
 
+/******************** home **********************/
+#home_body {width:100%; text-align: center; 
+    background: rgba(0,30,6,1) url('../src/img/home_bg.png') top left no-repeat;
+    background-size: cover;
+}
+#home_body>* {margin:0; padding: 0;}
+.col-3 {width:32.8%; float: left; }
+.col-3>div {width: 100%; height: 35vh; margin-bottom: 5vh; 
+    transition: 1500ms ease;
+    transition-property: scale;
+    cursor: pointer;}
+.col-3>div:hover { transform: scale(1.05);}
+.col-3>div>* {display: inline-block; }
+.col-3>div>img {margin-left: -30px; width:15vw; font-size: 23px;}
+.col-3>div>h2 {margin-left: -30px; width:13vw; font-size: 23px;}
 
+.col-3>:first-child {height: 10vh; padding-top: 2vh;}
 
+.home_left>.equipment>img {width:15vw; margin-left: 6vw;}
+.home_left>.equipment>img:hover {width:15vw;}
+.home_left>.shop>img {width:15vw; margin-left: 6vw;}
 
+.home_mid>h1{font-weight: 900;}
+.home_mid>.claimCoin {
+    height:18vh;
+}
+
+.home_mid>.claimCoin {
+    display: flex;
+    margin-top: 100px;
+}
+.home_mid>.claimCoin>img {
+    height:15vh; width:auto;
+    align-self: flex-end;
+    animation-duration: 2s;
+    animation-iteration-count: infinite;
+    height: 180px;
+    margin: 0 auto 0 auto;
+    transform-origin: bottom;
+    width: 180px;
+}
+.bounce-7 {
+    animation-name: bounce-7;
+    animation-timing-function: cubic-bezier(0.280, 0.840, 0.420, 1);
+}
+@keyframes bounce-7 {
+    0%   { transform: scale(1,1)      translateY(0); }
+    10%  { transform: scale(1.1,.9)   translateY(0); }
+    30%  { transform: scale(.9,1.1)   translateY(-50px); }
+    50%  { transform: scale(1.05,.95) translateY(0); }
+    57%  { transform: scale(1,1)      translateY(-7px); }
+    64%  { transform: scale(1,1)      translateY(0); }
+    100% { transform: scale(1,1)      translateY(0); }
+}
+
+/* .home_mid>.claimCoin>img {
+    height:18vh; width:auto;
+    padding-top: 0vh;
+    animation:bounce 1s infinite;
+    -webkit-animation:bounce 1s infinite;
+}
+@keyframes bounce {
+    0%       { padding-top: 0vh; }
+    25%, 75% { padding-top: 1vh; }
+    50%      { padding-top: 2vh; }
+    100%     { padding-top: 0vh; }
+  }
+  @-webkit-keyframes bounce {
+    0%       { padding-top: 0vh; }
+    25%, 75% { padding-top: 1vh; }
+    50%      { padding-top: 2vh; }
+    100%     { padding-top: 0vh; }
+  } */
+
+.home_mid>.me {height:45vh;}
+.home_mid>.me:hover {-webkit-transform:none; transform:none;}
+.home_mid>.me>img {height: 45vh; width:auto;}
+
+.home_right>.quick_btn {padding:48px 48px 0 0; text-align: right;}
+.home_right>.quick_btn:hover {-webkit-transform:none; transform:none;}
+.home_right>.quick_btn>img {height:4vh; width:auto;}
+
+.home_right>.stock>h2 {margin-left:-8vw;}
+.home_right>.stock>img {height:25vh; width:auto;}
+
+.home_right>.account {padding-top: 4vh;}
+.home_right>.account>img {height:20vh; width:auto; margin-left: -5px;}
