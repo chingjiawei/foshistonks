@@ -136,6 +136,8 @@ def update_account(username):
         account.password = request.json.get('password', account.password)
         account.phoneNumber = request.json.get('phoneNumber', account.phoneNumber)
         account.stonks = request.json.get('stonks', account.stonks)
+        if float(account.stonks) <= 0:
+            return jsonify({"message":"Stonks should be >= 0.0"}), 400
         account.equipHead = request.json.get('equipHead', account.equipHead)
         account.equipBody = request.json.get('equipBody', account.equipBody)
         account.equipHand = request.json.get('equipHand', account.equipHand)
