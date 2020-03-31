@@ -1,6 +1,6 @@
 <?php
 
-$username = 'mary';
+// // $username = 'mary';
 // if ( isset($_SESSION['username']) ){
 //     $username = $_SESSION['username'];
 // } else {
@@ -9,6 +9,10 @@ $username = 'mary';
 // }
 
 ?>
+
+<script>
+    alert(sessionStorage.getItem('username'))
+</script>
 
 <!DOCTYPE html>
 <html>

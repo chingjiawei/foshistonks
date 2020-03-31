@@ -61,6 +61,20 @@ def find_by_shopID(shopID):
     return jsonify({'message': 'There are no items available for sale in shop' + str(shopID)}), 404
 
 
+# Retreive an accessory in a particular shop
+@app.route("/shop/<int:shopID>/<int:accessoryID>")
+def find_accessory_in_shopID(shopID, accessoryID):
+    try:
+        shop = Shop.query.filter_by(shopID=shopID,accessoryID=accessoryID).first()
+    except:
+        return jsonify({'message': "An unknown error occurred while retrieving accessory in shop."}), 500
+
+    if shop:
+        return jsonify(shop.json())
+
+    return jsonify({'message': str(accessoryID) + ' cannot be found in shop ' + str(shopID)}), 404
+
+
 # create accessory in shop
 @app.route('/shop/<int:shopID>', methods=["POST"])
 def create_item(shopID):
@@ -81,7 +95,7 @@ def create_item(shopID):
             if value == None:
                 return jsonify({'message': f"An error occurred while updating the item in the shop. {key} cannot be None."}), 400
 
-            elif key in ['inStock', 'price'] and int(value) < 0:
+            elif key in ['inStock', 'price'] and float(value) < 0:
                 return jsonify({'message': f"An error occurred while updating the item in the shop. Please input a proper amount."}), 400
 
     except TypeError:
@@ -107,7 +121,7 @@ def update_item(shopID):
             if value == None:
                 return jsonify({'message': f"An error occurred while updating the item in the shop. {key} cannot be None."}), 400
 
-            elif key in ['inStock', 'price'] and int(value) < 0:
+            elif key in ['inStock', 'price'] and float(value) < 0:
                 return jsonify({'message': f"An error occurred while updating the item in the shop. Please input a proper amount."}), 400
 
         accessoryID = request.json.get('accessoryID')
