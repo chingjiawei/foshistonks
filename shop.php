@@ -37,7 +37,7 @@
         <h1 class='col-3'>FOSHI SHOP</h1>
         <div class='col-3'>
             <div class='quick_access'>
-                <img class='cart' src="src/icons/cart.png" alt="">
+                <img class='cart equip_link' src="src/icons/cart.png" alt="">
                 <img id='plusone' src="src/icons/plusone.png" alt="">
                 <span class='pipe'> | </span>
                 <img src="src/icons/user.png" alt="">
@@ -92,6 +92,10 @@
 <script>
     $('.home_link').click(function() {
         window.location.href = '/foshistonks/home.php';
+        return false;
+    });
+    $('.equip_link').click(function() {
+        window.location.href = '/foshistonks/equipment.php';
         return false;
     });
     
@@ -161,11 +165,11 @@
                         if (accessory.inStock > 0){
                             
                             eachBlock =
-                                "<h3 class='name'>" + accessory.accessoryName + "</h3>" +
-                                "<img class='img' src='src/img/shop/" + accessory.src + "'>" +
-                                "<p class='desc'>" + accessory.accessoryDesc + "</p>" +
-                                "<p class='price'> $" + accessory.price + "</p>" + 
-                                "<button class='buy_btn' value='"+accessory.accessoryID+"'>BUY</button>";
+                                "<div class='ele'><h3 class='name'>" + accessory.accessoryName + "</h3>" 
+                                    +"<div class='img'><img src='src/img/shop/" + accessory.src + "'></div>" +
+                                    "<p class='desc'>" + accessory.accessoryDesc + "</p>" +
+                                    "<p class='price'> $" + accessory.price + "</p>" + 
+                                    "<button class='buy_btn' value='" + accessory.accessoryID + "' onclick='buy(this.value)'>BUY</button></div>";
                             if (accessory.category == 'equipHead'){
                                 headBlocks += "<div class='ele'>" + eachBlock + "</div";
                             }
