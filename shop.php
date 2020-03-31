@@ -75,6 +75,17 @@
         <div class='ele'></div>
     </div>
 
+    <h2>Hand</h2>
+    <div class='ctg_container ctg_hand'>
+        <div class='ele'>hi</div>
+        <div class='ele'>hi</div>
+        <div class='ele'>hi</div>
+        <div class='ele'></div>
+        <div class='ele'></div>
+        <div class='ele'></div>
+    </div>
+
+
     <h2>Pet</h2>
     <div class='ctg_container ctg_pet'>
         <div class='ele'></div>
@@ -160,6 +171,7 @@
                     // for loop to setup all table rows with obtained book data
                     var headBlocks = "";
                     var bodyBlocks = "";
+                    var handBlocks = "";
                     var petBlocks = "";
                     for (const accessory of shop) {
                         if (accessory.inStock > 0){
@@ -176,6 +188,9 @@
                             if (accessory.category == 'equipBody'){
                                 bodyBlocks += "<div class='ele'>" + eachBlock + "</div";
                             } 
+                            if (accessory.category == 'equipHand'){
+                                handBlocks += "<div class='ele'>" + eachBlock + "</div";
+                            } 
                             if (accessory.category == 'equipPet'){
                                 petBlocks += "<div class='ele'>" + eachBlock + "</div";
                             }
@@ -185,9 +200,10 @@
                     console.log(shop)
 
                     // add all the rows to the table
-                    $('#ctg_head').append(headBlocks);
-                    $('#ctg_body').append(bodyBlocks);
-                    $('#ctg_pet').append(petBlocks);
+                    $('.ctg_head').append(headBlocks);
+                    $('.ctg_body').append(bodyBlocks);
+                    $('.ctg_hand').append(bodyBlocks);
+                    $('.ctg_pet').append(petBlocks);
                 }
             } catch (error) {
                 // Errors when calling the service; such as network error, 

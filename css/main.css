@@ -192,25 +192,6 @@ body {
     100% { transform: scale(1,1)      translateY(0); }
 }
 
-/* .home_mid>.claimCoin>img {
-    height:18vh; width:auto;
-    padding-top: 0vh;
-    animation:bounce 1s infinite;
-    -webkit-animation:bounce 1s infinite;
-}
-@keyframes bounce {
-    0%       { padding-top: 0vh; }
-    25%, 75% { padding-top: 1vh; }
-    50%      { padding-top: 2vh; }
-    100%     { padding-top: 0vh; }
-  }
-  @-webkit-keyframes bounce {
-    0%       { padding-top: 0vh; }
-    25%, 75% { padding-top: 1vh; }
-    50%      { padding-top: 2vh; }
-    100%     { padding-top: 0vh; }
-  } */
-
 .home_mid>.me {height:45vh;}
 .home_mid>.me:hover {-webkit-transform:none; transform:none;}
 .home_mid>.me>img {height: 45vh; width:auto;}
@@ -291,9 +272,152 @@ body {
     transition: ease-in 0.3s;
 }
 
-
-.clearfix::after {
-    content: "";
+.clearfix {
     clear: both;
-    display: table;
+    margin:0;
+    padding:0;
   }
+.clearfix::after {
+    clear: both;
+    margin:0;
+    padding:0;
+  }
+
+
+/******************** equip **********************/
+#equip_body{
+    background: #001e06; width:100%; 
+    text-align: center;
+    overflow:hidden;
+}
+#equip_body>.header{
+    width:100vw; height: 10vh; 
+    text-align: center; 
+    margin-top: 20px;
+    border-bottom: 1px solid #fff;
+    overflow: auto;
+}
+#equip_body>.col-3{width:33.33%;}
+#equip_body>.header .home_link{
+    float:left;
+    width:25px; height:auto; 
+    left:40px;
+    margin: 12px 0 0 30px;
+    /* padding-top: 20px; */
+}
+#equip_body>.header>h1{
+    font-weight: 900; 
+    /* padding-top: 16px; */
+}
+#equip_body>.header .quick_access{
+    float:right; margin: 12px 0 0 30px; width:100px;
+    /* padding-top: 25px; */
+}
+#equip_body>.header .quick_access>img{width:25px; height:auto;}
+#equip_body>.header .quick_access>a{color:#fff;}
+#equip_body>.clearfix{background-color: aqua;}
+#equip_body>.display{height: 90vh; clear:both; background-color: #ff0;}
+#equip_body>.col2{width:50vw; height: auto;}
+#equip_body>.display>.me{
+    width:100vh;
+    height:90vh;
+    background: url('../src/img/tenor.gif');
+    background-size: cover;
+    position: fixed;
+    top:10vh;
+    left:0;
+}
+#equip_body>.display>.me>.ori_foshi{
+    display: inline-block;
+    position: absolute;
+    top:0;
+    left:0;
+    height:90vh;
+    width:auto;
+}
+#equip_body>.display>.me>.on_avatar{
+    display: inline-block;
+    position: absolute;
+    top:0;
+    left:0;
+    height:90vh;
+    width:auto;
+}
+
+
+#equip_body>.display>.collections{
+    background-color:#001e06;
+    position: fixed;
+    top:10vh;
+    right:0;
+    overflow-y: auto;
+}
+#equip_body>.display>.collections>h2{
+    text-align: left;
+    padding: 0 0 0 4vw ;
+    font-size: 16px;
+    font-weight: 600;
+}
+#equip_body>.display>.collections>.ctg_container{
+    width: 50vw;
+}
+#equip_body>.display>.collections>.ctg_container>.ele{
+    display: inline-block;
+    width:14vw;
+    height: 35vh;
+    margin-bottom: 8px;
+    border:1px solid #001e06;
+    color:#001e06;
+    background-color: antiquewhite;
+    text-align: center;
+    vertical-align: middle;
+}
+#equip_body>.display>.collections>.ctg_container>.ele>.name{
+    font-size: 14px;
+    font-weight: 900;
+}
+#equip_body>.display>.collections>.ctg_container>.ele>.img{
+    width:12vw;
+    height: 20vh;
+    padding:10px 20px;
+}
+#equip_body>.display>.collections>.ctg_container>.ele>.desc{
+    font-size: 12px;
+}
+
+/* for head */
+#equip_body>.display>.collections>.ctg_head>.ele{
+    height: 32vh;
+}
+#equip_body>.display>.collections>.ctg_head>.ele>.img{
+    height: 18vh;
+}
+#equip_body>.display>.collections>.ctg_head>.ele>.img>img{
+    width:10vw;
+    padding-left: 18px;
+    height: auto;
+}
+/* for body */
+#equip_body>.display>.collections>.ctg_body>.ele>.img>img{
+    height: 18vh;
+    width:auto;
+    padding-left: 20px;
+}
+/* for hand */
+#equip_body>.display>.collections>.ctg_hand>.ele>.img>img{
+    height: 18vh;
+    width: auto;
+    padding-left: 20px;
+}
+/* for pet */
+#equip_body>.display>.collections>.ctg_pet>.ele>.img>img{
+    width:auto;
+    height: 17vh;
+    padding-left: 10px;
+}
+
+
+
+
+
+
