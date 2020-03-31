@@ -37,6 +37,9 @@
         <h1 class='col-3'>FOSHI SHOP</h1>
         <div class='col-3'>
             <div class='quick_access'>
+                <img class='cart' src="src/icons/cart.png" alt="">
+                <img id='plusone' src="src/icons/plusone.png" alt="">
+                <span class='pipe'> | </span>
                 <img src="src/icons/user.png" alt="">
                 <a href="logout.php">LOG OUT</a>
             </div>      
@@ -46,7 +49,15 @@
 
     <h2>Head</h2>
     <div class='ctg_container ctg_head'>
-        <div class='ele'></div>
+        <div class='ele'>
+            <h3 class='name'>MARIO HAT</h3>
+            <div class='img'>
+                <img src='src/img/shop/hat1.png'>
+            </div>
+            <p class='desc'>this is a short description.........</p>
+            <p class='price'>$3.33</p>
+            <button class='buy_btn' value='1' onclick='buy(this.value)'>BUY</button>
+        </div>
         <div class='ele'></div>
         <div class='ele'></div>
         <div class='ele'></div>
@@ -80,12 +91,48 @@
 <!-- Page passes the container for the graph to the program -->
 <script>
     $('.home_link').click(function() {
-            window.location.href = '/foshistonks/home.php';
-            return false;
-        });
-
-    $(function(){
+        window.location.href = '/foshistonks/home.php';
+        return false;
+    });
+    
+    ////////////////purchase microservice called here////////////
+    async function buy(val){
+        //Prevents screen from refreshing when submitting
+        var id = val
+        // console.log(id)
+        var serviceURL = "http://localhost:????/purchase??" + "/" + val;
         
+        try {
+            const response =
+                await fetch(
+                serviceURL, 
+                {
+                    mode: 'cors',
+                    method: 'POST',
+                    headers: {"Content-Type": "application/json"}
+                }
+            );
+            const data = await response.json();
+            // var book = data.books; //the arr is in data.books of the JSON data
+            if (response.ok) {
+                $('#plusone').fadeIn(200);
+                $('#plusone').delay(1200).fadeOut(200);
+            }else{
+                showError('Books not found.')
+            }
+            
+        } catch (error) {
+            // Errors when calling the service; such as network error, 
+            // service offline, etc
+            showError
+            ('There is a problem retrieving books data, please try again later.<br />'+error);
+            
+        }
+    } 
+
+    ///////////////////////display accessories//////////////////
+    $(function(){
+        $("#plusone").hide();
         // anonymous async function 
         // - using await requires the function that calls it to be async
         $(async() => {           
@@ -116,7 +163,7 @@
                                 "<img class='img' src='src/img/shop/" + accessory.src + "'>" +
                                 "<p class='desc'>" + accessory.accessoryDesc + "</p>" +
                                 "<p class='price'> $" + accessory.price + "</p>" + 
-                                "<button class='buy_btn'>BUY</button>";
+                                "<button class='buy_btn' value='"+accessory.accessoryID+"'>BUY</button>";
                             if (accessory.category == 'equipHead'){
                                 headBlocks += "<div class='ele'>" + eachBlock + "</div";
                             }

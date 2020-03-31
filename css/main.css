@@ -228,12 +228,26 @@ body {
 
 /******************** shop **********************/
 #shop_body{background: #001e06; width:100%; text-align: center;}
-#shop_body>.header{width:100vw; height: 20vh; text-align: center;}
+#shop_body>.header{width:100vw; height: 10vh; text-align: center;}
 #shop_body>.col-3{width:33.33%;}
 #shop_body>.header>h1{font-weight: 900;}
 #shop_body>.header .home_link{float:left;width:25px; height:auto; margin: 20px 0 0 30px;}
-#shop_body>.header .quick_access{float:right;margin: 20px 0 0 30px; width:100px;}
+#shop_body>.header .quick_access{float:right; margin: 20px 0 0 30px; width:100px;}
 #shop_body>.header .quick_access>img{width:25px; height:auto;}
+#shop_body>.header .quick_access>img.cart{
+    width:30px; height:auto;
+    position: absolute;
+    right:127px;
+}
+#shop_body>.header .quick_access>img#plusone{
+    width:30px; height:auto;
+    position: absolute;
+    right:127px;
+}
+#shop_body>.header .quick_access>.pipe{
+    position: absolute;
+    right:117px;
+}
 #shop_body>.header .quick_access>a{color:#fff;}
 
 #shop_body .ctg_container {display: inline-block; width:96vw; background-color: #ff0;}
@@ -241,7 +255,40 @@ body {
 #shop_body .ctg_container > .ele {
     display: inline-block; 
     width: 31vw;
-    background-color: #f00;
+    background-color: #fff;
+    color: #000;
+    border: 1px solid #000;
+    padding: 20px;
+}
+#shop_body .ctg_container > .ele > .name {
+    font-size: 18px; 
+    font-weight: 600;
+    margin:0px 0 10px 0; 
+    color:#001e06;}
+#shop_body .ctg_container > .ele > .img {
+    border:1px solid #001e06; 
+    width:95%; height:30vh; 
+    position: relative;
+    text-align:center;
+    margin:0px 0 10px 0; }
+#shop_body .ctg_container > .ele > .img >img { 
+    display: inline-block; 
+    width:70%; height:auto; 
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    vertical-align: middle;
+ }
+#shop_body .ctg_container > .ele > .desc {font-size: 12px;}
+#shop_body .ctg_container > .ele > .price {color:#001e06;}
+#shop_body .ctg_container > .ele > .buy_btn {color:#001e06; border:2px solid #001e06;}
+#shop_body .ctg_container > .ele > .buy_btn:hover {
+    border: 2px solid #001e06;
+    background-color: #001e06;
+    /* border-radius: 0; */
+    color: #fff;
+    transition: ease-in 0.3s;
 }
 
 
