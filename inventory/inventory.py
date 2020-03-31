@@ -97,7 +97,6 @@ def create_accessory_in_inventory(username):
 def update_accessory_in_inventory(username):
     
     try:
-
         data = request.get_json()
         
         for key, value in data.items():
@@ -109,8 +108,16 @@ def update_accessory_in_inventory(username):
 
         accessoryID = request.json.get('accessoryID')
 
+        # create if it doesn't exist
         if not (Inventory.query.filter_by(username=username, accessoryID=accessoryID).first()):
-            return jsonify({"message": "An accessory with accessoryID '{}' does not exist in your inventory.".format(accessoryID)}), 404
+            try:
+                inventory = Inventory(username=username, **data)
+                db.session.add(inventory)
+                db.session.commit()
+            except:
+                return jsonify({"message": "An unknown error occurred while adding the accessory into your inventory."}), 500
+            #return upon successful creation
+            return jsonify(inventory.json()), 201
 
         accessory = Inventory.query.filter_by(username=username, accessoryID=accessoryID).first()
         accessory.quantity = request.json.get('quantity', accessory.quantity)

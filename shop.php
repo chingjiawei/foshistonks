@@ -117,7 +117,7 @@
         var id = val;
         var username = sessionStorage.getItem('username');
         // console.log(id)
-        var serviceURL = "http://localhost:????/purchase??" + "/" + val;
+        var serviceURL = "http://localhost:5200/purchaseAccessory" + "/" + val;
         
         try {
             const response =
@@ -155,7 +155,6 @@
         $(async() => {           
             // Change serviceURL to your own
             var serviceURL = "http://127.0.0.1:5100/populateShopAccessories/1";
-    
             try {
                 const response =
                  await fetch(
