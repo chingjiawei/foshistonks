@@ -6,6 +6,7 @@ import requests
 import json
 
 app = Flask(__name__)
+CORS(app)
 
 @app.route("/login/<string:username>", methods=['POST'])
 def login(username):
