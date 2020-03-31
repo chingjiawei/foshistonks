@@ -231,7 +231,10 @@ body {
 #shop_body>.header{width:100vw; height: 20vh; text-align: center;}
 #shop_body>.col-3{width:33.33%;}
 #shop_body>.header>h1{font-weight: 900;}
-
+#shop_body>.header .home_link{float:left;width:25px; height:auto; margin: 20px 0 0 30px;}
+#shop_body>.header .quick_access{float:right;margin: 20px 0 0 30px; width:100px;}
+#shop_body>.header .quick_access>img{width:25px; height:auto;}
+#shop_body>.header .quick_access>a{color:#fff;}
 
 #shop_body .ctg_container {display: inline-block; width:96vw; background-color: #ff0;}
 #shop_body h2 {text-align: left; padding-left: 4vw;}
@@ -240,3 +243,10 @@ body {
     width: 31vw;
     background-color: #f00;
 }
+
+
+.clearfix::after {
+    content: "";
+    clear: both;
+    display: table;
+  }

@@ -71,7 +71,7 @@ HAPPY STONKING!</p>
             var password = $('#password').val();
 
             var serviceURL = "http://localhost:5013/login/";
-            var homeURL = "http://localhost/home.php";
+            var homeURL = "http://localhost/foshistonks/home.php";
 
             // var availability = parseInt($("#availability").val());
 
@@ -92,15 +92,15 @@ HAPPY STONKING!</p>
                 const data = await response.json();
 
                 if (response.ok) {
-                    // // create php session first
-                    // var xmlhttp = new XMLHttpRequest();
-                    // xmlhttp.open("GET", "session_maker.php?username="+username, true);
+                    // create php session first
+                    var xmlhttp = new XMLHttpRequest();
+                    xmlhttp.open("GET", "session_maker.php?username="+username, true);
 
-                    // xmlhttp.onreadystatechange = function(){
-                    //     if(xmlhttp.readyState == 4 && xmlhttp.status == 200){
-                    //         alert("Done! Session created.");
-                    //     }
-                    // };
+                    xmlhttp.onreadystatechange = function(){
+                        if(xmlhttp.readyState == 4 && xmlhttp.status == 200){
+                            alert("Done! Session created.");
+                        }
+                    };
                     // relocate to home page
                     window.location.replace(homeURL);
                     return false;

@@ -84,6 +84,19 @@ $username = 'mary';
             window.location.href = '/foshistonks/equipment.php';
             return false;
         });
+        $('.shop').click(function() {
+            window.location.href = '/foshistonks/shop.php';
+            // document.location.href="/foshistonks/shop.php"; 
+            return false;
+        });
+        $('.stock').click(function() {
+            window.location.href = '/foshistonks/stock.php';
+            return false;
+        });
+        $('.account').click(function() {
+            window.location.href = '/foshistonks/account.php';
+            return false;
+        });
     </script>
 </body>
 
