@@ -96,9 +96,11 @@
     });
     
     ////////////////purchase microservice called here////////////
+    
     async function buy(val){
         //Prevents screen from refreshing when submitting
-        var id = val
+        var id = val;
+        var username = sessionStorage.getItem('username');
         // console.log(id)
         var serviceURL = "http://localhost:????/purchase??" + "/" + val;
         
