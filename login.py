@@ -9,7 +9,9 @@ app = Flask(__name__)
 
 @app.route("/login/<string:username>", methods=['POST'])
 def login(username):
-    password = request.json.get('password')
+    # password = request.json.get('password')
+    data = request.get_json()
+    password = data["password"]
     res = requests.get('http://localhost:5000/account/' + username)
     res_users = res.json()
     try:
