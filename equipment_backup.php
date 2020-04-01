@@ -5,8 +5,7 @@
     <meta charset="utf-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
     <meta name="viewport" content="width=device-width">
-
-    <title>FoshiStonk</title>
+	<title>FoshiStonk</title>
 	<link rel="apple-touch-icon" sizes="180x180" href="src/icons/apple-touch-icon.png">
     <link rel="icon" type="image/png" sizes="32x32" href="src/icons/favicon-32x32.png">
     <link rel="icon" type="image/png" sizes="16x16" href="src/icons/favicon-16x16.png">
@@ -14,30 +13,25 @@
 	<meta name="msapplication-TileImage" content="images/icons/ms-icon-144x144.png">
 	<meta name="theme-color" content="#ffffff">
 
-    <meta name="viewport" 
-        content="width=device-width, initial-scale=1, shrink-to-fit=no">
-
+    <!-- Latest compiled and minified CSS -->
+    <!-- <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css"
+        integrity="sha384-BVYiiSIFeK1dGmJRAkycuHAHRg32OmUcww7on3RYdg4Va+PmSTsz/K68vbdEjh4u" crossorigin="anonymous">
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap-theme.min.css"
+        integrity="sha384-rHyoN1iRsVXV4nD0JutlnGaslCJuC7uwjduW9SVrLvRYooPp2bWYgmgJQIXwl/Sp" crossorigin="anonymous"> -->
     <link rel="stylesheet" href="css/main.css">
 
+   <!-- jQuery (necessary for Bootstrap's JavaScript plugins) -->
+   <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.12.4/jquery.min.js"></script>
     <!-- Latest compiled and minified JavaScript -->
-    <!-- jQuery (necessary for Bootstrap's JavaScript plugins) -->
-    <script 
-    src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script>
-<!--     
-    <script
-    src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.6/umd/popper.min.js"
-    integrity="sha384-wHAiFfRlMFy6i5SRaxvfOCifBUQy1xHdJ/yoi7FRNXMRBu5WHdZYu1hA6ZOblgut"
-    crossorigin="anonymous"></script>
-    
-    <script 
-    src="https://stackpath.bootstrapcdn.com/bootstrap/4.2.1/js/bootstrap.min.js"
-    integrity="sha384-B0UglyR+jN6CkvvICOB2joaf5I4l3gm9GU6Hc1og6Ls7i6U/mkkaduKaBhlAXv9k"
-    crossorigin="anonymous"></script>
-    <script src="js/main.js"></script> -->
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"
+        integrity="sha384-Tc5IQib027qvyjSMfHjOMaLkfuWVxZxUPnCJA7l2mCWNIpG9mGCD8wGNIcPD7Txa"
+        crossorigin="anonymous"></script>
+	<script src="js/main.js"></script>
+
 </head>
 
 <body id="equip_body">
-<div class='header'>
+    <div class='header'>
         <div class='col-3'>
             <img class="home_link" src="src/icons/home.png" alt="">
         </div>
@@ -59,8 +53,8 @@
         </div>
         <div class='col-2 collections'>
             <h2>Head</h2>
-            <div class='ctg_container ctg_head' id='equipHead'>
-                <!-- <div class='ele' id='hat1' data-value='head'>
+            <div class='ctg_container ctg_head'>
+                <div class='ele' id='hat1' data-value='head'>
                     <h3 class='name'>MARIO HAT</h3>
                     <div class='img'>
                         <img src='src/img/shop/hat1.png'>
@@ -87,12 +81,12 @@
                         <img src='src/img/shop/hat4.png'>
                     </div>
                     <p class='desc'>this is a short description.........</p>
-                </div> -->
+                </div>
             </div>
 
             <h2>Body</h2>
-            <div class='ctg_container ctg_body' id='equipBody'>
-                <!-- <div class='ele'>
+            <div class='ctg_container ctg_body'>
+                <div class='ele'>
                     <h3 class='name'>MARIO HAT</h3>
                     <div class='img'>
                         <img src='src/img/shop/body1.png'>
@@ -111,12 +105,12 @@
                         <img src='src/img/shop/body3.png'>
                     </div>
                     <p class='desc'>this is a short description.........</p>
-                </div> -->
+                </div>
             </div>
 
             <h2>Hand</h2>
-            <div class='ctg_container ctg_hand'id='equipHand'>
-                <!-- <div class='ele'>
+            <div class='ctg_container ctg_hand'>
+                <div class='ele'>
                     <h3 class='name'>MARIO HAT</h3>
                     <div class='img'>
                         <img src='src/img/shop/hand1.png'>
@@ -143,13 +137,13 @@
                         <img src='src/img/shop/hand4.png'>
                     </div>
                     <p class='desc'>this is a short description.........</p>
-                </div> -->
+                </div>
             </div>
 
 
             <h2>Pet</h2>
-            <div class='ctg_container ctg_pet' id ='equipPet'>
-                <!-- <div class='ele'>
+            <div class='ctg_container ctg_pet'>
+                <div class='ele'>
                     <h3 class='name'>CUTE CAT</h3>
                     <div class='img'>
                         <img src='src/img/shop/pet2.png'>
@@ -176,7 +170,7 @@
                         <img src='src/img/shop/pet4.png'>
                     </div>
                     <p class='desc'>this is a short description.........</p>
-                </div> -->
+                </div>
             </div>
             <p id='errorMsg'></p>
             <br>
@@ -187,29 +181,21 @@
     </div>
 
     <script>
-        
-        function addEvents(){
-            $('.ele').css('cursor', 'pointer');
-            $('.ele').click(
-                function(){
-                    var category = $(this).attr('data-cate');
-                    var data_src = $(this).attr('data-src');
-                    // $('#me').remove('.'+category);
-                    $('#me').find('.'+category).remove();
-                    $('#me').append("<img class='"+ category +" on_avatar' src='src/img/avatar/"+data_src+"'>");
-                    $('#me>img:last-child').hide();
-                    $('#me>img:last-child').fadeIn(500);
-                    console.log('hi');
-                }
-            )
-        }
-        
+        // function showError(message) {
+        //     // Hide the table and button in the event of error
+        //     $('#booksTable').hide();
+        //     $('#addBookBtn').hide();
     
-        // auto run this to pull all myInventory to display on the right
+        //     // Display an error under the main container
+        //     $('#main-container')
+        //         .append("<label>"+message+"</label>");
+        // }
+    
+        // anonymous async function 
+        // - using await requires the function that calls it to be async
         $(async() => {           
             // Change serviceURL to your own
-            var username = sessionStorage.getItem('username');
-            var serviceURL = "http://127.0.0.1:5100/populateInventoryAccessories/" + username;
+            var serviceURL = "http://127.0.0.1:5100/populateInventoryAccessories/mary";
     
             try {
                 const response =
@@ -217,32 +203,25 @@
                    serviceURL, { method: 'GET' }
                 );
                 const data = await response.json();
-                var items = data[username]; //the arr is in data.books of the JSON data
+                var books = data.books; //the arr is in data.books of the JSON data
     
                 // array or array.length are false
                 if (!data) {
                     showError('Books list empty or undefined.')
                 } else {
                     // for loop to setup all table rows with obtained book data
-                    for (var i in items){
-                        console.log(items[i]);
-                        var accessoryDesc = items[i]['accessoryDesc'];
-                        var accessoryID = items[i]['accessoryID'];  //1
-                        var accessoryName = items[i]['accessoryName']; //Santa Hat
-                        var category = items[i]['category']; //equipHead
-                        var quantity = items[i]['quantity']; //quantity
-                        var src = items[i]['src']; //src
-
-                        var add_div = 
-                            "<div class='ele' id='"+accessoryID+"' data-cate='"+ category + "' data-src='"+ src +
-                                "'><h3 class='name'>"+accessoryName+
-                                "</h3><div class='img'><img src='src/img/shop/"+src+
-                                "'></div><p class='desc'>"+accessoryDesc+
-                                "</p></div>";
-                        console.log(category);
-                        $('#'+category).append(add_div);
+                    console.log(data)
+                    var rows = "";
+                    for (const book of books) {
+                        eachRow =
+                            "<td>" + book.title + "</td>" +
+                            "<td>" + book.isbn13 + "</td>" +
+                            "<td>" + book.price + "</td>" +
+                            "<td>" + book.availability + "</td>";
+                        rows += "<tbody><tr>" + eachRow + "</tr></tbody>";
                     }
-                    addEvents();
+                    // add all the rows to the table
+                    $('#booksTable').append(rows);
                 }
             } catch (error) {
                 // Errors when calling the service; such as network error, 
@@ -251,15 +230,56 @@
               ('There is a problem retrieving books data, please try again later.<br />'+error);
                
             } // error
-
-            // Helper function to display error message
-            function showError(message) {
-                $('#errorMsg')
-                    .append("<label>"+message+"</label>");
-            }
-
         });
+        // $('.ele').css('cursor', 'pointer');
+        // $('.ele').click(
+        //     function(){
+        //         var category = $(this).attr('data-value');
+        //         var id = $(this).attr('id');
+        //         // $('#me').remove('.'+category);
+        //         $('#me').find('.'+category).remove();
+        //         $('#me').append("<img class='"+ category +" on_avatar' src='src/img/avatar/"+id+".png'>");
+        //         $('#me>img:last-child').hide();
+        //         $('#me>img:last-child').fadeIn(500);
+        //     }
+        //     $(async() => {           
+        //         // Change serviceURL to your own
+        //         var id = $(this).attr('id');
+        //         var serviceURL = "http://127.0.0.1:????/updateEquipment/"+id;
+        //         try {
+        //             const response = await fetch( serviceURL, 
+        //                 {
+        //                     mode: 'cors',
+        //                     method: 'POST',
+        //                     headers: {"Content-Type": "application/json"},
+        //                     body: JSON.stringify({
+        //                         accessoryID: id
+        //                     })
+        //                 });
+        //             const shop = await response.json();
+        //             // var shop = data["1"]; //only have 1 shop for now
+        
+        //             // array or array.length are falsy
+        //             if (response.ok) {
+        //                 //
+        //             }else{
+        //                 showError('Equip not updated.')
+        //             }
+        //         } catch (error) {
+        //             // Errors when calling the service; such as network error, 
+        //             // service offline, etc
+        //             showError
+        //         ('There is a problem updating equip data, please try again later.<br />'+error);
+                
+        //         } // error
+        //         function showError(message) {
+                    
+        //             $('#errorMsg')
+        //                 .append("<label>"+message+"</label>");
+        //         }
+        //     });
+        // );
     </script>
 </body>
+
 </html>
-    

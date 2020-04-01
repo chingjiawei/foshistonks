@@ -293,9 +293,9 @@ body {
 #equip_body>.header{
     width:100vw; height: 10vh; 
     text-align: center; 
-    margin-top: 20px;
+    /* margin-top: 20px; */
     border-bottom: 1px solid #fff;
-    overflow: auto;
+    overflow: hidden;
 }
 #equip_body>.col-3{width:33.33%;}
 #equip_body>.header .home_link{
@@ -319,7 +319,7 @@ body {
 #equip_body>.display{height: 90vh; clear:both; background-color: #ff0;}
 #equip_body>.col2{width:50vw; height: auto;}
 #equip_body>.display>.me{
-    width:100vh;
+    width:50%;
     height:90vh;
     background: url('../src/img/tenor.gif');
     background-size: cover;
@@ -346,7 +346,7 @@ body {
 
 
 #equip_body>.display>.collections{
-    background-color:#001e06;
+    background-color:#324436;
     position: fixed;
     top:10vh;
     right:0;
