@@ -10,6 +10,7 @@ app.config['SQLALCHEMY_TRACK_MODIFICATIONS'] = False
 
 CORS(app)
 
+# populate shop accessories
 @app.route('/populateShopAccessories/<int:shopID>', methods=['GET'])
 def populate_shop_accessories(shopID):
     shopURL = f'http://localhost:5003/shop/{shopID}'
@@ -19,7 +20,6 @@ def populate_shop_accessories(shopID):
         shop = req.json()
 
         accessoryIDList = [int(accessory) for accessory in shop[str(shopID)]]
-        shopAccessoriesList = []
 
         accessoryURL = f'http://localhost:5001/accessory/list'
         accessory_req = requests.get(accessoryURL, params = {"accessoryIDList[]": accessoryIDList})
@@ -32,6 +32,34 @@ def populate_shop_accessories(shopID):
                 shop[str(shopID)][str(accessory['accessoryID'])].update(accessory)
             
             return jsonify(shop)
+    
+    else:
+        return jsonify({"status": req.status_code, "error": req.json()})
+
+
+# populate inventory accessoreis
+@app.route('/populateInventoryAccessories/<string:username>', methods=['GET'])
+def populate_inventory_accessories(username):
+    inventoryURL = f'http://localhost:5002/inventory/{username}'
+    req = requests.get(inventoryURL)
+
+    if (req.status_code == 200):
+        inventory = req.json()
+
+        accessoryIDList = [int(accessory) for accessory in inventory[username]]
+        # return jsonify(accessoryIDList)
+
+        accessoryURL = f'http://localhost:5001/accessory/list'
+        accessory_req = requests.get(accessoryURL, params = {"accessoryIDList[]": accessoryIDList})
+        
+        if (accessory_req.status_code == 200):
+     
+            accessoryDetails = accessory_req.json()
+
+            for accessory in accessoryDetails:
+                inventory[str(username)][str(accessory['accessoryID'])].update(accessory)
+            
+            return jsonify(inventory)
     
     else:
         return jsonify({"status": req.status_code, "error": req.json()})

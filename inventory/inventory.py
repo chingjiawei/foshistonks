@@ -56,7 +56,7 @@ def find_by_username(username):
     inventory = Inventory.query.filter_by(username=username)
 
     if inventory:
-        return jsonify({f"{username}": [{"accessoryID":accessory.accessoryID, "quantity": accessory.quantity} for accessory in inventory]})
+        return jsonify({f"{username}": {accessory.accessoryID: {"accessoryID":accessory.accessoryID, "quantity": accessory.quantity} for accessory in inventory}})
 
     return jsonify({'message': 'There are no items in ' + username + "'s inventory."}), 404
 
