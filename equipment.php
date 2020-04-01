@@ -91,6 +91,7 @@
             </div>
 
             <h2>Body</h2>
+            
             <div class='ctg_container ctg_body' id='equipBody'>
                 <!-- <div class='ele'>
                     <h3 class='name'>MARIO HAT</h3>
@@ -194,12 +195,15 @@
                 function(){
                     var category = $(this).attr('data-cate');
                     var data_src = $(this).attr('data-src');
+                    var accessoryID = $(this).attr('id');
+
                     // $('#me').remove('.'+category);
                     $('#me').find('.'+category).remove();
                     $('#me').append("<img class='"+ category +" on_avatar' src='src/img/avatar/"+data_src+"'>");
                     $('#me>img:last-child').hide();
                     $('#me>img:last-child').fadeIn(500);
-                    console.log('hi');
+                    // console.log('hi');
+                    updateAccount(accessoryID);
                 }
             )
         }
@@ -221,7 +225,7 @@
     
                 // array or array.length are false
                 if (!data) {
-                    showError('Books list empty or undefined.')
+                    showError('Empty accessory.')
                 } else {
                     // for loop to setup all table rows with obtained book data
                     for (var i in items){
@@ -259,6 +263,38 @@
             }
 
         });
+
+        async function updateAccount(accessoryID){
+            var username = sessionStorage.getItem('username');
+            var serviceURL = "http://127.0.0.1:5102/changeEquip/" + username;
+    
+            try {
+                const response =
+                await fetch(
+                        serviceURL, {
+                            method: 'POST',
+                            headers: {'Content-Type': 'application/json'},
+                            body: JSON.stringify({
+                                username : username, 
+                                accessoryID : accessoryID
+                            }) 
+                        });
+                const data = await response.json();
+                // array or array.length are false
+                if (!data) {
+                    showError('Not updated.')
+                } else {
+                    // for loop to setup all table rows with obtained book data
+                    console.log('updated')
+                }
+            } catch (error) {
+                // Errors when calling the service; such as network error, 
+                // service offline, etc
+                showError
+            ('There is a problem retrieving books data, please try again later.<br />'+error);
+            
+            } // error
+        }
     </script>
 </body>
 </html>
