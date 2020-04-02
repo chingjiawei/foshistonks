@@ -50,7 +50,7 @@
 
     <h2>Head</h2>
     <div class='ctg_container ctg_head'>
-        <div class='ele'>
+        <!-- <div class='ele'>
             <h3 class='name'>MARIO HAT</h3>
             <div class='img'>
                 <img src='src/img/shop/hat1.png'>
@@ -58,7 +58,7 @@
             <p class='desc'>this is a short description.........</p>
             <p class='price'>$3.33</p>
             <button class='buy_btn' data-id='1' data-price='...'>BUY</button>
-        </div>
+        </div> -->
     </div>
 
     <h2>Body</h2>
@@ -92,47 +92,7 @@
         }
     );
     
-    ////////////////purchase microservice called here////////////
-    async function buy(accessoryID, currentStonks, price){
-        //Prevents screen from refreshing when submitting
-        var username = sessionStorage.getItem('username');
-        // console.log(id)
-        var serviceURL = "http://localhost:5200/purchaseAccessories/" + accessoryID;
-        
-        try {
-            const response =
-                await fetch(
-                serviceURL, 
-                {
-                    mode: 'cors',
-                    method: 'POST',
-                    headers: {"Content-Type": "application/json"},
-                    body: JSON.stringify({
-                                username : username, 
-                                accessoryID : accessoryID,
-                                shopID: "1", 
-                                currentStonks: currentStonks, 
-                                price: price
-                            }) 
-                }
-            );
-            const data = await response.json();
-            // var book = data.books; //the arr is in data.books of the JSON data
-            if (response.ok) {
-                $('#plusone').fadeIn(200);
-                $('#plusone').delay(1200).fadeOut(200);
-            }else{
-                showError('Books not found.')
-            }
-            
-        } catch (error) {
-            // Errors when calling the service; such as network error, 
-            // service offline, etc
-            showError
-            ('There is a problem retrieving books data, please try again later.<br />'+error);
-            
-        }
-    } 
+    
 
     ///////////////////////display accessories//////////////////
     $(function(){
@@ -167,7 +127,10 @@
                                     +"<div class='img'><img src='src/img/shop/" + accessory.src + "'></div>" +
                                     "<p class='desc'>" + accessory.accessoryDesc + "</p>" +
                                     "<p class='price'> $" + accessory.price + "</p>" + 
-                                    "<button class='buy_btn' value='" + accessory.accessoryID + "' onclick='buy(this.value)'>BUY</button></div>";
+                                    "<button class='buy_btn' value='" + accessory.accessoryID + "' data-id='"++"' data-price='"++"'>BUY</button></div>";
+
+
+                                //
                             if (accessory.category == 'equipHead'){
                                 headBlocks += "<div class='ele'>" + eachBlock + "</div";
                             }
@@ -199,6 +162,44 @@
                
             } // error
         });
+
+        ////////////////purchase microservice called here////////////
+        async function buy(accessoryID, currentStonks, price){
+            //Prevents screen from refreshing when submitting
+            var username = sessionStorage.getItem('username');
+            // console.log(id)
+            var serviceURL = "http://localhost:5200/purchaseAccessories/" + accessoryID;
+            
+            try {
+                const response =
+                    await fetch(
+                    serviceURL, 
+                    {
+                        mode: 'cors',
+                        method: 'POST',
+                        headers: {"Content-Type": "application/json"},
+                        body: JSON.stringify({
+                                    username : username, 
+                                    accessoryID : accessoryID,
+                                    shopID: "1", 
+                                    currentStonks: currentStonks, 
+                                    price: price
+                                }) 
+                    }
+                );
+                const data = await response.json();
+                if (response.ok) {
+                    $('#plusone').fadeIn(200);
+                    $('#plusone').delay(1200).fadeOut(200);
+                }else{
+                    showError('Books not found.')
+                }
+            } catch (error) {
+                showError
+                ('There is a problem retrieving books data, please try again later.<br />'+error);
+            }
+        }
+
     });
 
     async function getStonks(accessoryID, price) { 

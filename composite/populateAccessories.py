@@ -37,7 +37,7 @@ def populate_shop_accessories(shopID):
         return jsonify({"status": req.status_code, "error": req.json()})
 
 
-# populate inventory accessoreis
+# populate inventory accessoris
 @app.route('/populateInventoryAccessories/<string:username>', methods=['GET'])
 def populate_inventory_accessories(username):
     inventoryURL = f'http://localhost:5002/inventory/{username}'
