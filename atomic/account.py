@@ -100,7 +100,7 @@ def create_account(username):
 
 
 
-        new_account = Account(username = username, stonks = 100, lastLogin=datetime.datetime.now().date(), dailyStonks=False, **data)
+        new_account = Account(username = username, stonks = 100, lastLogin=datetime.datetime.now(), dailyStonks=False, **data)
 
     except:
         return jsonify({"message": "Please input a valid JSON."}), 400
