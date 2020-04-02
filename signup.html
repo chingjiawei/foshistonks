@@ -51,7 +51,7 @@
             </div>
         </form>
 
-        <label id="error" class="text-danger"></label>
+        <label id="error" class="text-danger" style="color:#fff;"></label>
         
     </div>
 
@@ -68,13 +68,15 @@
             var phoneNumber = $('#phoneNumber').val();
             var telegramID = $('#telegramID').val();
             
-            var serviceURL = "http://localhost:????/signup/" + username;
-            var homeURL = "http://localhost/home.php";
+            var serviceURL = "http://localhost:5000/account/" + username;
+            var indexURL = "http://localhost/foshistonks/index.php";
 
             // var availability = parseInt($("#availability").val());
 
             // form the POST url which includes the dynamic username
-            serviceURL += username;
+            // serviceURL += username;
+
+
             try {
                 const response =
                     await fetch(
@@ -83,28 +85,32 @@
                             method: 'POST',
                             headers: { "Content-Type": "application/json" },
                             body: JSON.stringify({ 
-                                username: username,
                                 password: password,
                                 email: email,
                                 phoneNumber: phoneNumber,
                                 telegramID: telegramID
                              })
+                            
                     });
+                    console.log(username);
+                    console.log(telegramID);
                 const data = await response.json();
+                console.log(data);
 
                 if (response.ok) {
                     // create php session first
-                    var xmlhttp = new XMLHttpRequest();
-                    xmlhttp.open("GET", "session_maker.php?username="+username, true);
+                    // var xmlhttp = new XMLHttpRequest();
+                    // xmlhttp.open("GET", "session_maker.php?username="+username, true);
 
-                    xmlhttp.onreadystatechange = function(){
-                        if(xmlhttp.readyState == 4 && xmlhttp.status == 200){
-                            alert("Done! Session created.");
-                        }
-                    };
+                    // xmlhttp.onreadystatechange = function(){
+                    //     if(xmlhttp.readyState == 4 && xmlhttp.status == 200){
+                    //         alert("Done! Session created.");
+                    //     }
+                    // };
+                    console.log("ok");
 
                     // relocate to home page
-                    window.location.replace(homeURL);
+                    window.location.replace(indexURL);
                     return false;
                 } else {
                     console.log(data);
@@ -121,6 +127,10 @@
         // function onTelegramAuth(user) {
         //         alert('Logged in as ' + user.first_name + ' ' + user.last_name + ' (' + user.id + (user.username ? ', @' + user.username : '') + ')');
         //     }
+        function showError(message) {
+            // Display an error under the the predefined label with error as the id
+            $('#error').text(message);
+        }
         
         </script>
     </script>
