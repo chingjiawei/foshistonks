@@ -3,9 +3,9 @@
 
 <head>
     <title>FoshiStonk</title>
-    <link rel="apple-touch-icon" sizes="180x180" href="src/icons/apple-touch-icon.png">
-    <link rel="icon" type="image/png" sizes="32x32" href="src/icons/favicon-32x32.png">
-    <link rel="icon" type="image/png" sizes="16x16" href="src/icons/favicon-16x16.png">
+    <link rel="apple-touch-icon" sizes="180x180" href="../src/icons/apple-touch-icon.png">
+    <link rel="icon" type="image/png" sizes="32x32" href="../src/icons/favicon-32x32.png">
+    <link rel="icon" type="image/png" sizes="16x16" href="../src/icons/favicon-16x16.png">
     <meta name="msapplication-TileColor" content="#ffffff">
     <meta name="msapplication-TileImage" content="images/icons/ms-icon-144x144.png">
     <meta name="theme-color" content="#ffffff">
@@ -28,15 +28,16 @@
     <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.4.1/js/bootstrap.min.js" integrity="sha384-wfSDF2E50Y2D1uUdj0O3uMBJnjuUD4Ih7YwaYd1iqfktj0Uod8GCExl3Og8ifwB6" crossorigin="anonymous"></script>
     <!-- <link href="//maxcdn.bootstrapcdn.com/bootstrap/4.1.1/css/bootstrap.min.css" rel="stylesheet" id="bootstrap-css">
     <script src="//maxcdn.bootstrapcdn.com/bootstrap/4.1.1/js/bootstrap.min.js"></script> -->
-    <script src="js/popper.min.js"></script>
-    <script src="js/bootstrap.min.js"></script>
+    <script src="../js/popper.min.js"></script>
+    <script src="../js/bootstrap.min.js"></script>
 
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script>
     <script>
         var data;
         var userName = sessionStorage.getItem('username');
         $(function() {
-            displayStocks()
+            // var allStocksData = displayStocks();
+            displayStocks();
         });
         async function displayStocks() {
             var stockURL = "http://localhost:5010/stock";
@@ -47,27 +48,32 @@
                             method: 'GET'
                         }
                     );
+                const data = await response.json();
                 if (!response.ok) {
                     //print some error
                     // $("#chartContainer").text("Error in retrieving stock data")
                     alert("error");
                 } else {
-                    const data = await response.json();
-                    console.log(data)
+                    // console.log(data);
+                    
                     //success             
                     // Begin accessing JSON data here
-                    var spoofname = []
-                    stocknamekey = data["stock"]
-                    for (var i in stocknamekey) {
-                        spoofname[i] = ([data["stock"][i].spoofname])
-                    }
-                    console.log(spoofname)
-                    var html = ""
+                    var spoofname = [];
+                    // var dict = [];
+                    var stockArr = data["stock"];
 
+                    for (var i in stockArr) {
+                        spoofname[i] = ([data["stock"][i].spoofname]);
+                    }
+
+                    var html = "";
+
+                    var allData = new Object();
+                    // var allData = [];
                     for (var j in spoofname) {
                         var serviceURL = "http://localhost:5010/stock/api/" + spoofname[j];
                         //     var request2 = new XMLHttpRequest()
-                        console.log(serviceURL)
+                        // console.log(serviceURL)
                         const response2 =
                             await fetch(
                                 serviceURL, {
@@ -75,23 +81,31 @@
                                 }
                             );
                         const data2 = await response2.json();
-                        console.log(data2)
+                        // allData[spoofname[j]] = data2;
+                        // allData.push(data2);
+                        allData[spoofname[j]] = data2;
+                        console.log(data2);
 
-                        html += "<tr>";
+                        // var thisStockName = dict[spoofname[j]];
+                        var thisStockPrice = data2[Object.keys(data2)[Object.keys(data2).length - 1]]; 
+                        html += "<tr data-spoof='"+spoofname[j]+"' data-price='"+thisStockPrice+"'>";
                         html += "<td>" + spoofname[j] + "</td>";
                         html += "<td>" + Object.keys(data2)[Object.keys(data2).length - 1] + "</td>";
                         html += "<td>" + data2[Object.keys(data2)[Object.keys(data2).length - 1]] + "</td>";
-                        html += "<td><form action=\"/action_page.php\"> <input type=\"text\" id=\"fname\" name=\"fname\"><br><br></form></td>";
-                        html += "<td><input class='button_class' type='button' value='Buy'/></td>";
+                        html += "<td data-buyId='"+spoofname[j]+"' ><form action=\"/action_page.php\"> <input type=\"text\" id=\"fname\" name=\"fname\"><br><br></form></td>";
+                        html += "<td><input class='buy_btn' type='button' value='Buy' data-spoof='"+spoofname[j]+"' data-price='"+thisStockPrice+"' /></td>";
                         html += "</tr>";
                         document.getElementById("buytd").innerHTML = html;
                     }
+                    // console.log(allData);
+                    showChart(allData);
+                    showPostion();
                 };
             } catch (error) {
                 //error, print something 
                 $("#display").text("Error in calling the service, " + error);
             }
-            showPostion();
+            
         };
 
         async function showPostion() {
@@ -104,33 +118,124 @@
                     }
                 );
             const data3 = await response3.json();
-            var html2 = ""
+            var html2 = "";
             for (var k in data3.stock) {
+                var currentPrice = $('[data-spoof="'+data3.stock[k]["stockName"]+'"]').attr('data-price');
+                // console.log(data3.stock[k]["stockName"]);
                 html2 += "<tr>";
                 html2 += "<td>" + data3.stock[k]["stockName"] + "</td>";
                 html2 += "<td>" + data3.stock[k]["price"] + "</td>";
-                html2 += "<td>" + "testing" + "</td>";
-                html2 += "<td>" + data3.stock[k]["amount"] + "</td>";
-                html2 += "<td><input type='button' value='Sell' id=\"" + data3.stock[k]["stockName"] + "\"  onClick=\"sell(" +this.id+")\" /></td>";
+                html2 += "<td>" + currentPrice + "</td>";
+                html2 += "<td data-sellId='"+data3.stock[k]["stockName"]+"'>" + data3.stock[k]["amount"] + "</td>";
+                html2 += "<td><input class='sell_btn' type='button' value='Sell' data-spoof='"+data3.stock[k]["stockName"]+"' data-price='"+currentPrice+"'/></td>";
                 html2 += "</tr>";
             }
             document.getElementById("selltd").innerHTML = html2;
         }
         
-            function sell(clicked_id) {
-                alert(clicked_id)
-
-            }
-        // async function showChart() {
-
+        // function buy() {
+        //     alert($(this).attr('data-spoof')); 
         // }
+        $('.buy_btn').click(
+            function(){
+                var spoof = $(this).attr('data-spoof');
+                var price = $(this).attr('data-price');
+                var amt = $('[data-buyId="'+spoof+'"]').val();
+                updateStock(amt, username,...); // call an asyn function to run the service
+            }
+        );
+
+        $('.sell_btn').click(
+            function(){
+                var spoof = $(this).attr('data-spoof');
+                var price = $(this).attr('data-price');
+                var amt = $('[data-sellId="'+spoof+'"]').val();
+                updateStock(........); // call an asyn function to run the service
+            }
+        );
+        
+
+        async function showChart(allData) {
+            
+            var options = {
+                animationEnabled: true,
+                theme: "light2",
+                title: {
+                    text: "Stock Prices"
+                },
+                axisX: {
+                    valueFormatString: "DDDD MMM YYYY HH:mm:ss zzz"
+                },
+                axisY: {
+                    title: "Stock Price",
+                    minimum: 5,
+                    maximum: 80
+                },
+                toolTip: {
+                    shared: true
+                },
+                legend: {
+                    cursor: "pointer",
+                    verticalAlign: "bottom",
+                    horizontalAlign: "left",
+                    dockInsidePlotArea: true,
+                    itemclick: toogleDataSeries
+                },
+                data: [
+                //     {
+                //     type: "line",
+                //     showInLegend: true,
+                //     name: "stock name", 
+                //     lineDashType: "dash",
+                //     yValueFormatString: "#,##",
+                //     dataPoints:
+                //     //aps
+                //     [{ x: new Date("2015-03-25 12:05:00"), y: 57 },
+                //     { x: new Date("2015-03-25 12:10:00"), y: 57 },
+                //     { x: new Date("2015-03-25 12:15:00"), y: 57 }]
+                // }
+                ]
+            };
+
+            for (var stockName in allData){
+                var val_list = allData[stockName];
+                // console.log(val_list);
+                var dps = [];
+                for (var val in val_list){
+                    // console.log(val);
+                    dps.push( {x: new Date(val), y: parseFloat(val_list[val])} );
+                }
+                var temp = {
+                    type: "line",
+                    showInLegend: true,
+                    name: stockName, 
+                    lineDashType: "dash",
+                    yValueFormatString: "#,##",
+                    dataPoints: dps
+                }
+                options.data.push(temp);
+            }
+            console.log(options.data);
+
+            $("#chartContainer").CanvasJSChart(options);
+
+            function toogleDataSeries(e) {
+                if (typeof(e.dataSeries.visible) === "undefined" || e.dataSeries.visible) {
+                    e.dataSeries.visible = false;
+                } else {
+                    e.dataSeries.visible = true;
+                }
+                e.chart.render();
+            }
+
+        }
     </script>
     <script src="https://canvasjs.com/assets/script/jquery-1.11.1.min.js"></script>
     <script src="https://canvasjs.com/assets/script/jquery.canvasjs.min.js"></script>
 </head>
 
 <body>
-    <!-- <div id="chartContainer" style="height: 370px; max-width: 920px; margin: 0px auto;"></div> -->
+    <div id="chartContainer" style="height: 370px; max-width: 920px; margin: 0px auto;"></div>
     <div class="container">
         <div class="card text-center">
             <div class="card-header">
