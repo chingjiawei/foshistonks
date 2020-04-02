@@ -30,18 +30,23 @@ class Account(db.Model):
     equipBody = db.Column(db.String(128), nullable = True)
     equipHand = db.Column(db.String(128), nullable = True)
     equipPet = db.Column(db.String(128), nullable = True)
+    lastLogin = db.Column(db.DateTime, nullable = False)
+    dailyStonks = db.Column(db.Boolean, server_default = '0', nullable = False)
     
-    def __init__(self, username, password, email, phoneNumber, telegramID, stonks, equipHead=None, equipBody=None, equipHand=None, equipPet=None):
+    def __init__(self, username, password, email, phoneNumber, telegramID, stonks, lastLogin, dailyStonks, equipHead=None, equipBody=None, equipHand=None, equipPet=None):
         self.username = username
         self.password = password
         self.email = email
         self.phoneNumber = phoneNumber
         self.telegramID = telegramID
         self.stonks = stonks
+        self.lastLogin = lastLogin
+        self.dailyStonks = dailyStonks
         self.equipHead = equipHead
         self.equipBody = equipBody
         self.equipHand = equipHand
         self.equipPet = equipPet
+
 
     def json(self):
         return {
@@ -51,6 +56,8 @@ class Account(db.Model):
             "phoneNumber": self.phoneNumber,
             "telegramID": self.telegramID,
             "stonks": str(self.stonks),
+            "lastLogin": self.lastLogin,
+            "dailyStonks": self.dailyStonks,
             "equipHead": self.equipHead,
             "equipBody": self.equipBody,
             "equipHand": self.equipHand,
@@ -75,7 +82,7 @@ def find_by_username(username):
 #create a new account (Input parameters. JSON password, email, telegramID, phoneNumber)
 @app.route("/account/<string:username>", methods =['POST'])
 def create_account(username):
-
+    import datetime
     try:
         data = request.get_json()
 
@@ -93,7 +100,7 @@ def create_account(username):
 
 
 
-        new_account = Account(username = username, stonks = 100, **data)
+        new_account = Account(username = username, stonks = 100, lastLogin=datetime.datetime.now().date(), dailyStonks=False, **data)
 
     except:
         return jsonify({"message": "Please input a valid JSON."}), 400
@@ -138,6 +145,8 @@ def update_account(username):
         account.stonks = request.json.get('stonks', account.stonks)
         if float(account.stonks) <= 0:
             return jsonify({"message":"Stonks should be >= 0.0"}), 400
+        account.lastLogin = request.json.get('lastLogin', account.lastLogin)
+        account.dailyStonks = request.json.get('dailyStonks', account.dailyStonks)
         account.equipHead = request.json.get('equipHead', account.equipHead)
         account.equipBody = request.json.get('equipBody', account.equipBody)
         account.equipHand = request.json.get('equipHand', account.equipHand)
