@@ -17,9 +17,9 @@ def login(username):
     res_users = res.json()
     try:
         if res_users["password"] != password:
-            return jsonify({"message":"Incorrect Password"}), 404
+            return jsonify({"message":"Incorrect Password"}), 401
     except KeyError:
-        return jsonify({"message":"User not found"}), 404
+        return jsonify({"message":"User not found"}), 401
     return jsonify({"message":"Login Successful!"}), 201
 
 

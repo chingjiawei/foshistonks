@@ -1,6 +1,7 @@
-
 <script>
-    // alert(sessionStorage.getItem('username')); //test if session exists
+    if ((sessionStorage.getItem('username')) == null){
+        window.location.replace("/foshistonks/index.php")
+    } //test if session exists
 </script>
 
 <!DOCTYPE html>
@@ -88,11 +89,10 @@
         });
         $('.shop').click(function() {
             window.location.href = '/foshistonks/shop.php';
-            // document.location.href="/foshistonks/shop.php"; 
             return false;
         });
         $('.stock').click(function() {
-            window.location.href = '/foshistonks/Testing-StockUI/stock.php';
+            window.location.href = '/foshistonks/stock.php';
             return false;
         });
         $('.account').click(function() {
@@ -131,7 +131,10 @@
                     if (equipPetsrc != null){
                         $('#me').append("<img class='on_avatar' src='src/img/avatar/"+equipPetsrc+"'>"); 
                     }
+
                     var stonks = data2['stonks'];
+                    // Set stonks in the session
+                    sessionStorage.setItem('stonks', stonks)
                     $('.account_info').html(
                         "Hi, <b class='name'>"+ username
                         +"</b>! You are <b class='balance'>$"+ stonks
@@ -139,7 +142,7 @@
                     );
                 }
             } catch (error) {
-                showError('There is a problem retrieving books data, please try again later.<br />'+error);
+                showError('There is a problem retrieving account data, please try again later.<br />'+error);
             } // error
 
             function showError(message) {

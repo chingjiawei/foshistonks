@@ -1,3 +1,10 @@
+<script>
+    if ((sessionStorage.getItem('username')) == null){
+        window.location.replace("/foshistonks/index.php")
+    } //test if session exists
+</script>
+
+
 <!DOCTYPE html>
 <html>
 
@@ -95,6 +102,12 @@
     </div>
 
     <script>
+        //home icon redirect
+        $('.home_link').css('cursor', 'pointer');
+        $('.home_link').click(function() {
+            window.location.href = '/foshistonks/home.php';
+            return false;
+        });
         
         function addEvents(){
             $('.ele').css('cursor', 'pointer');
@@ -113,19 +126,15 @@
                     updateAccount(accessoryID);
                 }
             );
-            $('unequip_btn').click(
+            $('.unequip_btn').click(
                 function(){
                     var category = $(this).attr('data-cate');
-                    $('#me').find('.'+category).remove();                    
-                    unequipAvatar(accessoryID);
+                    $('#me .'+category).remove();      
+                    console.log('hi');              
+                    // $('#me').find('.'+category).remove();                    
+                    unequipAvatar(category);
                 } 
             );
-            //home icon redirect
-            $('.home_link').css('cursor', 'pointer');
-            $('.home_link').click(function() {
-                window.location.href = '/foshistonks/home.php';
-                return false;
-            });
         }
         
         // auto run this to pull all myInventory to display on the right
@@ -140,8 +149,8 @@
                 );
                 const data = await response.json();
                 var items = data[username]; 
-                if (!data) {
-                    showError('Empty accessory.')
+                if (!items) {
+                    showError('You don\'t have any equipment yet.')
                 } else {
                     for (var i in items){
                         // console.log(items[i]);
@@ -234,7 +243,7 @@
             } // error
         }
 
-        async function unequipAvatar(accessoryID){
+        async function unequipAvatar(category){
             var username = sessionStorage.getItem('username');
             var serviceURL = "http://127.0.0.1:5102/unequip/" + username;
     
@@ -245,8 +254,7 @@
                             method: 'POST',
                             headers: {'Content-Type': 'application/json'},
                             body: JSON.stringify({
-                                username : username, 
-                                accessoryID : accessoryID
+                                category : category
                             }) 
                         });
                 const data = await response.json();

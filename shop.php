@@ -1,3 +1,10 @@
+<script>
+    if ((sessionStorage.getItem('username')) == null){
+        window.location.replace("/foshistonks/index.php")
+    } //test if session exists
+</script>
+
+
 <!DOCTYPE html>
 <html>
 
@@ -39,8 +46,11 @@
 
 <body id="shop_body">
     <div class='header'>
-        <div class='col-3'>
+        <div class='col-3 home_left'>
             <img class="home_link" src="src/icons/home.png" alt="">
+            <h1 class='account_info'>
+            <!-- Hi, <b class='name'>Mary</b>:) You are <b class='balance'>$3.00</b> stonks rich! -->
+            </h1>
         </div>
         <h1 class='col-3'>FOSHI SHOP</h1>
         <div class='col-3'>
@@ -85,10 +95,12 @@
 
 <!-- Page passes the container for the graph to the program -->
 <script>
+    $('.home_link').css('cursor', 'pointer');
     $('.home_link').click(function() {
         window.location.href = '/foshistonks/home.php';
         return false;
     });
+    $('.equip_link').css('cursor', 'pointer');
     $('.equip_link').click(function() {
         window.location.href = '/foshistonks/equipment.php';
         return false;
@@ -103,12 +115,41 @@
             }
         );  
     }
+
+    async function updateStonks(){
+        /////////////////////get stonks data////////////////////
+        var username = sessionStorage.getItem('username');
+        var serviceURL2 = "http://127.0.0.1:5000/account/" + username;
+        try {
+            const response2 = await fetch(serviceURL2, { method: 'GET'});
+            const data2 = await response2.json();
+            if (!data2) {
+                showError('Empty account.');
+            } else {
+                var stonks = data2['stonks'];
+                sessionStorage.setItem('stonks', stonks);
+                return stonks
+            }
+        } catch (error) {
+            showError('There is a problem updating stonks, please try again later.<br />'+error);
+        } // error
+        //////////////////////////////////////////////////////
+    }
     
     $("#plusone").hide();
     
 
     ///////////////////////display accessories//////////////////
-    $(async() => {           
+    $(async() => {      
+        await updateStonks()
+        // Set the balance and username
+        var username = sessionStorage.getItem('username');
+        var stonks = sessionStorage.getItem('stonks');
+        $('.account_info').html(
+            "Hi, <b class='name'>"+ username
+            +"</b>! You are <b class='balance'>$"+ stonks
+            +"</b> stonks rich!"
+        );     
         // Change serviceURL to your own
         var serviceURL = "http://127.0.0.1:5100/populateShopAccessories/1";
         try {
@@ -192,6 +233,9 @@
             );
             const data = await response.json();
             if (response.ok) {
+                var stonks = await updateStonks()
+                alert("Item bought successfully!");
+                $(".balance").html('$'+ stonks.toString());
                 $('#plusone').fadeIn(200);
                 $('#plusone').delay(1200).fadeOut(200);
             }else{
@@ -221,7 +265,7 @@
 
             }
         } catch (error) {
-            showError('There is a problem retrieving books data, please try again later.<br />'+error);
+            showError('There is a problem retrieving stonks, please try again later.<br />'+error);
         } // error
     }
 

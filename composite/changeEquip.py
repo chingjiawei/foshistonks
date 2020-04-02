@@ -48,31 +48,24 @@ def change_equipment(username):
 @app.route('/unequip/<string:username>', methods=['POST'])
 def remove_equipment(username):
 
-    # load json body
-    accessoryID = request.json.get('accessoryID')
+    try:
+        # load json body
+        category = request.json.get('category')
 
-    if accessoryID == None:
-        return jsonify({'message': 'Please input a valid JSON'}), 400
+        if category == None:
+            return jsonify({'message': 'Please input a valid JSON'}), 400
 
-    accountURL = f"http://localhost:5000/account/{username}"
-    accessoryURL = f'http://localhost:5001/accessory/{accessoryID}'
+        accountURL = f"http://localhost:5000/account/{username}"
 
-    # retrieve accessory source
-    accessory_req = requests.get(accessoryURL)
+        # update the equipment
+        account_req = requests.put(accountURL, json={category: None})
+        if not (account_req.status_code == 200):
+            return jsonify(account_req.json()), account_req.status_code
 
-    if not (accessory_req.status_code == 200):
-        return jsonify(accessory_req.json()), accessory_req.status_code
+        return jsonify({"message": "Accessory unequipped successfully!"}), 200
 
-    accessory = accessory_req.json()
-
-    category = accessory['category']
-
-    # update the equipment
-    account_req = requests.put(accountURL, json={category: None})
-    if not (account_req.status_code == 200):
-        return jsonify(account_req.json()), account_req.status_code
-
-    return jsonify({"message": "Accessory unequipped successfully!"}), 200
+    except:
+        return jsonify({"message": "An unknown error has occurred while unequipping player."}), 500
 
 
 if __name__ == "__main__":

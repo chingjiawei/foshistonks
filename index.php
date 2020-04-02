@@ -1,3 +1,10 @@
+<script>
+    if ((sessionStorage.getItem('username')) != null){
+        window.location.replace("/foshistonks/home.php")
+    } //test if session exists
+</script>
+
+
 <!DOCTYPE html>
 <html>
 
