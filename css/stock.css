@@ -1,0 +1,71 @@
+@import url('https://fonts.googleapis.com/css?family=Roboto:400,400i,500,500i,900&display=swap');
+
+html, body{
+    margin:0;
+    padding:0;
+    color: rgb(255, 255, 255);
+}
+
+*{font-family: 'Poppins', sans-serif;}
+
+body {
+    width:100%; text-align: center; 
+    background: rgba(0,30,6,1) url('../src/img/home_bg.png') top left no-repeat;
+    background-size: cover;
+}
+
+nav > .nav.nav-tabs{
+
+  border: none;
+    color:#fff;
+    background:#272e38;
+    border-radius:0;
+
+}
+nav > div a.nav-item.nav-link,
+nav > div a.nav-item.nav-link.active
+{
+  border: none;
+    padding: 18px 25px;
+    color:#fff;
+    background:#272e38;
+    border-radius:0;
+}
+
+nav > div a.nav-item.nav-link.active:after
+ {
+  content: "";
+  position: relative;
+  bottom: -60px;
+  left: -10%;
+  border: 15px solid transparent;
+  border-top-color: #e74c3c ;
+}
+.tab-content{
+  background: #fdfdfd;
+    line-height: 25px;
+    border: 1px solid #ddd;
+    border-top:5px solid #e74c3c;
+    border-bottom:5px solid #e74c3c;
+    padding:30px 25px;
+    color: #272e38;
+}
+
+nav > div a.nav-item.nav-link:hover,
+nav > div a.nav-item.nav-link:focus
+{
+  border: none;
+    background: #e74c3c;
+    color:#fff;
+    border-radius:0;
+    transition:background 0.20s linear;
+}
+
+
+.button_class{
+    display:inline-block;
+    width: 80px;
+    height: 40px;
+}
+
+

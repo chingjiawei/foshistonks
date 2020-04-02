@@ -1,0 +1,61 @@
+request2.onload = function() {
+                            data = JSON.parse(this.response)
+                            var dps = []
+                            var i
+                            for (var key in data) {
+                                dps.push({
+                                    x: new Date(key),
+                                    y: parseFloat(data[key])
+                                })
+                            }
+                            Object.keys(data);
+                            var listOfStock = ["1"]
+                            var html = ""
+                            for (var key in listOfStock) {
+                                html += "<tr>";
+                                html += "<td>" + stockName + "</td>";
+                                html += "<td>" + Object.keys(data)[Object.keys(data).length - 1] + "</td>";
+                                html += "<td>" + data[Object.keys(data)[Object.keys(data).length - 1]] + "</td>";
+                                html += "<td><input class='button_class' type='button' value='Buy'/></td>";
+                                html += "</tr>";
+                            }
+                            document.getElementById("buytd").innerHTML = html;
+                            console.log(dps)
+                            var options = {
+                                animationEnabled: true,
+                                theme: "light2",
+                                title: {
+                                    text: "Stock Price of DKBank Inc"
+                                },
+                                axisX: {
+                                    valueFormatString: "DDDD MMM YYYY HH:mm:ss zzz"
+                                },
+                                axisY: {
+                                    title: "Stock Price",
+                                    minimum: 30,
+                                    maximum: 90
+                                },
+                                toolTip: {
+                                    shared: true
+                                },
+                                legend: {
+                                    cursor: "pointer",
+                                    verticalAlign: "bottom",
+                                    horizontalAlign: "left",
+                                    dockInsidePlotArea: true,
+                                    itemclick: toogleDataSeries
+                                },
+                                data: [{
+                                    type: "line",
+                                    showInLegend: true,
+                                    name: "Stock Price",
+                                    lineDashType: "dash",
+                                    yValueFormatString: "#,##",
+                                    dataPoints: dps
+                                    //{ x: new Date("2015-03-25 12:05:00"), y: 57 },
+                                    //{ x: new Date("2015-03-25 12:10:00"), y: 57 },
+                                    //{ x: new Date("2015-03-25 12:15:00"), y: 57 },                                
+                                }]
+                            };
+                            $("#chartContainer").CanvasJSChart(options);
+                        };
