@@ -45,7 +45,9 @@
 
 <body id="home_body">
     <div class='col-3 home_left'>
-        <h1></h1>
+        <h1 class='account_info'>
+            <!-- Hi, <b class='name'>Mary</b>:) You are <b class='balance'>$3.00</b> stonks rich! -->
+        </h1>
         <div class='equipment pointer'>
             <img src="src/img/equipment_thumbnail.png" alt="">
             <h2>EQUIPMENT</h2>
@@ -99,7 +101,6 @@
         });
 
         $(async() => { 
-            ////////////// load all myInventory on the right for display  /////////////
             var username = sessionStorage.getItem('username');
             var serviceURL2 = "http://127.0.0.1:5000/account/" + username;
             try {
@@ -117,6 +118,7 @@
                     var equipHandsrc = data2['equipHand'];
                     var equipHeadsrc = data2['equipHead'];
                     var equipPetsrc = data2['equipPet'];
+                    
                     if ( equipBodysrc != null){
                         $('#me').append("<img class='on_avatar' src='src/img/avatar/"+equipBodysrc+"'>"); 
                     }
@@ -129,6 +131,12 @@
                     if (equipPetsrc != null){
                         $('#me').append("<img class='on_avatar' src='src/img/avatar/"+equipPetsrc+"'>"); 
                     }
+                    var stonks = data2['stonks'];
+                    $('.account_info').html(
+                        "Hi, <b class='name'>"+ username
+                        +"</b>:) You are <b class='balance'>"+ stonks
+                        +"</b> stonks rich!"
+                    );
                 }
             } catch (error) {
                 showError('There is a problem retrieving books data, please try again later.<br />'+error);
