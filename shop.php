@@ -98,7 +98,8 @@
             function(){
                 var accessoryID = $(this).attr('data-id');
                 var price = $(this).attr('data-price');
-                getStonks(accessoryID, price); //will call buy()
+                var inStock = $(this).attr('data-inStock');
+                getStonks(accessoryID, price, inStock); //will call buy()
             }
         );  
     }
@@ -134,7 +135,8 @@
                                 +"<div class='img'><img src='src/img/shop/" + thisShop[i]["src"] + "'></div>" +
                                 "<p class='desc'>" + thisShop[i]["accessoryDesc"] + "</p>" +
                                 "<p class='price'> $" + thisShop[i]["price"] + "</p>" + 
-                                "<button class='buy_btn' data-id='"+thisShop[i]["accessoryID"]+"' data-price='"+thisShop[i]["price"]+"'>BUY</button></div>";
+                                "<p class='inStock'> Quantity: " + thisShop[i]["inStock"] + "</p>" +
+                                "<button class='buy_btn' data-id='"+thisShop[i]["accessoryID"]+"' data-price='"+thisShop[i]["price"]+"' data-inStock ='"+thisShop[i]['inStock']+"'>BUY</button></div>";
 
                         if (thisShop[i]['category'] == 'equipHead'){
                             headBlocks += eachBlock;
@@ -165,11 +167,11 @@
     });
 
     ////////////////purchase microservice called here////////////
-    async function buy(accessoryID, currentStonks, price){
+    async function buy(accessoryID, currentStonks, price, inStock){
         //Prevents screen from refreshing when submitting
         var username = sessionStorage.getItem('username');
         // console.log(id)
-        var serviceURL = "http://127.0.0.1:5200/purchaseAccessories/" + accessoryID;
+        var serviceURL = "http://localhost:5200/purchaseAccessories/" + accessoryID;
         
         try {
             const response =
@@ -181,15 +183,15 @@
                     headers: {"Content-Type": "application/json"},
                     body: JSON.stringify({
                                 username : username, 
-                                accessoryID : accessoryID,
                                 shopID: "1", 
                                 currentStonks: currentStonks, 
-                                price: price
+                                price: price,
+                                inStock: inStock
                             }) 
                 }
             );
             const data = await response.json();
-            if (data) {
+            if (response.ok) {
                 $('#plusone').fadeIn(200);
                 $('#plusone').delay(1200).fadeOut(200);
             }else{
@@ -201,7 +203,7 @@
         }
     }
 
-    async function getStonks(accessoryID, price) { 
+    async function getStonks(accessoryID, price, inStock) { 
         var username = sessionStorage.getItem('username');
         var serviceURL2 = "http://127.0.0.1:5000/account/" + username;
         try {
@@ -215,7 +217,7 @@
                 showError('Empty account.');
             } else {
                 var currentStonks = data2['stonks'];
-                buy(accessoryID, currentStonks, price);
+                buy(accessoryID, currentStonks, price, inStock);
 
             }
         } catch (error) {
