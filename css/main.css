@@ -158,6 +158,11 @@ body {
 
 .col-3>:first-child {height: 10vh; padding-top: 2vh;}
 
+.home_left>.account_info {    
+    font-size: 18px;
+    font-weight: 400;
+    padding-top: 48px;
+}
 .home_left>.equipment{margin:7vh 0;}
 .home_left>.equipment>img {width:15vw; margin-left: 6vw;}
 .home_left>.equipment>img:hover {width:15vw;}
@@ -241,8 +246,18 @@ body {
 
 
 /******************** shop **********************/
-#shop_body{background: #001e06; width:100%; text-align: center;}
-#shop_body>.header{width:100vw; height: 10vh; text-align: center;}
+#shop_body{
+    /* background: #001e06;  */
+    background: rgba(0,30,6,1) url('../src/img/home_bg.png') bottom left no-repeat;
+    background-size: cover;
+    width:100%; 
+    text-align: center;
+}
+#shop_body>.header{
+    width:100vw; height: 10vh; text-align: center;
+    background: #001e06;
+    position: fixed;
+}
 #shop_body>.col-3{width:33.33%;}
 #shop_body>.header>h1{font-weight: 900;}
 #shop_body>.header .home_link{float:left;width:25px; height:auto; margin: 20px 0 0 30px;}
@@ -265,7 +280,12 @@ body {
 #shop_body>.header .quick_access>a{color:#fff;}
 
 #shop_body .ctg_container {display: inline-block; width:96vw; background-color: #ff0;}
-#shop_body h2 {text-align: left; padding-left: 4vw;}
+#shop_body h2 {
+    text-align: left; 
+    padding-left: 4vw;
+    padding-top: 100px;
+    margin-top: 0;
+}
 #shop_body .ctg_container > .ele {
     display: inline-block; 
     width: 31vw;
@@ -380,16 +400,32 @@ body {
 
 #equip_body>.display>.collections{
     background-color:#324436;
+    text-align: left;
     position: fixed;
     top:10vh;
     right:0;
     overflow-y: auto;
 }
 #equip_body>.display>.collections>h2{
+    display: inline-block;
     text-align: left;
     padding: 0 0 0 4vw ;
     font-size: 16px;
     font-weight: 600;
+}
+#equip_body>.display>.collections>.unequip_btn{
+    border: 1px solid #fff;
+    margin-left: 10px;
+    color: #fff;
+    background-color: rgba(100,100,100,0);
+    cursor: pointer;
+}
+#equip_body>.display>.collections>.unequip_btn:hover {
+    border: 1px solid #fff;
+    background-color: #fff;
+    border-radius: 0;
+    color: #001e06;
+    transition: ease-in 0.3s;
 }
 #equip_body>.display>.collections>.ctg_container{
     width: 50vw;

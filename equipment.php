@@ -58,7 +58,8 @@
             <img class='on_avatar' src="src/img/avatar/pet1.png" alt=""> -->
         </div>
         <div class='col-2 collections'>
-            <h2>Head</h2>
+            <h2>Head</h2> 
+            <button class='unequip_btn' data-cate='equipHead'>UNEQUIP</button>
             <div class='ctg_container ctg_head' id='equipHead'>
                 <!-- <div class='ele' id='hat1' data-value='head'>
                     <h3 class='name'>MARIO HAT</h3>
@@ -67,117 +68,23 @@
                     </div>
                     <p class='desc'>this is a short description.........</p>
                 </div>
-                <div class='ele' id='hat2' data-value='head'>
-                    <h3 class='name'>MARIO HAT</h3>
-                    <div class='img'>
-                        <img src='src/img/shop/hat2.png'>
-                    </div>
-                    <p class='desc'>this is a short description.........</p>
-                </div>
-                <div class='ele' id='hat3' data-value='head'>
-                    <h3 class='name'>MARIO HAT</h3>
-                    <div class='img'>
-                        <img src='src/img/shop/hat3.png'>
-                    </div>
-                    <p class='desc'>this is a short description.........</p>
-                </div>
-                <div class='ele'>
-                    <h3 class='name'>MARIO HAT</h3>
-                    <div class='img'>
-                        <img src='src/img/shop/hat4.png'>
-                    </div>
-                    <p class='desc'>this is a short description.........</p>
-                </div> -->
+                -->
             </div>
 
             <h2>Body</h2>
-            
+            <button class='unequip_btn' data-cate='equipBody'>UNEQUIP</button>
             <div class='ctg_container ctg_body' id='equipBody'>
-                <!-- <div class='ele'>
-                    <h3 class='name'>MARIO HAT</h3>
-                    <div class='img'>
-                        <img src='src/img/shop/body1.png'>
-                    </div>
-                    <p class='desc'>this is a short description.........</p>
-                </div>
-                <div class='ele'>
-                    <h3 class='name'>MARIO HAT</h3>
-                    <div class='img'>
-                        <img src='src/img/shop/body2.png'>
-                    </div>
-                    <p class='desc'>this is a short description.........</p>
-                </div><div class='ele'>
-                    <h3 class='name'>MARIO HAT</h3>
-                    <div class='img'>
-                        <img src='src/img/shop/body3.png'>
-                    </div>
-                    <p class='desc'>this is a short description.........</p>
-                </div> -->
             </div>
 
             <h2>Hand</h2>
+            <button class='unequip_btn' data-cate='equipHand'>UNEQUIP</button>
             <div class='ctg_container ctg_hand'id='equipHand'>
-                <!-- <div class='ele'>
-                    <h3 class='name'>MARIO HAT</h3>
-                    <div class='img'>
-                        <img src='src/img/shop/hand1.png'>
-                    </div>
-                    <p class='desc'>this is a short description.........</p>
-                </div>
-                <div class='ele'>
-                    <h3 class='name'>MARIO HAT</h3>
-                    <div class='img'>
-                        <img src='src/img/shop/hand2.png'>
-                    </div>
-                    <p class='desc'>this is a short description.........</p>
-                </div>
-                <div class='ele'>
-                    <h3 class='name'>MARIO HAT</h3>
-                    <div class='img'>
-                        <img src='src/img/shop/hand3.png'>
-                    </div>
-                    <p class='desc'>this is a short description.........</p>
-                </div>
-                <div class='ele'>
-                    <h3 class='name'>MARIO HAT</h3>
-                    <div class='img'>
-                        <img src='src/img/shop/hand4.png'>
-                    </div>
-                    <p class='desc'>this is a short description.........</p>
-                </div> -->
             </div>
 
 
             <h2>Pet</h2>
+            <button class='unequip_btn' data-cate='equipPet'>UNEQUIP</button>
             <div class='ctg_container ctg_pet' id ='equipPet'>
-                <!-- <div class='ele'>
-                    <h3 class='name'>CUTE CAT</h3>
-                    <div class='img'>
-                        <img src='src/img/shop/pet2.png'>
-                    </div>
-                    <p class='desc'>this is a short description.........</p>
-                </div>
-                <div class='ele'>
-                    <h3 class='name'>CUTE CAT</h3>
-                    <div class='img'>
-                        <img src='src/img/shop/pet1.png'>
-                    </div>
-                    <p class='desc'>this is a short description.........</p>
-                </div>
-                <div class='ele'>
-                    <h3 class='name'>CUTE CAT</h3>
-                    <div class='img'>
-                        <img src='src/img/shop/pet3.png'>
-                    </div>
-                    <p class='desc'>this is a short description.........</p>
-                </div>
-                <div class='ele'>
-                    <h3 class='name'>CUTE CAT</h3>
-                    <div class='img'>
-                        <img src='src/img/shop/pet4.png'>
-                    </div>
-                    <p class='desc'>this is a short description.........</p>
-                </div> -->
             </div>
             <p id='errorMsg'></p>
             <br>
@@ -206,7 +113,13 @@
                     updateAccount(accessoryID);
                 }
             );
-
+            $('unequip_btn').click(
+                function(){
+                    var category = $(this).attr('data-cate');
+                    $('#me').find('.'+category).remove();                    
+                    unequipAvatar(accessoryID);
+                } 
+            );
             //home icon redirect
             $('.home_link').css('cursor', 'pointer');
             $('.home_link').click(function() {
@@ -313,13 +226,39 @@
                     showError('Not updated.')
                 } else {
                     // for loop to setup all table rows with obtained book data
-                    console.log('updated')
+                    console.log('updated');
                 }
             } catch (error) {
-                // Errors when calling the service; such as network error, 
-                // service offline, etc
-                showError
-            ('There is a problem retrieving books data, please try again later.<br />'+error);
+                showError('There is a problem retrieving books data, please try again later.<br />'+error);
+            
+            } // error
+        }
+
+        async function unequipAvatar(accessoryID){
+            var username = sessionStorage.getItem('username');
+            var serviceURL = "http://127.0.0.1:5102/unequip/" + username;
+    
+            try {
+                const response =
+                await fetch(
+                        serviceURL, {
+                            method: 'POST',
+                            headers: {'Content-Type': 'application/json'},
+                            body: JSON.stringify({
+                                username : username, 
+                                accessoryID : accessoryID
+                            }) 
+                        });
+                const data = await response.json();
+                // array or array.length are false
+                if (!data) {
+                    showError('Not unequipped.')
+                } else {
+                    // for loop to setup all table rows with obtained book data
+                    console.log('Unequipped')
+                }
+            } catch (error) {
+                showError('There is a problem retrieving books data, please try again later.<br />'+error);
             
             } // error
         }
