@@ -4,10 +4,10 @@
 ---
 
 INSERT INTO `account` (`username`, `password`, `email`, `phoneNumber`, `telegramid`, `stonks`, `equipHead`, `equipBody`, `equipHand`, `equipPet`) VALUES 
-('Yoshi', 'youshi123', 'youshi@gmail.com', '67009000', '12345', 100.00, 1, Null, Null, Null), 
-('James', 'james123', 'james@gmail.com', '98882345', '98572', 100.00, Null, Null, Null, 3), 
-('mary', '123', 'mary@gmail.com', '74653725', '98972', 100.00, Null, Null, Null, 3), 
-('Amy', 'amy123', 'amy@gmail.com', '66667888', '23456', 100.00, Null, 2, Null, Null);
+('Yoshi', 'youshi123', 'youshi@gmail.com', '67009000', '12345', 100.00, 'hat2.png', Null, Null, Null), 
+('James', 'james123', 'james@gmail.com', '98882345', '98572', 100.00, Null, Null, Null, 'pet2.png'), 
+('mary', '123', 'mary@gmail.com', '74653725', '98972', 100.00, Null, Null, Null, 'pet2.png'), 
+('Amy', 'amy123', 'amy@gmail.com', '66667888', '23456', 100.00, Null, 'body3.png', Null, Null);
 
 ---
 --- Dumping data for table `accessory`
