@@ -39,6 +39,10 @@ CREATE TABLE IF NOT EXISTS `stock` (
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 COMMIT;
 
+---
+--- Dumping data for table `stock`
+---
+
 INSERT INTO `stock` (stockname, spoofname) VALUES
 ('A', 'DKBank Inc'),
 ('AA', 'ThisKong Pte Ltd'),

@@ -41,6 +41,17 @@ CREATE TABLE IF NOT EXISTS `inventory` (
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 COMMIT;
 
+
+---
+--- Dumping data for table `inventory`
+---
+
+INSERT INTO `inventory` (`username`, `accessoryID`, `quantity`) VALUES
+('Yoshi', 1, 1),
+('James', 3, 1),
+('mary', 3, 1),
+('Amy', 2, 1);
+
 /*!40101 SET CHARACTER_SET_CLIENT=@OLD_CHARACTER_SET_CLIENT */;
 /*!40101 SET CHARACTER_SET_RESULTS=@OLD_CHARACTER_SET_RESULTS */;
 /*!40101 SET COLLATION_CONNECTION=@OLD_COLLATION_CONNECTION */;

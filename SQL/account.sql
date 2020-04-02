@@ -53,12 +53,16 @@ CREATE TABLE IF NOT EXISTS `account` (
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 COMMIT;
 
+---
+--- Dumping data for table `account`
+---
+
+INSERT INTO `account` (`username`, `password`, `email`, `phoneNumber`, `telegramid`, `stonks`, `equipHead`, `equipBody`, `equipHand`, `equipPet`,`lastLogin` = now(),`dailyStonks`) VALUES 
+('Yoshi', 'youshi123', 'youshi@gmail.com', '67009000', '12345', 100.00, 'hat2.png', Null, Null, Null, now(), 0), 
+('James', 'james123', 'james@gmail.com', '98882345', '98572', 100.00, Null, Null, Null, 'pet2.png', now(), 0), 
+('mary', '123', 'mary@gmail.com', '74653725', '98972', 100.00, Null, Null, Null, 'pet2.png', now(), 0), 
+('Amy', 'amy123', 'amy@gmail.com', '66667888', '23456', 100.00, Null, 'body3.png', Null, Null, now(), 0);
+
 /*!40101 SET CHARACTER_SET_CLIENT=@OLD_CHARACTER_SET_CLIENT */;
 /*!40101 SET CHARACTER_SET_RESULTS=@OLD_CHARACTER_SET_RESULTS */;
 /*!40101 SET COLLATION_CONNECTION=@OLD_COLLATION_CONNECTION */;
-
-
--- Test data
--- INSERT INTO account (username, password, email, phoneNumber, telegramid, stonks) 
--- VALUES ('Yoshi', 'youshi123', 'youshi@gmai.com', 67009000, 12345,1000), 
--- ('Amy', 'amy123', 'amy@gmai.com', 66667888, 23456,0);

@@ -42,6 +42,28 @@ CREATE TABLE IF NOT EXISTS `shop` (
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 COMMIT;
 
+---
+--- Dumping data for table `shop`
+---
+
+INSERT INTO `shop` (`shopID`, `accessoryID`, `inStock`, `price`) VALUES
+(1, 1, 10, '20.50'),
+(1, 2, 10, '24.50'),
+(1, 3, 10, '40.00'),
+(1, 4, 10, '28.50'),
+(1, 5, 10, '45.00'),
+(1, 6, 10, '50.00'),
+(1, 7, 10, '55.00'),
+(1, 8, 10, '15.50'),
+(1, 9, 10, '18.00'),
+(1, 10, 10, '16.50'),
+(1, 11, 10, '18.00'),
+(1, 12, 10, '25.00'),
+(1, 13, 10, '26.50'),
+(1, 14, 10, '27.50'),
+(1, 15, 10, '28.00');
+
+
 /*!40101 SET CHARACTER_SET_CLIENT=@OLD_CHARACTER_SET_CLIENT */;
 /*!40101 SET CHARACTER_SET_RESULTS=@OLD_CHARACTER_SET_RESULTS */;
 /*!40101 SET COLLATION_CONNECTION=@OLD_COLLATION_CONNECTION */;
