@@ -48,14 +48,14 @@ def populate_inventory_accessories(username):
 
         accessoryIDList = [int(accessory) for accessory in inventory[username]]
         # return jsonify(accessoryIDList)
+        if len(accessoryIDList) == 0:
+            return jsonify({"message" : "No Accessories"})
 
         accessoryURL = f'http://localhost:5001/accessory/list'
         accessory_req = requests.get(accessoryURL, params = {"accessoryIDList[]": accessoryIDList})
         
         if (accessory_req.status_code == 200):
-     
             accessoryDetails = accessory_req.json()
-
             for accessory in accessoryDetails:
                 inventory[str(username)][str(accessory['accessoryID'])].update(accessory)
             
