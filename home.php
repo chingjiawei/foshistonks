@@ -92,7 +92,7 @@
             return false;
         });
         $('.stock').click(function() {
-            window.location.href = '/foshistonks/stock.php';
+            window.location.href = '/foshistonks/Testing-StockUI/stock.php';
             return false;
         });
         $('.account').click(function() {
