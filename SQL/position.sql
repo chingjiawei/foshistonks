@@ -34,6 +34,7 @@ DROP TABLE IF EXISTS `position`;
 CREATE TABLE IF NOT EXISTS `position` (
   `time_stamp` datetime NOT NULL,
   `stockid` int(10) NOT NULL,
+  `stockname` varchar(128) NOT NULL,
   `username` varchar(16) NOT NULL,
   `price` decimal(10,2) NOT NULL,
   `purchasetype` varchar(10) NOT NULL,

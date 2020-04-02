@@ -3,14 +3,14 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: 127.0.0.1:3306
--- Generation Time: Mar 28, 2020 at 04:40 PM
+-- Generation Time: Apr 02, 2020 at 11:42 AM
 -- Server version: 5.7.23
 -- PHP Version: 7.2.10
 
 SET SQL_MODE = "NO_AUTO_VALUE_ON_ZERO";
 SET AUTOCOMMIT = 0;
 START TRANSACTION;
-SET time_zone = "+08:00";
+SET time_zone = "+00:00";
 
 
 /*!40101 SET @OLD_CHARACTER_SET_CLIENT=@@CHARACTER_SET_CLIENT */;
@@ -18,14 +18,11 @@ SET time_zone = "+08:00";
 /*!40101 SET @OLD_COLLATION_CONNECTION=@@COLLATION_CONNECTION */;
 /*!40101 SET NAMES utf8mb4 */;
 
--- --------------------------------------------------------
 --
 -- Database: `account`
 --
-DROP DATABASE IF EXISTS `account`;
 CREATE DATABASE IF NOT EXISTS `account` DEFAULT CHARACTER SET utf8 COLLATE utf8_general_ci;
 USE `account`;
-
 -- --------------------------------------------------------
 
 --
@@ -51,17 +48,17 @@ CREATE TABLE IF NOT EXISTS `account` (
   UNIQUE KEY `email` (`email`),
   UNIQUE KEY `telegramID` (`telegramID`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+
+--
+-- Dumping data for table `account`
+--
+
+INSERT INTO `account` (`username`, `password`, `email`, `phoneNumber`, `telegramID`, `stonks`, `equipHead`, `equipBody`, `equipHand`, `equipPet`, `lastLogin`, `dailyStonks`) VALUES
+('Amy', 'amy123', 'amy@gmail.com', '66667888', '23456', '100.00', NULL, 'body3.png', NULL, NULL, '2020-04-02 19:20:35', 0),
+('James', 'james123', 'james@gmail.com', '98882345', '98572', '100.00', NULL, NULL, NULL, 'pet2.png', '2020-04-02 19:20:35', 0),
+('mary', '123', 'mary@gmail.com', '74653725', '98972', '100.00', NULL, NULL, NULL, 'pet2.png', '2020-04-02 19:20:35', 0),
+('Yoshi', 'youshi123', 'youshi@gmail.com', '67009000', '12345', '100.00', 'hat2.png', NULL, NULL, NULL, '2020-04-02 19:20:35', 0);
 COMMIT;
-
----
---- Dumping data for table `account`
----
-
-INSERT INTO `account` (`username`, `password`, `email`, `phoneNumber`, `telegramid`, `stonks`, `equipHead`, `equipBody`, `equipHand`, `equipPet`,`lastLogin` = now(),`dailyStonks`) VALUES 
-('Yoshi', 'youshi123', 'youshi@gmail.com', '67009000', '12345', 100.00, 'hat2.png', Null, Null, Null, now(), 0), 
-('James', 'james123', 'james@gmail.com', '98882345', '98572', 100.00, Null, Null, Null, 'pet2.png', now(), 0), 
-('mary', '123', 'mary@gmail.com', '74653725', '98972', 100.00, Null, Null, Null, 'pet2.png', now(), 0), 
-('Amy', 'amy123', 'amy@gmail.com', '66667888', '23456', 100.00, Null, 'body3.png', Null, Null, now(), 0);
 
 /*!40101 SET CHARACTER_SET_CLIENT=@OLD_CHARACTER_SET_CLIENT */;
 /*!40101 SET CHARACTER_SET_RESULTS=@OLD_CHARACTER_SET_RESULTS */;

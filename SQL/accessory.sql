@@ -3,14 +3,14 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: 127.0.0.1:3306
--- Generation Time: Mar 28, 2020 at 04:44 PM
+-- Generation Time: Apr 02, 2020 at 11:16 AM
 -- Server version: 5.7.23
 -- PHP Version: 7.2.10
 
 SET SQL_MODE = "NO_AUTO_VALUE_ON_ZERO";
 SET AUTOCOMMIT = 0;
 START TRANSACTION;
-SET time_zone = "+08:00";
+SET time_zone = "+00:00";
 
 
 /*!40101 SET @OLD_CHARACTER_SET_CLIENT=@@CHARACTER_SET_CLIENT */;
@@ -18,11 +18,9 @@ SET time_zone = "+08:00";
 /*!40101 SET @OLD_COLLATION_CONNECTION=@@COLLATION_CONNECTION */;
 /*!40101 SET NAMES utf8mb4 */;
 
--- --------------------------------------------------------
 --
 -- Database: `accessory`
 --
-DROP DATABASE IF EXISTS `accessory`;
 CREATE DATABASE IF NOT EXISTS `accessory` DEFAULT CHARACTER SET utf8 COLLATE utf8_general_ci;
 USE `accessory`;
 
@@ -41,8 +39,7 @@ CREATE TABLE IF NOT EXISTS `accessory` (
   `src` varchar(128) NOT NULL,
   PRIMARY KEY (`accessoryID`),
   UNIQUE KEY `accessoryID` (`accessoryID`)
-) ENGINE=InnoDB DEFAULT CHARSET=utf8;
-COMMIT;
+) ENGINE=InnoDB AUTO_INCREMENT=16 DEFAULT CHARSET=utf8;
 
 --
 -- Dumping data for table `accessory`
@@ -64,7 +61,7 @@ INSERT INTO `accessory` (`accessoryID`, `accessoryName`, `accessoryDesc`, `categ
 (13, 'Andrew Marlton', 'First dog on the moon; your best friend!', 'equipPet', 'pet2.png'),
 (14, 'Jumbo', 'Dumbo\'s childhood friend!', 'equipPet', 'pet3.png'),
 (15, 'Jake The Dog', 'Jake the Dog from Adventure Time!', 'equipPet', 'pet4.png');
-
+COMMIT;
 
 /*!40101 SET CHARACTER_SET_CLIENT=@OLD_CHARACTER_SET_CLIENT */;
 /*!40101 SET CHARACTER_SET_RESULTS=@OLD_CHARACTER_SET_RESULTS */;
