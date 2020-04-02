@@ -52,7 +52,6 @@
                 <a href="logout.php">LOG OUT</a>
             </div>      
         </div>
-        <p id='errorMsg'></p>
     </div>
     <div id="error_display cleafix"></div>
 
@@ -80,6 +79,8 @@
     <h2>Pet</h2>
     <div class='ctg_container ctg_pet'>
     </div>
+
+    <p id='errorMsg'></p>
     
 
 <!-- Page passes the container for the graph to the program -->
@@ -168,7 +169,7 @@
         //Prevents screen from refreshing when submitting
         var username = sessionStorage.getItem('username');
         // console.log(id)
-        var serviceURL = "http://localhost:5200/purchaseAccessories/" + accessoryID;
+        var serviceURL = "http://127.0.0.1:5200/purchaseAccessories/" + accessoryID;
         
         try {
             const response =
@@ -188,15 +189,15 @@
                 }
             );
             const data = await response.json();
-            if (response.ok) {
+            if (data) {
                 $('#plusone').fadeIn(200);
                 $('#plusone').delay(1200).fadeOut(200);
             }else{
-                showError('Books not found.')
+                showError('Accessory not found.')
             }
         } catch (error) {
             showError
-            ('There is a problem retrieving books data, please try again later.<br />'+error);
+            ('There is a problem retrieving accessory data, please try again later.<br />'+error);
         }
     }
 
