@@ -144,7 +144,10 @@ body {
 }
 #home_body>* {margin:0; padding: 0;}
 .col-3 {width:32.8%; float: left; }
-#home_body>.col-3>div {width: 100%; height: 35vh; margin-bottom: 5vh; 
+#home_body>.col-3>div {
+    width: 100%; 
+    /* height: 35vh;  */
+    margin-bottom: 5vh; 
     transition: 1500ms ease;
     transition-property: scale;
     cursor: pointer;}
@@ -155,10 +158,13 @@ body {
 
 .col-3>:first-child {height: 10vh; padding-top: 2vh;}
 
+.home_left>.equipment{margin:7vh 0;}
 .home_left>.equipment>img {width:15vw; margin-left: 6vw;}
 .home_left>.equipment>img:hover {width:15vw;}
+.home_left>.shop{margin:14vh 0;}
 .home_left>.shop>img {width:15vw; margin-left: 6vw;}
 
+.home_mid{position: relative;}
 .home_mid>h1{font-weight: 900;}
 .home_mid>.claimCoin {
     height:18vh;
@@ -192,17 +198,44 @@ body {
     100% { transform: scale(1,1)      translateY(0); }
 }
 
-.home_mid>.me {height:45vh;}
-.home_mid>.me:hover {-webkit-transform:none; transform:none;}
+#home_body>.home_mid>.me {height:45vh; position: absolute;}
+#home_body>.home_mid>.me:hover {-webkit-transform:none; transform:none;}
 .home_mid>.me>img {height: 45vh; width:auto;}
+
+.home_mid>.me{
+    width:50%;
+    position: fixed;
+    top:10vh;
+    left:0;
+    cursor: crosshair;
+}
+.home_mid>.me>.ori_foshi{
+    display: inline-block;
+    position: absolute;
+    top: 32vh;
+    left: 6%;
+    height:45vh;
+    width:auto;
+}
+.home_mid>.me>.on_avatar{
+    display: inline-block;
+    position: absolute;
+    top: 32vh;
+    left: 6%;
+    height:45vh;
+    width:auto;
+}
+
 
 .home_right>.quick_btn {padding:48px 48px 0 0; text-align: right;}
 .home_right>.quick_btn:hover {-webkit-transform:none; transform:none;}
 .home_right>.quick_btn>img {height:4vh; width:auto;}
 
+.home_right>.stock{margin:7vh 0;}
 .home_right>.stock>h2 {margin-left:-8vw;}
 .home_right>.stock>img {height:25vh; width:auto;}
 
+.home_right>.account{margin:10vh 0;}
 .home_right>.account {padding-top: 4vh;}
 .home_right>.account>img {height:20vh; width:auto; margin-left: -5px;}
 

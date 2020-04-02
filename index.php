@@ -75,8 +75,6 @@ HAPPY STONKING!</p>
             var serviceURL = "http://localhost:5013/login/";
             var homeURL = "http://localhost/foshistonks/home.php";
 
-            // var availability = parseInt($("#availability").val());
-
             // form the POST url which includes the dynamic username
             serviceURL += username;
             try {
@@ -90,17 +88,8 @@ HAPPY STONKING!</p>
                 const data = await response.json();
 
                 if (response.ok) {
-                    sessionStorage.setItem('username', username)
+                    sessionStorage.setItem('username', username);
 
-                    // // create php session first
-                    // var xmlhttp = new XMLHttpRequest();
-                    // xmlhttp.open("GET", "/session_maker.php?username="+username, true);
-
-                    // xmlhttp.onreadystatechange = function(){
-                    //     if(xmlhttp.readyState == 4 && xmlhttp.status == 200){
-                    //         alert("Done! Session created.");
-                    //     }
-                    // };
                     // relocate to home page
                     window.location.replace(homeURL);
                     return false;

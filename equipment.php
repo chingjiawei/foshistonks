@@ -205,31 +205,33 @@
                     // console.log('hi');
                     updateAccount(accessoryID);
                 }
-            )
+            );
+
+            //home icon redirect
+            $('.home_link').css('cursor', 'pointer');
+            $('.home_link').click(function() {
+                window.location.href = '/foshistonks/home.php';
+                return false;
+            });
         }
         
-    
         // auto run this to pull all myInventory to display on the right
         $(async() => {           
-            // Change serviceURL to your own
+            ////////////// load all myInventory on the right for display  /////////////
             var username = sessionStorage.getItem('username');
             var serviceURL = "http://127.0.0.1:5100/populateInventoryAccessories/" + username;
-    
             try {
                 const response =
                  await fetch(
                    serviceURL, { method: 'GET' }
                 );
                 const data = await response.json();
-                var items = data[username]; //the arr is in data.books of the JSON data
-    
-                // array or array.length are false
+                var items = data[username]; 
                 if (!data) {
                     showError('Empty accessory.')
                 } else {
-                    // for loop to setup all table rows with obtained book data
                     for (var i in items){
-                        console.log(items[i]);
+                        // console.log(items[i]);
                         var accessoryDesc = items[i]['accessoryDesc'];
                         var accessoryID = items[i]['accessoryID'];  //1
                         var accessoryName = items[i]['accessoryName']; //Santa Hat
@@ -243,25 +245,51 @@
                                 "</h3><div class='img'><img src='src/img/shop/"+src+
                                 "'></div><p class='desc'>"+accessoryDesc+
                                 "</p></div>";
-                        console.log(category);
                         $('#'+category).append(add_div);
                     }
                     addEvents();
                 }
             } catch (error) {
-                // Errors when calling the service; such as network error, 
-                // service offline, etc
-                showError
-              ('There is a problem retrieving books data, please try again later.<br />'+error);
-               
+                showError('There is a problem populating accessories data, please try again later.<br />'+error);
             } // error
 
-            // Helper function to display error message
+            ////////////// load all myInventory on the right for display  /////////////
+            var serviceURL2 = "http://127.0.0.1:5000/account/" + username;
+            try {
+                const response2 =
+                  await fetch(
+                    serviceURL2, { 
+                        method: 'GET'
+                    });
+                const data2 = await response2.json();
+                if (!data2) {
+                    showError('Empty account.')
+                } else {
+                    var equipBodysrc = data2['equipBody'];
+                    var equipHandsrc = data2['equipHand'];
+                    var equipHeadsrc = data2['equipHead'];
+                    var equipPetsrc = data2['equipPet'];
+                    if ( equipBodysrc != null){
+                        $('#me').append("<img class='on_avatar' src='src/img/avatar/"+equipBodysrc+"'>"); 
+                    }
+                    if (equipHandsrc != null){
+                        $('#me').append("<img class='on_avatar' src='src/img/avatar/"+equipHandsrc+"'>"); 
+                    }
+                    if (equipHeadsrc != null){
+                        $('#me').append("<img class='on_avatar' src='src/img/avatar/"+equipHeadsrc+"'>"); 
+                    }
+                    if (equipPetsrc != null){
+                        $('#me').append("<img class='on_avatar' src='src/img/avatar/"+equipPetsrc+"'>"); 
+                    }
+                }
+            } catch (error) {
+                showError('There is a problem retrieving books data, please try again later.<br />'+error);
+            } // error
+
             function showError(message) {
                 $('#errorMsg')
                     .append("<label>"+message+"</label>");
             }
-
         });
 
         async function updateAccount(accessoryID){
