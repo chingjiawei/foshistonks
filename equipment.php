@@ -103,7 +103,7 @@
                     var category = $(this).attr('data-cate');
                     var data_src = $(this).attr('data-src');
                     var accessoryID = $(this).attr('id');
-
+                    console.log(accessoryID);
                     // $('#me').remove('.'+category);
                     $('#me').find('.'+category).remove();
                     $('#me').append("<img class='"+ category +" on_avatar' src='src/img/avatar/"+data_src+"'>");
@@ -183,16 +183,16 @@
                     var equipHeadsrc = data2['equipHead'];
                     var equipPetsrc = data2['equipPet'];
                     if ( equipBodysrc != null){
-                        $('#me').append("<img class='on_avatar' src='src/img/avatar/"+equipBodysrc+"'>"); 
+                        $('#me').append("<img class='equipBody on_avatar' src='src/img/avatar/"+equipBodysrc+"'>"); 
                     }
                     if (equipHandsrc != null){
-                        $('#me').append("<img class='on_avatar' src='src/img/avatar/"+equipHandsrc+"'>"); 
+                        $('#me').append("<img class='equipHand on_avatar' src='src/img/avatar/"+equipHandsrc+"'>"); 
                     }
                     if (equipHeadsrc != null){
-                        $('#me').append("<img class='on_avatar' src='src/img/avatar/"+equipHeadsrc+"'>"); 
+                        $('#me').append("<img class='equipHead on_avatar' src='src/img/avatar/"+equipHeadsrc+"'>"); 
                     }
                     if (equipPetsrc != null){
-                        $('#me').append("<img class='on_avatar' src='src/img/avatar/"+equipPetsrc+"'>"); 
+                        $('#me').append("<img class='equipPet on_avatar' src='src/img/avatar/"+equipPetsrc+"'>"); 
                     }
                 }
             } catch (error) {
