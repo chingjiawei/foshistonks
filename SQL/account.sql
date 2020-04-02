@@ -44,6 +44,8 @@ CREATE TABLE IF NOT EXISTS `account` (
   `equipBody` varchar(128) DEFAULT NULL,
   `equipHand` varchar(128) DEFAULT NULL,
   `equipPet` varchar(128) DEFAULT NULL,
+  `lastLogin` datetime NOT NULL,
+  `dailyStonks` tinyint(1) NOT NULL DEFAULT '0',
   PRIMARY KEY (`username`),
   UNIQUE KEY `username` (`username`),
   UNIQUE KEY `email` (`email`),
