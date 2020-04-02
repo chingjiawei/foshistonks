@@ -16,7 +16,7 @@ CORS(app)
 
 # output (message: successful / error), 200/500
 
-@app.route("/purchaseAccessory/<int:accessoryID>", methods =['POST'])
+@app.route("/purchaseAccessories/<int:accessoryID>", methods =['POST'])
 def purchase_accessory (accessoryID):
     
     # load json body

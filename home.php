@@ -134,7 +134,7 @@
                     var stonks = data2['stonks'];
                     $('.account_info').html(
                         "Hi, <b class='name'>"+ username
-                        +"</b>:) You are <b class='balance'>"+ stonks
+                        +"</b>! You are <b class='balance'>$"+ stonks
                         +"</b> stonks rich!"
                     );
                 }
