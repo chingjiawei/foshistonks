@@ -57,7 +57,8 @@ HAPPY STONKING!</p>
         
     </div>
 
-    <!-- <script async src="https://telegram.org/js/telegram-widget.js?7" data-telegram-login="foshistonks_bot"
+    <!-- C:\wamp64\www\foshistonks\atomic 
+        <script async src="https://telegram.org/js/telegram-widget.js?7" data-telegram-login="foshistonks_bot"
             data-size="large" data-onauth="onTelegramAuth(user)" data-request-access="write"></script> -->
 	<script>
         function showError(message) {
