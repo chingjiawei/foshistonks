@@ -188,7 +188,6 @@
             $('#error').text(message);
         }
     </script>
-    </script>
 </body>
 
 </html>
