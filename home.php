@@ -63,7 +63,7 @@
         <div class='claimCoin'>
             <img class='bounce-7' src="src/img/claim_coin.png" alt="">
         </div>
-        <div class='me' id='me'>
+        <div class='me' id='me' style="z-index: -1;">
             <img class="ori_foshi" src="src/img/me_test.png" alt="">
         </div>
     </div>
@@ -83,6 +83,30 @@
     </div>
 
 	<script>
+        async function updateDailyStonks() {
+            var username = sessionStorage.getItem('username')
+            var stonks = parseFloat(sessionStorage.getItem('stonks')) + 10;
+            console.log(stonks)
+            var dailyStonks = true;
+            var serviceURL = "http://127.0.0.1:5000/account/" + username;
+            try {
+                const response =await fetch(serviceURL, { 
+                    method: 'PUT',
+                    headers: {'Content-Type': 'application/json'},
+                    body: JSON.stringify({stonks : stonks, dailyStonks : dailyStonks})
+                    });
+                const data = await response.json();
+                if (response.ok) {
+                    alert('Thank you for logging in today! Happy stonking!');
+                    sessionStorage.setItem('stonks', stonks);
+                } else {
+                    showError('Empty account.');
+                }
+            } catch (error) {
+                showError('There is a problem updating daily stonks account data, please try again later.<br />'+error);
+            } // error
+        }
+
         $('.equipment').click(function() {
             window.location.href = '/foshistonks/equipment.php';
             return false;
@@ -100,6 +124,13 @@
             return false;
         });
 
+        $('.claimCoin').click(async function() {
+            // alert(1)
+            await  updateDailyStonks();
+            var stonks = sessionStorage.getItem('stonks')
+            $(".balance").html('$'+ stonks.toString());
+        });
+
         $(async() => { 
             var username = sessionStorage.getItem('username');
             var serviceURL2 = "http://127.0.0.1:5000/account/" + username;
@@ -114,6 +145,11 @@
                     showError('Empty account.')
                 } else {
                     console.log(data2);
+                    console.log(data2['dailyStonks'])
+                    console.log(data2['lastLogin'])
+                    var timezoneOffset = (new Date()).getTimezoneOffset() * 60000;
+                    var date = new Date(Date.now() - timezoneOffset).toISOString().slice(0, 19).replace('T', ' ');
+                    console.log(date)
                     var equipBodysrc = data2['equipBody'];
                     var equipHandsrc = data2['equipHand'];
                     var equipHeadsrc = data2['equipHead'];

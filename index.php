@@ -73,6 +73,38 @@ HAPPY STONKING!</p>
             $('#error').text(message);
         }
 
+        async function updateLoginTime(username) {
+            var timezoneOffset = (new Date()).getTimezoneOffset() * 60000;
+            var lastLogin = new Date(Date.now() - timezoneOffset).toISOString().slice(0, 19).replace('T', ' ');
+
+            var serviceURL = "http://127.0.0.1:5000/account/" + username;
+            try {
+                const response =await fetch(
+                    serviceURL, {
+                        method: 'PUT',
+                        headers: {'Content-Type': 'application/json'},
+                        body: JSON.stringify({lastLogin : lastLogin}) 
+                    });
+                const data = await response.json();
+
+                if (response.ok) {
+                    // alert('loginTime updated!')
+                } else {
+                    console.log(data);
+                    showError(data.message);
+                }
+
+            } catch (error) {
+                // Errors when calling the service; such as network error, 
+                // service offline, etc
+                showError
+                    ("There is a problem updating the login time of this account, please try again later. " + error);
+
+            } // error
+        }
+
+
+
         $("#login_form").submit(async (event) => {
             //Prevents screen from refreshing when submitting
             event.preventDefault();
@@ -96,7 +128,11 @@ HAPPY STONKING!</p>
                 const data = await response.json();
 
                 if (response.ok) {
+                    // set username session in tab
                     sessionStorage.setItem('username', username);
+
+                    // update the latestLoginTime
+                    await updateLoginTime(username);
 
                     // relocate to home page
                     window.location.replace(homeURL);
@@ -116,8 +152,6 @@ HAPPY STONKING!</p>
         // function onTelegramAuth(user) {
         //         alert('Logged in as ' + user.first_name + ' ' + user.last_name + ' (' + user.id + (user.username ? ', @' + user.username : '') + ')');
         //     }
-            
-        </script>
     </script>
 </body>
 
