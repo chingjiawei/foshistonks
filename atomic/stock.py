@@ -7,9 +7,12 @@ from datetime import datetime
 
 import requests
 import datetime
+import json
+from flask.json import dump
+from json import dumps
 
 app = Flask(__name__)
-app.config['SQLALCHEMY_DATABASE_URI'] = 'mysql+mysqlconnector://root@localhost:3308/stock'
+app.config['SQLALCHEMY_DATABASE_URI'] = 'mysql+mysqlconnector://root@localhost:3306/stock'
 # environ.get('dbURL')
 
 app.config['SQLALCHEMY_TRACK_MODIFICATIONS'] = False
@@ -40,7 +43,15 @@ class Stock(db.Model):
 #get all stocks
 @app.route("/stock")
 def get_all():
-    return jsonify({"stock":[Stock.json() for Stock in Stock.query.all()]})
+    #data = {"stock":[Stock.json() for Stock in Stock.query.all()]}
+    #response = json.dumps(data)
+    #response.status_code = 200 # or 400 or whatever
+    #result = {"stock":[Stock.json() for Stock in Stock.query.all()]}
+    #return response
+    #data = [Stock.json() for Stock in Stock.query.all()]
+    data = {"stock":[{"stockid":"1","stockName":"A","spoofname":"DKBank Inc"},{"stockid":"2","stockName":"AA","spoofname":"ThisKong Pte Ltd"},{"stockid":"3","stockName":"DAL","spoofname":"Yeet and Yeehaw Advisor"}]}
+    # return jsonify({"stock":[Stock.json() for Stock in Stock.query.all()]})
+    return jsonify(data)
 
 #return a stock api
 @app.route("/stock/api/<string:spoofname>")
@@ -52,11 +63,17 @@ def get_stock_api(spoofname):
         data = {
             "function": "TIME_SERIES_INTRADAY", #Gets stock data at 5 min intervals
             "symbol": stock.stockname,
-            "interval": "5min",
+            "interval": "1min",
             "apikey": "2BAMKY2DJ4ZKBEK2",
             }
         response = requests.get(API_URL, data)
-        return response.json()
+        response_data =  response.json() 
+        formattedData = {}
+        for i in response_data["Time Series (1min)"]:
+            formattedData.update({i:response_data["Time Series (1min)"][i]["4. close"]})
+        # return json.dumps(listOfDate)
+        return json.dumps(formattedData)
+        #return response.json()
     return jsonify({"message":"Stock not found"}), 404
 
 #return a stock

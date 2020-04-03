@@ -9,7 +9,7 @@ import requests
 import datetime
 
 app = Flask(__name__)
-app.config['SQLALCHEMY_DATABASE_URI'] = 'mysql+mysqlconnector://root@localhost:3308/position'
+app.config['SQLALCHEMY_DATABASE_URI'] = 'mysql+mysqlconnector://root@localhost:3306/position'
 # environ.get('dbURL')
 
 app.config['SQLALCHEMY_TRACK_MODIFICATIONS'] = False
@@ -23,15 +23,17 @@ class Position(db.Model):
 
     time_stamp = db.Column(db.DateTime, primary_key = True)
     stockid = db.Column(db.Integer, nullable = False)
+    stockName = db.Column(db.String(20), nullable = False)
     username = db.Column(db.String(16), primary_key = True)
     price = db.Column(db.Float, nullable = False)
     purchasetype = db.Column(db.String(10), nullable = False)
     amount = db.Column(db.Integer, nullable = False)
 
     
-    def __init__(self, time_stamp, stockid, username, price, purchasetype, amount):
+    def __init__(self, time_stamp, stockid,stockName, username, price, purchasetype, amount):
         self.time_stamp = time_stamp
         self.stockid = stockid
+        self.stockName = stockName
         self.username = username
         self.price = price
         self.purchasetype = purchasetype
@@ -40,6 +42,7 @@ class Position(db.Model):
     def json(self):
         return {"time_stamp": self.time_stamp, 
                 "stockid": self.stockid, 
+                "stockName": self.stockName, 
                 "username": self.username,  
                 "price": self.price,
                 "purchasetype": self.purchasetype,
@@ -59,6 +62,7 @@ def create_position(username):
     content = request.get_json()
     time_stamp = datetime.datetime.now()
     stockid = content["stockid"]
+    stockName = content["stockName"]
     price = content["price"]
     purchasetype = content['purchasetype']
     amount = content['amount']
@@ -69,6 +73,7 @@ def create_position(username):
 
         new_position = Position(time_stamp = time_stamp,
                          stockid = stockid, 
+                         stockName = stockName,
                          username = username, 
                          price = price,
                          purchasetype = purchasetype,
