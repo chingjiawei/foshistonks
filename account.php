@@ -72,9 +72,9 @@
 <!-- Page passes the container for the graph to the program -->
 
 <body id="account_body">
-    <h1>Account Page</h1>
+    <h1>UPDATE ACCOUNT INFO</h1>
     <div class='account'>
-        <!-- <img src="src/img/yoshi_house.png" alt=""> -->
+        <img src="src/img/yoshi_house.png" alt="">
         <form id="account_form">
             <div class="block">
                 <label>Username</label>
@@ -98,7 +98,7 @@
             </div>
             <div class="block">
                 <label>Amount Of Stonks You Have</label>
-                <input type="text" class="form-control" id="stonks" placeholder="Amount Of Stonks You Have" value="default-value" required readonly>
+                <input type="text" class="form-control blockUpdate" id="stonks" placeholder="Amount Of Stonks You Have" value="default-value" required readonly>
             </div>
             <div class="button_row">
                 <button type="submit" class="btn_update">Update</button>
