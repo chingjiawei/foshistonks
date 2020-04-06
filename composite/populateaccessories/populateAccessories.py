@@ -1,6 +1,7 @@
 from flask import Flask, request, jsonify
 from flask_sqlalchemy import SQLAlchemy
 from flask_cors import CORS
+from os import environ
 
 import requests
 
@@ -13,7 +14,7 @@ CORS(app)
 # populate shop accessories
 @app.route('/populateShopAccessories/<int:shopID>', methods=['GET'])
 def populate_shop_accessories(shopID):
-    shopURL = f'http://localhost:5003/shop/{shopID}'
+    shopURL = f'http://172.17.0.8:5003/shop/{shopID}'
     req = requests.get(shopURL)
 
     if (req.status_code == 200):
@@ -21,7 +22,7 @@ def populate_shop_accessories(shopID):
 
         accessoryIDList = [int(accessory) for accessory in shop[str(shopID)]]
 
-        accessoryURL = f'http://localhost:5001/accessory/list'
+        accessoryURL = f'http://172.17.0.2:5001/accessory/list'
         accessory_req = requests.get(accessoryURL, params = {"accessoryIDList[]": accessoryIDList})
         
         if (accessory_req.status_code == 200):
@@ -40,7 +41,7 @@ def populate_shop_accessories(shopID):
 # populate inventory accessoris
 @app.route('/populateInventoryAccessories/<string:username>', methods=['GET'])
 def populate_inventory_accessories(username):
-    inventoryURL = f'http://localhost:5002/inventory/{username}'
+    inventoryURL = f'http://172.17.0.4:5002/inventory/{username}'
     req = requests.get(inventoryURL)
 
     if (req.status_code == 200):
@@ -51,7 +52,7 @@ def populate_inventory_accessories(username):
         if len(accessoryIDList) == 0:
             return jsonify({"message" : "No Accessories"})
 
-        accessoryURL = f'http://localhost:5001/accessory/list'
+        accessoryURL = f'http://172.17.0.2:5001/accessory/list'
         accessory_req = requests.get(accessoryURL, params = {"accessoryIDList[]": accessoryIDList})
         
         if (accessory_req.status_code == 200):

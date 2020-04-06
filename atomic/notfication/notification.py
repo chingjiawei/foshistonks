@@ -5,7 +5,7 @@ from flask_cors import CORS
 from datetime import datetime
 import json
 import pika
-import telegram
+# import telegram
 import requests
 import os
 

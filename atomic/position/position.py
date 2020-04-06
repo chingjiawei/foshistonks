@@ -9,7 +9,7 @@ import requests
 import datetime
 
 app = Flask(__name__)
-app.config['SQLALCHEMY_DATABASE_URI'] = 'mysql+mysqlconnector://root@localhost:3306/position'
+app.config['SQLALCHEMY_DATABASE_URI'] = environ.get('dbURL')#'mysql+mysqlconnector://root@localhost:3306/position'
 # environ.get('dbURL')
 
 app.config['SQLALCHEMY_TRACK_MODIFICATIONS'] = False

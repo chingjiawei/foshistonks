@@ -1,6 +1,7 @@
 from flask import Flask, request, jsonify
 from flask_sqlalchemy import SQLAlchemy
 from flask_cors import CORS
+from os import environ
 
 import requests
 
@@ -32,13 +33,13 @@ def purchase_accessory (accessoryID):
     inStock = purchaseData['inStock']
 
     # generate URLs
-    accessoryURL = f'http://localhost:5001/accessory/{accessoryID}'
+    accessoryURL = f'http://172.17.0.2:5001/accessory/{accessoryID}'
 
-    shopURL = f'http://localhost:5003/shop/{shopID}'
+    shopURL = f'http://172.17.0.8:5003/shop/{shopID}'
 
-    accountStonkURL = f'http://localhost:5000/account/{username}'
+    accountStonkURL = f'http://172.17.0.3:5000/account/{username}'
 
-    inventoryURL = f'http://localhost:5002/inventory/{username}'
+    inventoryURL = f'http://172.17.0.4:5002/inventory/{username}'
 
 
     # deduct stonks from account

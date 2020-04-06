@@ -8,7 +8,7 @@ import decimal
 # from os import environ
 
 app = Flask(__name__)
-app.config['SQLALCHEMY_DATABASE_URI'] = 'mysql+mysqlconnector://root@localhost:3306/account'
+app.config['SQLALCHEMY_DATABASE_URI'] = environ.get('dbURL')#'mysql+mysqlconnector://root@localhost:3306/account'
 # environ.get('dbURL')
 
 app.config['SQLALCHEMY_TRACK_MODIFICATIONS'] = False

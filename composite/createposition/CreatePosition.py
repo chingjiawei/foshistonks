@@ -16,7 +16,7 @@ CORS(app)
 @app.route("/createposition/<string:username>", methods=['POST'])
 def create_user_position(username):
     spoofname = request.json.get('spoofname')
-    res = requests.get('http://localhost:5010/stock/' + spoofname, json={"spoofname": spoofname})
+    res = requests.get('http://172.17.0.9:5010/stock/' + spoofname, json={"spoofname": spoofname})
     res_getstock =  res.json()
     stockid = res_getstock["stockid"]
     price = request.json.get('price')
@@ -28,19 +28,19 @@ def create_user_position(username):
                 "purchasetype": purchasetype,
                 "amount": amount
              }
-    res = requests.post('http://localhost:5011/position/create/' + username, json=content)
+    res = requests.post('http://172.17.0.7:5011/position/create/' + username, json=content)
     res_createpos = res.json()
     req = {
             "stonks": res_createpos["stonks"]
         }
-    res_updatestonk = requests.post('http://localhost:5000/account/update/stonks/' + username, json=req)
+    res_updatestonk = requests.post('http://172.17.0.3:5000/account/update/stonks/' + username, json=req)
     if res_createpos and purchasetype == "sell":
         req = {
             "time_stamp": res_createpos["time_stamp"],
             "stockid": stockid,
             "amount": amount
         }
-        res_updatepos = requests.post('http://localhost:5011/position/create/' + username, json=content)
+        res_updatepos = requests.post('http://172.17.0.7:5011/position/create/' + username, json=content)
     send_position(res_createpos)
     return jsonify({"message":"Created Position Successfully!"}), 201
 

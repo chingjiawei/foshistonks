@@ -15,7 +15,7 @@
     <!-- Bootstrap libraries -->
     <!-- Optional theme -->
     <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap-theme.min.css" integrity="sha384-rHyoN1iRsVXV4nD0JutlnGaslCJuC7uwjduW9SVrLvRYooPp2bWYgmgJQIXwl/Sp" crossorigin="anonymous">
-    <link rel="stylesheet" href="../css/stock.css">
+    <link rel="stylesheet" href="css/stock.css">
 
     <!-- Latest compiled and minified JavaScript -->
     <!-- jQuery (necessary for Bootstrap's JavaScript plugins) -->
@@ -28,8 +28,8 @@
     <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.4.1/js/bootstrap.min.js" integrity="sha384-wfSDF2E50Y2D1uUdj0O3uMBJnjuUD4Ih7YwaYd1iqfktj0Uod8GCExl3Og8ifwB6" crossorigin="anonymous"></script>
     <!-- <link href="//maxcdn.bootstrapcdn.com/bootstrap/4.1.1/css/bootstrap.min.css" rel="stylesheet" id="bootstrap-css">
     <script src="//maxcdn.bootstrapcdn.com/bootstrap/4.1.1/js/bootstrap.min.js"></script> -->
-    <script src="../js/popper.min.js"></script>
-    <script src="../js/bootstrap.min.js"></script>
+    <script src="js/popper.min.js"></script>
+    <script src="js/bootstrap.min.js"></script>
 
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script>
     <script>
@@ -55,7 +55,7 @@
                     alert("error");
                 } else {
                     // console.log(data);
-                    
+
                     //success             
                     // Begin accessing JSON data here
                     var spoofname = [];
@@ -87,13 +87,13 @@
                         console.log(data2);
 
                         // var thisStockName = dict[spoofname[j]];
-                        var thisStockPrice = data2[Object.keys(data2)[Object.keys(data2).length - 1]]; 
-                        html += "<tr data-spoof='"+spoofname[j]+"' data-price='"+thisStockPrice+"'>";
+                        var thisStockPrice = data2[Object.keys(data2)[Object.keys(data2).length - 1]];
+                        html += "<tr data-spoof='" + spoofname[j] + "' data-price='" + thisStockPrice + "'>";
                         html += "<td>" + spoofname[j] + "</td>";
                         html += "<td>" + Object.keys(data2)[Object.keys(data2).length - 1] + "</td>";
                         html += "<td>" + data2[Object.keys(data2)[Object.keys(data2).length - 1]] + "</td>";
-                        html += "<td data-buyId='"+spoofname[j]+"' ><form action=\"/action_page.php\"> <input type=\"text\" id=\"fname\" name=\"fname\"><br><br></form></td>";
-                        html += "<td><input class='buy_btn' type='button' value='Buy' data-spoof='"+spoofname[j]+"' data-price='"+thisStockPrice+"' /></td>";
+                        html += "<td data-buyId='" + spoofname[j] + "' ><input type=\"text\" ></td>";
+                        html += "<td><input class='buy_btn' type='button' value='Buy' data-spoof='" + spoofname[j] + "' data-price='" + thisStockPrice + "' onclick= 'buyStock()'/></td>";
                         html += "</tr>";
                         document.getElementById("buytd").innerHTML = html;
                     }
@@ -105,7 +105,7 @@
                 //error, print something 
                 $("#display").text("Error in calling the service, " + error);
             }
-            
+
         };
 
         async function showPostion() {
@@ -120,43 +120,89 @@
             const data3 = await response3.json();
             var html2 = "";
             for (var k in data3.stock) {
-                var currentPrice = $('[data-spoof="'+data3.stock[k]["stockName"]+'"]').attr('data-price');
-                // console.log(data3.stock[k]["stockName"]);
-                html2 += "<tr>";
-                html2 += "<td>" + data3.stock[k]["stockName"] + "</td>";
-                html2 += "<td>" + data3.stock[k]["price"] + "</td>";
-                html2 += "<td>" + currentPrice + "</td>";
-                html2 += "<td data-sellId='"+data3.stock[k]["stockName"]+"'>" + data3.stock[k]["amount"] + "</td>";
-                html2 += "<td><input class='sell_btn' type='button' value='Sell' data-spoof='"+data3.stock[k]["stockName"]+"' data-price='"+currentPrice+"'/></td>";
-                html2 += "</tr>";
+                var currentPrice = $('[data-spoof="' + data3.stock[k]["stockName"] + '"]').attr('data-price');
+                if (data3.stock[k].purchasetype == "buy"); {
+                    // console.log(data3.stock[k]["stockName"]);
+                    html2 += "<tr>";
+                    html2 += "<td>" + data3.stock[k]["stockName"] + "</td>";
+                    html2 += "<td>" + data3.stock[k]["price"] + "</td>";
+                    html2 += "<td>" + currentPrice + "</td>";
+                    html2 += "<td data-sellId='" + data3.stock[k]["stockName"] + "'>" + data3.stock[k]["amount"] + "</td>";
+                    html2 += "<td><input class='sell_btn' type='button' value='Sell' data-spoof='" + data3.stock[k]["stockName"] + "' data-price='" + currentPrice + "' onclick= 'sellStock()'/></td>";
+                    html2 += "</tr>";
+                }
             }
             document.getElementById("selltd").innerHTML = html2;
         }
-        
+
+        async function buyStock() {
+            // var notiURL = "http://localhost:5012/createPosition/sendnoti";
+            // //selling
+            // const response6 =
+            //     await fetch(
+            //         notiURL, { 
+            //             mode: 'cors',
+            //             method: 'GET'                
+            //         }
+            //     );
+            // const data6 = await response6.json();
+            // var updateaccountURL = ""
+            var notiURL = "http://localhost:5000/account/update/stonks/"+userName;
+            //selling
+            const response6 =
+                await fetch(
+                    notiURL, { 
+                        mode: 'cors',
+                        method: 'POST',
+                        headers: {'Content-Type': 'application/json'},
+                        body: JSON.stringify({"stonks": -70.2000})                 
+                    }
+                );
+            const data6 = await response6.json();
+            alert("Creation of postion is successful!");
+            var indexURL = "http://localhost/foshistonks/home.php";
+            window.location.replace(indexURL);
+        }
+
+        async function sellStock() {
+            // var notiURL = "http://localhost:5012/createPosition/sendsellnoti";
+            // //selling
+            // const response6 =
+            //     await fetch(
+            //         notiURL, { 
+            //             mode: 'cors',
+            //             method: 'GET'                
+            //         }
+            //     );
+            // const data6 = await response6.json();
+            alert("Selling of stock is successful");
+            var indexURL = "http://localhost/foshistonks/home.php";
+            window.location.replace(indexURL);
+        }
         // function buy() {
         //     alert($(this).attr('data-spoof')); 
         // }
-        $('.buy_btn').click(
-            function(){
-                var spoof = $(this).attr('data-spoof');
-                var price = $(this).attr('data-price');
-                var amt = $('[data-buyId="'+spoof+'"]').val();
-                updateStock(amt, username,...); // call an asyn function to run the service
-            }
-        );
+        // $('.buy_btn').click(
+        //     function() {
+        //         var spoof = $(this).attr('data-spoof');
+        //         var price = $(this).attr('data-price');
+        //         var amt = $('[data-buyId="' + spoof + '"]').val();
+        //         // updateStock(amt, username,...); // call an asyn function to run the service
+        //     }
+        // );
 
-        $('.sell_btn').click(
-            function(){
-                var spoof = $(this).attr('data-spoof');
-                var price = $(this).attr('data-price');
-                var amt = $('[data-sellId="'+spoof+'"]').val();
-                updateStock(........); // call an asyn function to run the service
-            }
-        );
-        
+        // $('.sell_btn').click(
+        //     function() {
+        //         var spoof = $(this).attr('data-spoof');
+        //         var price = $(this).attr('data-price');
+        //         var amt = $('[data-sellId="' + spoof + '"]').val();
+        //         // updateStock(........); // call an asyn function to run the service
+        //     }
+        // );
+
 
         async function showChart(allData) {
-            
+
             var options = {
                 animationEnabled: true,
                 theme: "light2",
@@ -182,33 +228,36 @@
                     itemclick: toogleDataSeries
                 },
                 data: [
-                //     {
-                //     type: "line",
-                //     showInLegend: true,
-                //     name: "stock name", 
-                //     lineDashType: "dash",
-                //     yValueFormatString: "#,##",
-                //     dataPoints:
-                //     //aps
-                //     [{ x: new Date("2015-03-25 12:05:00"), y: 57 },
-                //     { x: new Date("2015-03-25 12:10:00"), y: 57 },
-                //     { x: new Date("2015-03-25 12:15:00"), y: 57 }]
-                // }
+                    //     {
+                    //     type: "line",
+                    //     showInLegend: true,
+                    //     name: "stock name", 
+                    //     lineDashType: "dash",
+                    //     yValueFormatString: "#,##",
+                    //     dataPoints:
+                    //     //aps
+                    //     [{ x: new Date("2015-03-25 12:05:00"), y: 57 },
+                    //     { x: new Date("2015-03-25 12:10:00"), y: 57 },
+                    //     { x: new Date("2015-03-25 12:15:00"), y: 57 }]
+                    // }
                 ]
             };
 
-            for (var stockName in allData){
+            for (var stockName in allData) {
                 var val_list = allData[stockName];
                 // console.log(val_list);
                 var dps = [];
-                for (var val in val_list){
+                for (var val in val_list) {
                     // console.log(val);
-                    dps.push( {x: new Date(val), y: parseFloat(val_list[val])} );
+                    dps.push({
+                        x: new Date(val),
+                        y: parseFloat(val_list[val])
+                    });
                 }
                 var temp = {
                     type: "line",
                     showInLegend: true,
-                    name: stockName, 
+                    name: stockName,
                     lineDashType: "dash",
                     yValueFormatString: "#,##",
                     dataPoints: dps
@@ -251,7 +300,9 @@
             <div class="card-body">
                 <div class="tab-content">
                     <div class="tab-pane active" id="post">
-                        Below are the list of stocks that you can buy
+                        Below are the list of stocks that you can buy.
+                        <!-- You have $<?php $price = 100;
+                                        echo $price; ?> left! -->
                         <table class="table">
                             <thead>
                                 <tr>

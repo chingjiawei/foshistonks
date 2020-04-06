@@ -1,6 +1,7 @@
 from flask import Flask, request, jsonify
 from flask_sqlalchemy import SQLAlchemy
 from flask_cors import CORS
+from os import environ
 
 import requests
 
@@ -15,7 +16,7 @@ CORS(app)
 def check_account_balance(username):
 
 
-    accountURL = f"http://localhost:5000/account/{username}"
+    accountURL = f"http://172.17.0.3:5000/account/{username}"
     account_req = requests.get(accountURL)
 
     if (account_req.status_code == 200):

@@ -129,6 +129,7 @@
             await  updateDailyStonks();
             var stonks = sessionStorage.getItem('stonks')
             $(".balance").html('$'+ stonks.toString());
+            $('.claimCoin').hide();
         });
 
         $(async() => { 
@@ -154,6 +155,10 @@
                     var equipHandsrc = data2['equipHand'];
                     var equipHeadsrc = data2['equipHead'];
                     var equipPetsrc = data2['equipPet'];
+                    var dailyStonks = data2['dailyStonks'];
+                    if (dailyStonks) {
+                        $('.claimCoin').hide();
+                    }
                     
                     if ( equipBodysrc != null){
                         $('#me').append("<img class='on_avatar' src='src/img/avatar/"+equipBodysrc+"'>"); 
