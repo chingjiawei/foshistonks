@@ -19,7 +19,7 @@ import os
 #import pika
 
 app = Flask(__name__)
-app.config['SQLALCHEMY_DATABASE_URI'] = 'mysql+mysqlconnector://root@localhost:3306/FoshiStonks'
+app.config['SQLALCHEMY_DATABASE_URI'] = 'mysql+mysqlconnector://root@localhost:3306/monitoring'
 app.config['SQLALCHEMY_TRACK_MODIFICATIONS'] = False
  
 db = SQLAlchemy(app)
@@ -29,9 +29,9 @@ class MonitoringLog(db.Model):
     __tablename__ = 'monitoring'
  
     log_id = db.Column(db.Integer, primary_key=True)
-    user_id = db.Column(db.String(10), nullable=False)
+    user_id = db.Column(db.String(20), nullable=False)
     log_content = db.Column(db.String(500), nullable=False)
-    log_from = db.Column(db.String(20), nullable=False)
+    log_from = db.Column(db.String(128), nullable=False)
     timestamp = db.Column(db.DateTime, nullable=False, default=datetime.now)
     
     def __init__(self, log_id, user_id,log_content,log_from,timestamp):
@@ -44,7 +44,7 @@ class MonitoringLog(db.Model):
 
     # def json(self):
     #     return{'notification_id': self.notification_id,'project_id': self.project_id,'user_id': self.user_id,'message': self.message,'phone_number': self.phone_number,'timestamp': self.timestamp}
-#db.create_all() 
+# db.create_all() 
 
 def receiveLog():
     hostname = "localhost" # default host

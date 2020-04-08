@@ -91,7 +91,7 @@ def send_noti(noti):
     print("Proccessing...Sending noti now")
     status = 201
     result = {}
-    chat_id = noti['user_id']
+    chat_id = noti['telegram_id']
     message = noti['message']
     bot_token = '1058377172:AAHlRyWYvsyY0tOuYQIYdBKKZ-VmV3ptML4'
     url = 'https://api.telegram.org/bot'+bot_token+'/sendMessage?chat_id='+chat_id+'&text='+ message 

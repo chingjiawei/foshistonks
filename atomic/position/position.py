@@ -9,9 +9,9 @@ import requests
 import datetime
 
 app = Flask(__name__)
-app.config['SQLALCHEMY_DATABASE_URI'] = environ.get('dbURL')#'mysql+mysqlconnector://root@localhost:3306/position'
+#app.config['SQLALCHEMY_DATABASE_URI'] = environ.get('dbURL')#'mysql+mysqlconnector://root@localhost:3306/position'
 # environ.get('dbURL')
-
+app.config['SQLALCHEMY_DATABASE_URI'] = 'mysql+mysqlconnector://root@localhost:3306/position'
 app.config['SQLALCHEMY_TRACK_MODIFICATIONS'] = False
 
 db = SQLAlchemy(app)
@@ -78,13 +78,41 @@ def create_position(username):
                          price = price,
                          purchasetype = purchasetype,
                          amount = amount)
-
         try:
             db.session.add(new_position)
             db.session.commit()
             amt = float(price) * int(amount)
             if purchasetype == "buy":
-                amt = -amt
+                amt = -amt       
+        except:
+            return jsonify({"message":"An error occurred creating the position."}), 500
+
+        return jsonify({"stonks" : amt}), 201
+
+    return jsonify({"message": "Fields incomplete!"}), 404
+
+
+@app.route("/position/updateSold/<string:username>", methods = ["POST"])
+def updateSold_position(username):
+    content = request.get_json()
+    time_stamp = datetime.datetime.now()
+    stockid = content["stockid"]
+    stockName = content["stockName"]
+    price = content["price"]
+    purchasetype = content['purchasetype']
+    amount = content['amount']
+    if time_stamp and stockid and username and price and purchasetype and amount:
+        existing_position = Position.query.filter(Position.stockid == stockid and Position.username == username).first()
+        if existing_position != None and existing_position.purchasetype == purchasetype and purchasetype == 'sell':
+            return jsonify({"message": "Stock has not been bought yet - unable to sell"}), 404
+
+        existing_position.purchasetype = "sold"
+        try:
+            # db.session.add(new_position)
+            db.session.commit()
+            amt = float(price) * int(amount)
+            if purchasetype == "buy":
+                amt = -amt       
         except:
             return jsonify({"message":"An error occurred creating the position."}), 500
 
@@ -115,8 +143,6 @@ def update_position(username):
          return jsonify({"message":"An error occurred updating the position information."}), 500
 
     return jsonify({"message":"Updated Successfully!"}), 201
-
-
 
 if __name__ == '__main__':
     app.run(host='0.0.0.0', port=5011, debug=True)
