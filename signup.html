@@ -68,7 +68,7 @@
             var phoneNumber = $('#phoneNumber').val();
             var telegramID = $('#telegramID').val();
             
-            var serviceURL = "http://localhost:5000/account/" + username;
+            var serviceURL = "http://localhost:8000/api/v1/account/" + username;
             var indexURL = "http://localhost/foshistonks/index.php";
 
             // var availability = parseInt($("#availability").val());
@@ -81,7 +81,7 @@
                 const response =
                     await fetch(
                         serviceURL, {
-                            mode: 'cors',
+                            mode: 'no-cors',
                             method: 'POST',
                             headers: { "Content-Type": "application/json" },
                             body: JSON.stringify({ 
@@ -96,6 +96,7 @@
                     console.log(telegramID);
                 const data = await response.json();
                 console.log(data);
+                console.log(data.message);
 
                 if (response.ok) {
                     // create php session first

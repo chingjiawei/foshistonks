@@ -29,7 +29,7 @@
     <script src="js/main.js"></script>
     <script>
         var username = sessionStorage.getItem('username');
-        var getAccountURL = "http://localhost:5000/account/" + username;
+        var getAccountURL = "http://localhost:8000/api/v1/account/" + username;
         $(async () => {
             try {
                 const response =
@@ -123,7 +123,7 @@
             var phoneNumber = $('#phoneNumber').val();
             var telegramID = $('#telegramID').val();
 
-            var serviceURL = "http://localhost:5000/account/" + username;
+            var serviceURL = "http://localhost:8000/api/v1/account/" + username;
             var homeURL = "http://localhost/foshistonks/home.php";
 
             // var availability = parseInt($("#availability").val());

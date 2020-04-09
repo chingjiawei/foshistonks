@@ -14,7 +14,7 @@ CORS(app)
 # input (username, accessoryID)
 
 # change the player's equipment
-@app.route('/changeEquip/<string:username>', methods=['POST'])
+@app.route('/changeequip/<string:username>', methods=['POST'])
 def change_equipment(username):
 
     # load json body
@@ -23,8 +23,8 @@ def change_equipment(username):
     if accessoryID == None:
         return jsonify({'message': 'Please input a valid JSON'}), 400
 
-    accountURL = f"http://172.17.0.3:5000/account/{username}"
-    accessoryURL = f'http://172.17.0.2:5001/accessory/{accessoryID}'
+    accountURL = f"http://172.18.0.6:5000/account/{username}"
+    accessoryURL = f'http://172.18.0.5:5001/accessory/{accessoryID}'
 
     # retrieve accessory source
     accessory_req = requests.get(accessoryURL)
@@ -46,7 +46,7 @@ def change_equipment(username):
 
 
     # unequip player's equipment
-@app.route('/unequip/<string:username>', methods=['POST'])
+@app.route('/changeequip/unequip/<string:username>', methods=['POST'])
 def remove_equipment(username):
 
     try:
@@ -56,7 +56,7 @@ def remove_equipment(username):
         if category == None:
             return jsonify({'message': 'Please input a valid JSON'}), 400
 
-        accountURL = f"http://172.17.0.3:5000/account/{username}"
+        accountURL = f"http://172.18.0.6:5000/account/{username}"
 
         # update the equipment
         account_req = requests.put(accountURL, json={category: None})

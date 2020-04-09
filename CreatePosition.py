@@ -32,7 +32,7 @@ def create_user_position(username):
     req = {
             "stonks": res_createpos["stonks"]
         }
-    res_updatestonk = requests.post('http://localhost:5000/account/update/stonks/' + username, json=req)
+    res_updatestonk = requests.post('http://localhost:8000/api/v1/account/update/stonks/' + username, json=req)
     if res_createpos and purchasetype == "sell":
         req = {
             "time_stamp": res_createpos["time_stamp"],

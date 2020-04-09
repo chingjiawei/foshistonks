@@ -12,6 +12,7 @@ app.config['SQLALCHEMY_DATABASE_URI'] = environ.get('dbURL')#'mysql+mysqlconnect
 # environ.get('dbURL')
 
 app.config['SQLALCHEMY_TRACK_MODIFICATIONS'] = False
+app.config['SQLALCHEMY_ENGINE_OPTIONS'] = {'pool_recycle': 299}
 
 db = SQLAlchemy(app)
 
@@ -223,6 +224,8 @@ def delete_account(username):
 
     return jsonify({"message":"Deleted Successfully!"}),200
 
-
+@app.teardown_appcontext
+def shutdown_session(exception=None):
+    db.session.remove()
 if __name__ == '__main__':
     app.run(host='0.0.0.0', port=5000, debug=True)

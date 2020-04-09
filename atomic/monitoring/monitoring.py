@@ -7,11 +7,11 @@ import os
 from flask import Flask, request
 from flask_sqlalchemy import SQLAlchemy
 from flask_cors import CORS
+from os import environ
 
 from datetime import datetime
 import json
 import pika
-import telegram
 import requests
 import os
 # Communication patterns:
@@ -19,7 +19,7 @@ import os
 #import pika
 
 app = Flask(__name__)
-app.config['SQLALCHEMY_DATABASE_URI'] = 'mysql+mysqlconnector://root@localhost:3306/monitoring'
+app.config['SQLALCHEMY_DATABASE_URI'] = environ.get('dbURL')
 app.config['SQLALCHEMY_TRACK_MODIFICATIONS'] = False
  
 db = SQLAlchemy(app)
@@ -47,7 +47,7 @@ class MonitoringLog(db.Model):
 # db.create_all() 
 
 def receiveLog():
-    hostname = "localhost" # default host
+    hostname = "172.18.0.15" # default host
     port = 5672 # default port
     # connect to the broker and set up a communication channel in the connection
     connection = pika.BlockingConnection(pika.ConnectionParameters(host=hostname, port=port))

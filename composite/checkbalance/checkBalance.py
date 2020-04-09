@@ -12,11 +12,11 @@ app.config['SQLALCHEMY_TRACK_MODIFICATIONS'] = False
 CORS(app)
 
 # check if there is enough money in the account
-@app.route('/checkBalance/<string:username>', methods=['GET'])
+@app.route('/checkbalance/<string:username>', methods=['GET'])
 def check_account_balance(username):
 
 
-    accountURL = f"http://172.17.0.3:5000/account/{username}"
+    accountURL = f"http://172.18.0.6:5000/account/{username}"
     account_req = requests.get(accountURL)
 
     if (account_req.status_code == 200):

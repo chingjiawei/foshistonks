@@ -6,8 +6,6 @@ from os import environ
 import requests
 
 app = Flask(__name__)
-app.config['SQLALCHEMY_DATABASE_URI'] = 'mysql+mysqlconnector://root@localhost:3306/'
-app.config['SQLALCHEMY_TRACK_MODIFICATIONS'] = False
 
 CORS(app)
 
@@ -17,7 +15,7 @@ CORS(app)
 
 # output (message: successful / error), 200/500
 
-@app.route("/purchaseAccessories/<int:accessoryID>", methods =['POST'])
+@app.route("/purchaseaccessories/<int:accessoryID>", methods =['POST'])
 def purchase_accessory (accessoryID):
     
     # load json body
@@ -33,13 +31,13 @@ def purchase_accessory (accessoryID):
     inStock = purchaseData['inStock']
 
     # generate URLs
-    accessoryURL = f'http://172.17.0.2:5001/accessory/{accessoryID}'
+    accessoryURL = f'http://172.18.0.5:5001/accessory/{accessoryID}'
 
-    shopURL = f'http://172.17.0.8:5003/shop/{shopID}'
+    shopURL = f'http://172.18.0.9:5003/shop/{shopID}'
 
-    accountStonkURL = f'http://172.17.0.3:5000/account/{username}'
+    accountStonkURL = f'http://172.18.0.6:5000/account/{username}'
 
-    inventoryURL = f'http://172.17.0.4:5002/inventory/{username}'
+    inventoryURL = f'http://172.18.0.7:5002/inventory/{username}'
 
 
     # deduct stonks from account

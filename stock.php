@@ -41,7 +41,7 @@
         });
 
         async function displayStocks() {
-            var stockURL = "http://localhost:5010/stock";
+            var stockURL = "http://localhost:8000/api/v1/stock";
             try {
                 const response =
                     await fetch(
@@ -72,7 +72,7 @@
                     var allData = new Object();
                     // var allData = [];
                     for (var j in spoofname) {
-                        var serviceURL = "http://localhost:5010/stock/api/" + spoofname[j];
+                        var serviceURL = "http://localhost:8000/api/v1/stock/api/" + spoofname[j];
                         //     var request2 = new XMLHttpRequest()
                         // console.log(serviceURL)
                         const response2 =
@@ -110,7 +110,7 @@
         };
 
         async function showPostion() {
-            var positionURL = "http://localhost:5011/position/" + userName;
+            var positionURL = "http://localhost:8000/api/v1/position/" + userName;
             //selling
             const response3 =
                 await fetch(
@@ -142,7 +142,7 @@
         async function buyStock(spoofname, price) {
             var amount = document.getElementsByName('buy' + spoofname)[0];
             var amt = amount.value
-            var notiURL = "http://localhost:5012/createposition/" + userName;
+            var notiURL = "http://localhost:8000/api/v1/createposition/" + userName;
             //selling
             const response6 =
                 await fetch(
@@ -169,7 +169,7 @@
         };
 
         async function sellStock(stockName, price, amount) {
-            var notiURL = "http://localhost:5012/createposition/" + userName;
+            var notiURL = "http://localhost:8000/api/v1/createposition/" + userName;
             //selling
             const response7 =
                 await fetch(
