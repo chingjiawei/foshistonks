@@ -62,7 +62,7 @@ class Notification(db.Model):
 # @app.route("/noti/create/", methods=['POST'])
    
 def receiveNotiCreate():
-    hostname = "localhost" # default broker hostname
+    hostname = "172.17.0.5" # default broker hostname
     port = 5672 # default port
     # connect to the broker and set up a communication channel in the connection
     connection = pika.BlockingConnection(pika.ConnectionParameters(host=hostname, port=port))

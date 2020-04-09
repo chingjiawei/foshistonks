@@ -1,0 +1,41 @@
+cd atomic/accessory
+docker build -t chingjiawei/accessory:1.0.0 .
+docker run -p 5001:5001 -e dbURL=mysql+mysqlconnector://is213@host.docker.internal:3306/accessory chingjiawei/accessory:1.0.0
+cd ../account
+docker build -t chingjiawei/account:1.0.0 .
+docker run -p 5000:5000 -e dbURL=mysql+mysqlconnector://is213@host.docker.internal:3306/account chingjiawei/account:1.0.0
+cd ../inventory
+docker build -t chingjiawei/inventory:1.0.0 .
+docker run -p 5002:5002 -e dbURL=mysql+mysqlconnector://is213@host.docker.internal:3306/inventory chingjiawei/inventory:1.0.0
+cd ../notfication
+docker run -d --hostname my-rabbit --name some-rabbit rabbitmq:3
+docker build -t chingjiawei/notification:1.0.0 .
+docker run chingjiawei/notification:1.0.0
+cd ../position
+docker build -t chingjiawei/position:1.0.0 .
+docker run -p 5011:5011 -e dbURL=mysql+mysqlconnector://is213@host.docker.internal:3306/position chingjiawei/position:1.0.0
+cd ../shop
+docker build -t chingjiawei/shop:1.0.0 .
+docker run -p 5003:5003 -e dbURL=mysql+mysqlconnector://is213@host.docker.internal:3306/shop chingjiawei/shop:1.0.0
+cd ../stock
+docker build -t chingjiawei/stock:1.0.0 .
+docker run -p 5010:5010 -e dbURL=mysql+mysqlconnector://is213@host.docker.internal:3306/stock chingjiawei/stock:1.0.0
+cd ../../composite/changeequip
+docker build -t chingjiawei/changeequip:1.0.0 .
+docker run -p 5102:5102 chingjiawei/changeequip:1.0.0
+cd ../checkbalance
+docker build -t chingjiawei/checkbalance:1.0.0 .
+docker run -p 5101:5101 chingjiawei/checkbalance:1.0.0
+cd ../createposition
+docker build -t chingjiawei/createposition:1.0.0 .
+docker run -p 5012:5012 chingjiawei/createposition:1.0.0
+cd ../login
+docker build -t chingjiawei/login:1.0.0 .
+docker run -p 5013:5013 chingjiawei/login:1.0.0
+cd ../populateaccessories
+docker build -t chingjiawei/populateaccessories:1.0.0 .
+docker run -p 5100:5100 chingjiawei/populateaccessories:1.0.0
+cd ../purchaseaccessories
+docker build -t chingjiawei/purchaseaccessories:1.0.0 .
+docker run -p 5200:5200 chingjiawei/purchaseaccessories:1.0.0
+

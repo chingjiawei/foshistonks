@@ -122,7 +122,7 @@ def create_noti():
 
     # Return the newly created order when creation is succssful
     # if status==200:
-    hostname = "localhost" # default broker hostname. Web management interface default at http://localhost:15672
+    hostname = "172.17.0.5" # default broker hostname. Web management interface default at http://localhost:15672
     port = 5672 # default messaging port.
     # connect to the broker and set up a communication channel in the connection
     connection = pika.BlockingConnection(pika.ConnectionParameters(host=hostname, port=port))
