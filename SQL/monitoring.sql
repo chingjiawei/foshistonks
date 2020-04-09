@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: 127.0.0.1:3306
--- Generation Time: Apr 09, 2020 at 08:05 AM
+-- Generation Time: Apr 09, 2020 at 08:03 AM
 -- Server version: 5.7.19
 -- PHP Version: 7.1.9
 
@@ -19,27 +19,26 @@ SET time_zone = "+00:00";
 /*!40101 SET NAMES utf8mb4 */;
 
 --
--- Database: `position`
+-- Database: `monitoring`
 --
 
 -- --------------------------------------------------------
 
 --
--- Table structure for table `position`
+-- Table structure for table `monitoring`
 --
 
-DROP TABLE IF EXISTS `position`;
-CREATE TABLE IF NOT EXISTS `position` (
-  `time_stamp` datetime NOT NULL,
-  `stockid` int(10) NOT NULL,
-  `stockName` varchar(128) NOT NULL,
-  `username` varchar(16) NOT NULL,
-  `price` decimal(10,2) NOT NULL,
-  `purchasetype` varchar(10) NOT NULL,
-  `amount` int(10) NOT NULL,
-  PRIMARY KEY (`time_stamp`,`username`)
-) ENGINE=InnoDB DEFAULT CHARSET=utf8;
-COMMIT;
+DROP TABLE IF EXISTS `monitoring`;
+CREATE TABLE IF NOT EXISTS `monitoring` (
+  `log_id` int(11) NOT NULL AUTO_INCREMENT,
+  `user_id` varchar(20) NOT NULL,
+  `log_content` varchar(500) NOT NULL,
+  `log_from` varchar(128) NOT NULL,
+  `timestamp` datetime NOT NULL,
+  PRIMARY KEY (`log_id`)
+) ENGINE=MyISAM AUTO_INCREMENT=11 DEFAULT CHARSET=latin1;
+
+
 
 /*!40101 SET CHARACTER_SET_CLIENT=@OLD_CHARACTER_SET_CLIENT */;
 /*!40101 SET CHARACTER_SET_RESULTS=@OLD_CHARACTER_SET_RESULTS */;
