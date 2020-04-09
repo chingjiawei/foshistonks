@@ -107,6 +107,51 @@
             } // error
         }
 
+        async function updateLoginTime(username, data2) {
+            var timezoneOffset = (new Date()).getTimezoneOffset() * 60000;
+            var oldLogin = new Date(Date.parse(data2['lastLogin']) + timezoneOffset);
+            oldLogin.setHours(0,0,0,0);
+
+            var lastLogin = new Date(Date.now() - timezoneOffset).toISOString().slice(0, 19).replace('T', ' ');
+
+            var date = new Date(Date.now());
+            date.setHours(0,0,0,0)
+
+            var elapsed = date - oldLogin;
+            // if it's the next day
+            if (elapsed >= 86400000) {
+                payload = {"lastLogin" : lastLogin, "dailyStonks": false}
+            } else {
+                payload = {"lastLogin" : lastLogin}
+            }
+
+            var serviceURL = "http://127.0.0.1:5000/account/" + username;
+            try {
+                const response =await fetch(
+                    serviceURL, {
+                        method: 'PUT',
+                        headers: {'Content-Type': 'application/json'},
+                        body: JSON.stringify(payload) 
+                    });
+                const data = await response.json();
+
+                if (response.ok) {
+                    // alert('loginTime updated!')
+                    return data
+                } else {
+                    console.log(data);
+                    showError(data.message);
+                }
+
+            } catch (error) {
+                // Errors when calling the service; such as network error, 
+                // service offline, etc
+                showError
+                    ("There is a problem updating the login time of this account, please try again later. " + error);
+
+            } // error
+        }
+
         $('.equipment').click(function() {
             window.location.href = '/foshistonks/equipment.php';
             return false;
@@ -126,7 +171,7 @@
 
         $('.claimCoin').click(async function() {
             // alert(1)
-            await  updateDailyStonks();
+            await updateDailyStonks();
             var stonks = sessionStorage.getItem('stonks')
             $(".balance").html('$'+ stonks.toString());
             $('.claimCoin').hide();
@@ -145,17 +190,13 @@
                 if (!data2) {
                     showError('Empty account.')
                 } else {
-                    console.log(data2);
-                    console.log(data2['dailyStonks'])
-                    console.log(data2['lastLogin'])
-                    var timezoneOffset = (new Date()).getTimezoneOffset() * 60000;
-                    var date = new Date(Date.now() - timezoneOffset).toISOString().slice(0, 19).replace('T', ' ');
-                    console.log(date)
+                    var data = await updateLoginTime(username, data2);
+                    var dailyStonks = data['dailyStonks'];
+
                     var equipBodysrc = data2['equipBody'];
                     var equipHandsrc = data2['equipHand'];
                     var equipHeadsrc = data2['equipHead'];
                     var equipPetsrc = data2['equipPet'];
-                    var dailyStonks = data2['dailyStonks'];
                     if (dailyStonks) {
                         $('.claimCoin').hide();
                     }

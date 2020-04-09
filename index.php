@@ -132,7 +132,7 @@ HAPPY STONKING!</p>
                     sessionStorage.setItem('username', username);
 
                     // update the latestLoginTime
-                    await updateLoginTime(username);
+                    // await updateLoginTime(username);
 
                     // relocate to home page
                     window.location.replace(homeURL);
