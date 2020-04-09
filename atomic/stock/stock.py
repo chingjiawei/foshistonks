@@ -14,7 +14,7 @@ from json import dumps
 app = Flask(__name__)
 #app.config['SQLALCHEMY_DATABASE_URI'] = environ.get('dbURL')#'mysql+mysqlconnector://root@localhost:3306/stock'
 # environ.get('dbURL')
-app.config['SQLALCHEMY_DATABASE_URI'] = 'mysql+mysqlconnector://root@localhost:3306/stock'
+app.config['SQLALCHEMY_DATABASE_URI'] = environ.get('dbURL')
 app.config['SQLALCHEMY_TRACK_MODIFICATIONS'] = False
 
 db = SQLAlchemy(app)
@@ -34,10 +34,10 @@ class Stock(db.Model):
         self.spoofname = spoofname
 
     def json(self):
-        return jsonify({"stockid": self.stockid, 
+        return {"stockid": self.stockid, 
                 "stockname": self.stockname, 
                 "spoofname": self.spoofname,  
-                })   , 201
+                }
 
 
 #get all stocks
@@ -49,9 +49,9 @@ def get_all():
     #result = {"stock":[Stock.json() for Stock in Stock.query.all()]}
     #return response
     #data = [Stock.json() for Stock in Stock.query.all()]
-    data = {"stock":[{"stockid":"1","stockName":"A","spoofname":"DKBank Inc"},{"stockid":"2","stockName":"AA","spoofname":"ThisKong Pte Ltd"},{"stockid":"3","stockName":"DAL","spoofname":"Yeet and Yeehaw Advisor"}]}
-    # return jsonify({"stock":[Stock.json() for Stock in Stock.query.all()]})
-    return jsonify(data)
+    # data = {"stock":[{"stockid":"1","stockName":"A","spoofname":"DKBank Inc"},{"stockid":"2","stockName":"AA","spoofname":"ThisKong Pte Ltd"},{"stockid":"3","stockName":"DAL","spoofname":"Yeet and Yeehaw Advisor"}]}
+    return jsonify({"stock":[Stock.json() for Stock in Stock.query.all()]})
+    # return jsonify(data)
 
 #return a stock api
 @app.route("/stock/api/<string:spoofname>")
@@ -64,7 +64,7 @@ def get_stock_api(spoofname):
             "function": "TIME_SERIES_INTRADAY", #Gets stock data at 5 min intervals
             "symbol": stock.stockname,
             "interval": "1min",
-            "apikey": "2BAMKY2DJ4ZKBEK2",
+            "apikey": "6X8I6CEA4ESMED9G",
             }
         response = requests.get(API_URL, data)
         response_data =  response.json() 
