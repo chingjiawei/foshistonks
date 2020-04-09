@@ -39,6 +39,7 @@
             // var allStocksData = displayStocks();
             displayStocks();
         });
+
         async function displayStocks() {
             var stockURL = "http://localhost:5010/stock";
             try {
@@ -92,8 +93,8 @@
                         html += "<td>" + spoofname[j] + "</td>";
                         html += "<td>" + Object.keys(data2)[Object.keys(data2).length - 1] + "</td>";
                         html += "<td>" + data2[Object.keys(data2)[Object.keys(data2).length - 1]] + "</td>";
-                        html += "<td data-buyId='" + spoofname[j] + "' ><input type=\"text\" ></td>";
-                        html += "<td><input class='buy_btn' type='button' value='Buy' data-spoof='" + spoofname[j] + "' data-price='" + thisStockPrice + "' onclick= 'buyStock()'/></td>";
+                        html += "<td><input type=\"text\" name=\"buy" + spoofname[j] + "\" list=\"amount\"><datalist id=\"amount\"><option value=\"5\"><option value=\"10\"></datalist></td>";
+                        html += "<td><input class='buy_btn' type='button' value='Buy' data-spoof='" + spoofname[j] + "' data-price='" + thisStockPrice + "' onclick= \"buyStock(\'" + spoofname[j] + "\', \'" + thisStockPrice + "\')\" /></td>";
                         html += "</tr>";
                         document.getElementById("buytd").innerHTML = html;
                     }
@@ -121,85 +122,82 @@
             var html2 = "";
             for (var k in data3.stock) {
                 var currentPrice = $('[data-spoof="' + data3.stock[k]["stockName"] + '"]').attr('data-price');
-                if (data3.stock[k].purchasetype == "buy"); {
+                if (data3.stock[k].purchasetype == "buy") {
                     // console.log(data3.stock[k]["stockName"]);
                     html2 += "<tr>";
                     html2 += "<td>" + data3.stock[k]["stockName"] + "</td>";
                     html2 += "<td>" + data3.stock[k]["price"] + "</td>";
                     html2 += "<td>" + currentPrice + "</td>";
                     html2 += "<td data-sellId='" + data3.stock[k]["stockName"] + "'>" + data3.stock[k]["amount"] + "</td>";
-                    html2 += "<td><input class='sell_btn' type='button' value='Sell' data-spoof='" + data3.stock[k]["stockName"] + "' data-price='" + currentPrice + "' onclick= 'sellStock()'/></td>";
+                    // html2 += "<td><input class='sell_btn' type='button' value='Sell' data-spoof='" + data3.stock[k]["stockName"] + "' data-price='" + currentPrice + "' onclick= \"sellStock(\'" + data3.stock[k]["stockName"] + "\',\'" + data3.stock[k]["price"] + "\',\'" + data3.stock[k]["amount"] + "\')\" /></td>";
+                    html2 += "<td><input class='sell_btn' type='button' value='Sell' data-spoof='' data-price='' onclick= \"sellStock(\'" + data3.stock[k]["stockName"] + "\',\'" + currentPrice + "\',\'" + data3.stock[k]["amount"] + "\')\" /></td>";
                     html2 += "</tr>";
                 }
             }
             document.getElementById("selltd").innerHTML = html2;
         }
 
-        async function buyStock() {
-            // var notiURL = "http://localhost:5012/createPosition/sendnoti";
-            // //selling
-            // const response6 =
-            //     await fetch(
-            //         notiURL, { 
-            //             mode: 'cors',
-            //             method: 'GET'                
-            //         }
-            //     );
-            // const data6 = await response6.json();
-            // var updateaccountURL = ""
-            var notiURL = "http://localhost:5000/account/update/stonks/"+userName;
+
+
+        async function buyStock(spoofname, price) {
+            var amount = document.getElementsByName('buy' + spoofname)[0];
+            var amt = amount.value
+            var notiURL = "http://localhost:5012/createposition/" + userName;
             //selling
             const response6 =
                 await fetch(
-                    notiURL, { 
+                    notiURL, {
                         mode: 'cors',
                         method: 'POST',
-                        headers: {'Content-Type': 'application/json'},
-                        body: JSON.stringify({"stonks": -70.2000})                 
+                        headers: {
+                            'Content-Type': 'application/json'
+                        },
+                        body: JSON.stringify({
+                            username: userName,
+                            spoofname: spoofname,
+                            price: price,
+                            purchasetype: "buy",
+                            amount: amt
+                        })
                     }
                 );
             const data6 = await response6.json();
-            alert("Creation of postion is successful!");
+            alert(data6["message"])
+            // alert("Creation of postion is successful!");
+            
+            location.reload();
+        };
+
+        async function sellStock(stockName, price, amount) {
+            var notiURL = "http://localhost:5012/createposition/" + userName;
+            //selling
+            const response7 =
+                await fetch(
+                    notiURL, {
+                        mode: 'cors',
+                        method: 'POST',
+                        headers: {
+                            'Content-Type': 'application/json'
+                        },
+                        body: JSON.stringify({
+                            username: userName,
+                            spoofname: stockName,
+                            price: price,
+                            purchasetype: "sell",
+                            amount: amount
+                        })
+                    }
+                );
+            const data7 = await response7.json();
+            alert(data7["message"])
+            // alert("Creation of postion is successful!");
+            location.reload();
+        }
+
+        async function goBack(){
             var indexURL = "http://localhost/foshistonks/home.php";
             window.location.replace(indexURL);
         }
-
-        async function sellStock() {
-            // var notiURL = "http://localhost:5012/createPosition/sendsellnoti";
-            // //selling
-            // const response6 =
-            //     await fetch(
-            //         notiURL, { 
-            //             mode: 'cors',
-            //             method: 'GET'                
-            //         }
-            //     );
-            // const data6 = await response6.json();
-            alert("Selling of stock is successful");
-            var indexURL = "http://localhost/foshistonks/home.php";
-            window.location.replace(indexURL);
-        }
-        // function buy() {
-        //     alert($(this).attr('data-spoof')); 
-        // }
-        // $('.buy_btn').click(
-        //     function() {
-        //         var spoof = $(this).attr('data-spoof');
-        //         var price = $(this).attr('data-price');
-        //         var amt = $('[data-buyId="' + spoof + '"]').val();
-        //         // updateStock(amt, username,...); // call an asyn function to run the service
-        //     }
-        // );
-
-        // $('.sell_btn').click(
-        //     function() {
-        //         var spoof = $(this).attr('data-spoof');
-        //         var price = $(this).attr('data-price');
-        //         var amt = $('[data-sellId="' + spoof + '"]').val();
-        //         // updateStock(........); // call an asyn function to run the service
-        //     }
-        // );
-
 
         async function showChart(allData) {
 
@@ -284,6 +282,7 @@
 </head>
 
 <body>
+    <button onclick="goBack()">Back</button>
     <div id="chartContainer" style="height: 370px; max-width: 920px; margin: 0px auto;"></div>
     <div class="container">
         <div class="card text-center">
