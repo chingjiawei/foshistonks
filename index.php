@@ -77,7 +77,7 @@ HAPPY STONKING!</p>
             var timezoneOffset = (new Date()).getTimezoneOffset() * 60000;
             var lastLogin = new Date(Date.now() - timezoneOffset).toISOString().slice(0, 19).replace('T', ' ');
 
-            var serviceURL = "http://localhost:8000/api/v1/account/" + username;
+            var serviceURL = "http://127.0.0.1:5000/account/" + username;
             try {
                 const response =await fetch(
                     serviceURL, {
@@ -112,7 +112,7 @@ HAPPY STONKING!</p>
             var username = $('#username').val();
             var password = $('#password').val();
 
-            var serviceURL = "http://localhost:8000/api/v1/login/";
+            var serviceURL = "http://localhost:5013/login/";
             var homeURL = "http://localhost/foshistonks/home.php";
 
             // form the POST url which includes the dynamic username
@@ -132,7 +132,7 @@ HAPPY STONKING!</p>
                     sessionStorage.setItem('username', username);
 
                     // update the latestLoginTime
-                    await updateLoginTime(username);
+                    // await updateLoginTime(username);
 
                     // relocate to home page
                     window.location.replace(homeURL);
