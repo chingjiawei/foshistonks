@@ -58,15 +58,15 @@ def get_all():
 def get_stock_api(spoofname): 
     stock = Stock.query.filter_by(spoofname = spoofname).first()
     if stock:
-        API_URL = "https://www.alphavantage.co/query"
+        API_URL = "https://www.alphavantage.co/query?function=TIME_SERIES_INTRADAY&symbol=" + stock.stockname + "&interval=1min&apikey=6X8I6CEA4ESMED9G"
 
-        data = {
-            "function": "TIME_SERIES_INTRADAY", #Gets stock data at 5 min intervals
-            "symbol": stock.stockname,
-            "interval": "1min",
-            "apikey": "6X8I6CEA4ESMED9G",
-            }
-        response = requests.get(API_URL, data)
+        # data = {
+        #     "function": "TIME_SERIES_INTRADAY", #Gets stock data at 5 min intervals
+        #     "symbol": stock.stockname,
+        #     "interval": "1min",
+        #     "apikey": "6X8I6CEA4ESMED9G",
+        #     }
+        response = requests.get(API_URL, verify=False) #, data
         response_data =  response.json() 
         formattedData = {}
         for i in response_data["Time Series (1min)"]:

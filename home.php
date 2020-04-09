@@ -88,7 +88,7 @@
             var stonks = parseFloat(sessionStorage.getItem('stonks')) + 10;
             console.log(stonks)
             var dailyStonks = true;
-            var serviceURL = "http://127.0.0.1:5000/account/" + username;
+            var serviceURL = "http://localhost:8000/api/v1/account/" + username;
             try {
                 const response =await fetch(serviceURL, { 
                     method: 'PUT',
@@ -134,7 +134,7 @@
 
         $(async() => { 
             var username = sessionStorage.getItem('username');
-            var serviceURL2 = "http://127.0.0.1:5000/account/" + username;
+            var serviceURL2 = "http://localhost:8000/api/v1/account/" + username;
             try {
                 const response2 =
                   await fetch(

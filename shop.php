@@ -119,7 +119,7 @@
     async function updateStonks(){
         /////////////////////get stonks data////////////////////
         var username = sessionStorage.getItem('username');
-        var serviceURL2 = "http://127.0.0.1:5000/account/" + username;
+        var serviceURL2 = "http://localhost:8000/api/v1/account/" + username;
         try {
             const response2 = await fetch(serviceURL2, { method: 'GET'});
             const data2 = await response2.json();
@@ -151,7 +151,7 @@
             +"</b> stonks rich!"
         );     
         // Change serviceURL to your own
-        var serviceURL = "http://127.0.0.1:5100/populateShopAccessories/1";
+        var serviceURL = "http://localhost:8000/api/v1/populateaccessories/populateshopaccessories/1";
         try {
             const response =
                 await fetch(
@@ -249,7 +249,7 @@
 
     async function getStonks(accessoryID, price, inStock) { 
         var username = sessionStorage.getItem('username');
-        var serviceURL2 = "http://127.0.0.1:5000/account/" + username;
+        var serviceURL2 = "http://localhost:8000/api/v1/account/" + username;
         try {
             const response2 =
                 await fetch(
