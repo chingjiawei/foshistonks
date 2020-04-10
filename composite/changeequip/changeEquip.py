@@ -1,14 +1,10 @@
 from flask import Flask, request, jsonify
-from flask_sqlalchemy import SQLAlchemy
 from flask_cors import CORS
 from os import environ
 
 import requests
 
 app = Flask(__name__)
-app.config['SQLALCHEMY_DATABASE_URI'] = 'mysql+mysqlconnector://root@localhost:3306/'
-app.config['SQLALCHEMY_TRACK_MODIFICATIONS'] = False
-
 CORS(app)
 
 # input (username, accessoryID)
@@ -23,8 +19,8 @@ def change_equipment(username):
     if accessoryID == None:
         return jsonify({'message': 'Please input a valid JSON'}), 400
 
-    accountURL = f"http://172.17.0.3:5000/account/{username}"
-    accessoryURL = f'http://172.17.0.2:5001/accessory/{accessoryID}'
+    accountURL = f"http://account:5000/account/{username}"
+    accessoryURL = f'http://accessory:5001/accessory/{accessoryID}'
 
     # retrieve accessory source
     accessory_req = requests.get(accessoryURL)
@@ -56,7 +52,7 @@ def remove_equipment(username):
         if category == None:
             return jsonify({'message': 'Please input a valid JSON'}), 400
 
-        accountURL = f"http://172.17.0.3:5000/account/{username}"
+        accountURL = f"http://account:5000/account/{username}"
 
         # update the equipment
         account_req = requests.put(accountURL, json={category: None})

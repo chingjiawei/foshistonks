@@ -40,3 +40,32 @@ services:
             - "5013:5013"
         depends_on:
             - account
+
+    changeequip:
+        build: "./composite/changeequip"
+        image: "weihaosmu/changeequip:1.0.0"
+        ports:
+            - "5102:5102"
+        depends_on:
+            - account
+            - accessory
+
+    populateaccessories:
+        build: "./composite/populateaccessories"
+        image: "weihaosmu/populateaccessories:1.0.0"
+        ports:
+            - "5100:5100"
+        depends_on:
+            - shop
+            - inventory
+            - accessory
+
+    purchaseaccessories:
+        build: "./composite/purchaseaccessories"
+        image: "weihaosmu/purchaseaccessories:1.0.0"
+        ports:
+            - "5200:5200"
+        depends_on:
+            - shop
+            - inventory
+            - accessory
