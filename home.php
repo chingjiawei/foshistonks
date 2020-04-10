@@ -179,11 +179,7 @@
 
         $(async() => { 
             var username = sessionStorage.getItem('username');
-<<<<<<< Updated upstream
-            var serviceURL2 = "http://127.0.0.1:5000/account/" + username;
-=======
             var serviceURL2 = "http://localhost:5000/account/" + username;
->>>>>>> Stashed changes
             try {
                 const response2 =
                   await fetch(
