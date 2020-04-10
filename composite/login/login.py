@@ -13,11 +13,7 @@ def login(username):
     # password = request.json.get('password')
     data = request.get_json()
     password = data["password"]
-<<<<<<< Updated upstream
-    res = requests.get('http://172.17.0.3:5000/account/' + username)
-=======
     res = requests.get('http://account:5000/account/' + username)
->>>>>>> Stashed changes
     res_users = res.json()
     try:
         if res_users["password"] != password:

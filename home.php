@@ -88,11 +88,7 @@
             var stonks = parseFloat(sessionStorage.getItem('stonks')) + 10;
             console.log(stonks)
             var dailyStonks = true;
-<<<<<<< Updated upstream
-            var serviceURL = "http://127.0.0.1:5000/account/" + username;
-=======
             var serviceURL = "http://localhost:5000/account/" + username;
->>>>>>> Stashed changes
             try {
                 const response =await fetch(serviceURL, { 
                     method: 'PUT',
@@ -129,11 +125,7 @@
                 payload = {"lastLogin" : lastLogin}
             }
 
-<<<<<<< Updated upstream
-            var serviceURL = "http://127.0.0.1:5000/account/" + username;
-=======
             var serviceURL = "http://localhost:5000/account/" + username;
->>>>>>> Stashed changes
             try {
                 const response =await fetch(
                     serviceURL, {
