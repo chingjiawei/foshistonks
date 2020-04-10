@@ -1,0 +1,42 @@
+version: "3.7"
+
+services:
+    account:
+        build: "./atomic/account"
+        image: "weihaosmu/account:1.0.0"
+        environment:
+            - dbURL=mysql+mysqlconnector://is213@host.docker.internal:3306/account
+        ports:
+            - "5000:5000"
+
+    accessory:
+        build: "./atomic/accessory"
+        image: "weihaosmu/accessory:1.0.0"
+        environment:
+            - dbURL=mysql+mysqlconnector://is213@host.docker.internal:3306/accessory
+        ports:
+            - "5001:5001"
+
+    inventory:
+        build: "./atomic/inventory"
+        image: "weihaosmu/inventory:1.0.0"
+        environment:
+            - dbURL=mysql+mysqlconnector://is213@host.docker.internal:3306/inventory
+        ports:
+            - "5002:5002"
+
+    shop:
+        build: "./atomic/shop"
+        image: "weihaosmu/shop:1.0.0"
+        environment:
+            - dbURL=mysql+mysqlconnector://is213@host.docker.internal:3306/shop
+        ports:
+            - "5003:5003"
+
+    login:
+        build: "./composite/login"
+        image: "weihaosmu/login:1.0.0"
+        ports:
+            - "5013:5013"
+        depends_on:
+            - account

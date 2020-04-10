@@ -77,7 +77,11 @@ HAPPY STONKING!</p>
             var timezoneOffset = (new Date()).getTimezoneOffset() * 60000;
             var lastLogin = new Date(Date.now() - timezoneOffset).toISOString().slice(0, 19).replace('T', ' ');
 
+<<<<<<< Updated upstream
             var serviceURL = "http://127.0.0.1:5000/account/" + username;
+=======
+            var serviceURL = "http://localhost:5000/account/" + username;
+>>>>>>> Stashed changes
             try {
                 const response =await fetch(
                     serviceURL, {
