@@ -21,7 +21,9 @@ SET time_zone = "+08:00";
 --
 -- Database: `monitoring`
 --
-
+DROP DATABASE IF EXISTS `monitoring`;
+CREATE DATABASE IF NOT EXISTS `monitoring` DEFAULT CHARACTER SET utf8 COLLATE utf8_general_ci;
+USE `monitoring`;
 -- --------------------------------------------------------
 
 --

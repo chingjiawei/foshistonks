@@ -121,6 +121,7 @@ HAPPY STONKING!</p>
                 const response =
                     await fetch(
                         serviceURL, {
+                            mode: 'cors',
                             method: 'POST',
                             headers: {'Content-Type': 'application/json'},
                             body: JSON.stringify({username : username, password : password}) 

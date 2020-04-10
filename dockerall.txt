@@ -40,10 +40,10 @@ docker build -t chingjiawei/purchaseaccessories:1.0.0 .
 docker run --rm -d --name=purchaseaccessories --network=kong-net chingjiawei/purchaseaccessories:1.0.0
 cd ../../atomic/notfication
 docker build -t chingjiawei/notification:1.0.0 .
-docker run -rm -d --network=kong-net chingjiawei/notification:1.0.0
+docker run -d --network=kong-net chingjiawei/notification:1.0.0
 cd ../monitoring
 docker build -t chingjiawei/monitoring:1.0.0 .
-docker run -rm -d --network=kong-net chingjiawei/monitoring:1.0.0
+docker run -d --network=kong-net chingjiawei/monitoring:1.0.0
 
 
 

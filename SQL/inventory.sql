@@ -21,6 +21,7 @@ SET time_zone = "+00:00";
 --
 -- Database: `inventory`
 --
+DROP DATABASE IF EXISTS `inventory`;
 CREATE DATABASE IF NOT EXISTS `inventory` DEFAULT CHARACTER SET utf8 COLLATE utf8_general_ci;
 USE `inventory`;
 -- --------------------------------------------------------

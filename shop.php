@@ -212,7 +212,7 @@
         //Prevents screen from refreshing when submitting
         var username = sessionStorage.getItem('username');
         // console.log(id)
-        var serviceURL = "http://localhost:5200/purchaseAccessories/" + accessoryID;
+        var serviceURL = "http://localhost:8000/api/v1/purchaseaccessories/" + accessoryID;
         
         try {
             const response =
