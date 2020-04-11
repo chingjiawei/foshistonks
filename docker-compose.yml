@@ -33,11 +33,75 @@ services:
         ports:
             - "5003:5003"
 
+    stock:
+        build: "./atomic/stock"
+        image: "weihaosmu/stock:1.0.0"
+        environment:
+            - dbURL=mysql+mysqlconnector://is213@host.docker.internal:3306/stock
+        ports:
+            - "5010:5010"
+
+    position:
+        build: "./atomic/position"
+        image: "weihaosmu/position:1.0.0"
+        environment:
+            - dbURL=mysql+mysqlconnector://is213@host.docker.internal:3306/position
+        ports:
+            - "5011:5011"
+
+    rabbitmq:
+        image: "rabbitmq:3-management"
+        hostname: "rabbitmq"
+        ports:
+            - "5672:5672"
+            - "15672:15672"
+        healthcheck:
+            test: ["CMD", "curl", "-f", "http://localhost:15672"]
+            interval: 30s
+            timeout: 10s
+            retries: 5
+
+    monitoring:
+        build: "./atomic/monitoring"
+        image: "weihaosmu/monitoring:1.0.0"
+        environment:
+            - dbURL=mysql+mysqlconnector://is213@host.docker.internal:3306/monitoring
+        restart: on-failure
+        depends_on:
+            - rabbitmq
+        links:
+            - rabbitmq
+
+    notification:
+        build: "./atomic/notification"
+        image: "weihaosmu/notification:1.0.0"
+        restart: on-failure
+        depends_on:
+            - rabbitmq
+        links:
+            - rabbitmq
+
     login:
         build: "./composite/login"
         image: "weihaosmu/login:1.0.0"
         ports:
             - "5013:5013"
+        depends_on:
+            - account
+
+    createposition:
+        build: "./composite/createposition"
+        image: "weihaosmu/createposition:1.0.0"
+        ports:
+            - "5012:5012"
+        depends_on:
+            - account
+
+    checkbalance:
+        build: "./composite/checkbalance"
+        image: "weihaosmu/checkbalance:1.0.0"
+        ports:
+            - "5101:5101"
         depends_on:
             - account
 

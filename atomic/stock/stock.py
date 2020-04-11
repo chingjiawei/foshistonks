@@ -66,7 +66,7 @@ def get_stock_api(spoofname):
             "interval": "1min",
             "apikey": "6X8I6CEA4ESMED9G",
             }
-        response = requests.get(API_URL, data)
+        response = requests.get(API_URL, data, verify=False)
         response_data =  response.json() 
         formattedData = {}
         for i in response_data["Time Series (1min)"]:

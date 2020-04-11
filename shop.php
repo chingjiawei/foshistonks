@@ -235,6 +235,8 @@
             if (response.ok) {
                 var stonks = await updateStonks()
                 alert("Item bought successfully!");
+                var shopURL = "http://localhost/foshistonks/shop.php";
+                window.location.replace(shopURL);
                 $(".balance").html('$'+ stonks.toString());
                 $('#plusone').fadeIn(200);
                 $('#plusone').delay(1200).fadeOut(200);
